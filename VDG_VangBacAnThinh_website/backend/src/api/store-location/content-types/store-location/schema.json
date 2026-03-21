@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "store_locations",
+  "info": {
+    "singularName": "store-location",
+    "pluralName": "store-locations",
+    "displayName": "Store Location",
+    "description": "Physical store locations"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "address": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "openingHours": {
+      "type": "text"
+    }
+  }
+}

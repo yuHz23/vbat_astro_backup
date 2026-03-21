@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "brand_partners",
+  "info": {
+    "singularName": "brand-partner",
+    "pluralName": "brand-partners",
+    "displayName": "Brand Partner",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"]
+    },
+    "website": {
+      "type": "string"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    }
+  }
+}

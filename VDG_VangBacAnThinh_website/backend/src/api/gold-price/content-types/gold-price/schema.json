@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gold_prices",
+  "info": {
+    "singularName": "gold-price",
+    "pluralName": "gold-prices",
+    "displayName": "Gold Price",
+    "description": "Company gold buy/sell prices"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "goldType": {
+      "type": "string",
+      "required": true
+    },
+    "goldName": {
+      "type": "string",
+      "required": true
+    },
+    "buyPrice": {
+      "type": "decimal",
+      "required": true
+    },
+    "sellPrice": {
+      "type": "decimal",
+      "required": true
+    },
+    "unit": {
+      "type": "string",
+      "default": "VNĐ/lượng"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 0
+    },
+    "isActive": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

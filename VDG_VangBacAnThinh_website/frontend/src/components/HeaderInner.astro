@@ -1,0 +1,73 @@
+<!-- Header (Inner variant) -->
+<header x-data="header" :class="scrolled ? 'shadow-lg' : ''" class="bg-white sticky top-0 z-50 transition-shadow duration-300">
+  <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+    <a href="/" class="flex items-center gap-2">
+      <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+        <span class="text-accent font-heading text-xl font-bold">VA</span>
+      </div>
+      <div class="hidden sm:block">
+        <div class="font-heading text-primary font-bold text-lg leading-tight">VÀNG AN THỊNH</div>
+        <div class="text-xs text-gray-500 uppercase tracking-wider">Mua Bán Vàng Bạc Uy Tín</div>
+      </div>
+    </a>
+    <nav class="hidden lg:flex items-center gap-6 text-sm font-medium">
+      <a href="/" class="text-primary hover:text-accent transition-colors">Trang chủ</a>
+      <a href="/gia-vang.html" class="text-primary hover:text-accent transition-colors">Giá vàng</a>
+      <div class="relative" @mouseenter="toggleMenu('products')" @mouseleave="closeMenu()">
+        <a href="/san-pham.html" class="text-primary hover:text-accent transition-colors flex items-center gap-1">
+          Sản phẩm
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+        <div x-show="activeMenu === 'products'" x-transition class="absolute top-full left-0 bg-white shadow-xl rounded-lg py-3 min-w-[200px] border border-gray-100">
+          <a href="/san-pham.html?category=nhan" class="block px-4 py-2 hover:bg-light-bg hover:text-accent transition-colors">Nhẫn</a>
+          <a href="/san-pham.html?category=day-chuyen" class="block px-4 py-2 hover:bg-light-bg hover:text-accent transition-colors">Dây chuyền</a>
+          <a href="/san-pham.html?category=vong-tay" class="block px-4 py-2 hover:bg-light-bg hover:text-accent transition-colors">Vòng tay</a>
+          <a href="/san-pham.html?category=bong-tai" class="block px-4 py-2 hover:bg-light-bg hover:text-accent transition-colors">Bông tai</a>
+          <a href="/san-pham.html?category=vang-mieng" class="block px-4 py-2 hover:bg-light-bg hover:text-accent transition-colors">Vàng miếng</a>
+        </div>
+      </div>
+      <a href="/tin-tuc.html" class="text-primary hover:text-accent transition-colors">Tin tức</a>
+      <a href="/he-thong-cua-hang.html" class="text-primary hover:text-accent transition-colors">Cửa hàng</a>
+      <a href="/gioi-thieu.html" class="text-primary hover:text-accent transition-colors">Giới thiệu</a>
+      <a href="/lien-he.html" class="text-primary hover:text-accent transition-colors">Liên hệ</a>
+    </nav>
+    <div class="flex items-center gap-3">
+      <button @click="$store.ui.toggleSearch()" class="p-2 text-primary hover:text-accent transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      </button>
+      <a href="/yeu-thich.html" class="p-2 text-primary hover:text-accent transition-colors hidden sm:block">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+      </a>
+      <button @click="$store.cart.toggle()" class="p-2 text-primary hover:text-accent transition-colors relative">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+        <span x-show="$store.cart.count > 0" x-text="$store.cart.count" class="absolute -top-1 -right-1 bg-accent text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold"></span>
+      </button>
+      <button @click="$store.ui.toggleMobileMenu()" class="p-2 text-primary lg:hidden">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </div>
+  </div>
+  <!-- Search Overlay (inside header for inner variant) -->
+  <div x-cloak x-show="$store.ui.searchOpen" x-transition x-data="searchComponent" class="absolute top-full left-0 w-full bg-white shadow-lg border-t p-4 z-50">
+    <div class="max-w-3xl mx-auto">
+      <div class="flex gap-2">
+        <input type="text" x-model="query" @input="search()" @keydown.enter="goToSearch()" placeholder="Tìm kiếm sản phẩm..." class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent text-sm" autofocus />
+        <button @click="goToSearch()" class="bg-accent text-white px-6 py-3 rounded-lg hover:bg-accent-dark transition-colors text-sm font-medium">Tìm</button>
+        <button @click="$store.ui.searchOpen = false" class="p-3 text-gray-500 hover:text-primary">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div x-show="results.length > 0" class="mt-3 border-t pt-3">
+        <template x-for="item in results" :key="item.id">
+          <a :href="'/san-pham-chi-tiet.html?slug=' + item.slug" class="flex items-center gap-3 p-2 hover:bg-light-bg rounded-lg transition-colors">
+            <img :src="getStrapiMedia(item.images?.[0]?.url)" class="w-12 h-12 object-cover rounded" :alt="item.name" />
+            <div>
+              <div class="text-sm font-medium text-primary" x-text="item.name"></div>
+              <div class="text-sm text-accent font-semibold" x-text="formatPriceVND(item.price)"></div>
+            </div>
+          </a>
+        </template>
+      </div>
+    </div>
+  </div>
+</header>

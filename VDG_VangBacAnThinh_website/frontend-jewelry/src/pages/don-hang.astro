@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Đơn hàng - Vàng An Thịnh" description="Lịch sử đơn hàng Vàng An Thịnh - Theo dõi và quản lý đơn mua hàng của bạn." variant="inner">
+  <main class="min-h-screen bg-light-bg"
+    x-data="{ get user() { return $store.auth.user; } }">
+
+    <div class="max-w-4xl mx-auto px-4 py-12">
+
+      <!-- Page Title -->
+      <div class="mb-8">
+        <h1 class="font-heading text-3xl text-primary font-bold">Tài khoản của tôi</h1>
+        <div class="w-16 h-1 bg-accent mt-2"></div>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- Sidebar -->
+        <div class="md:col-span-1">
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <!-- Avatar -->
+            <div class="text-center mb-6">
+              <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-3">
+                <span class="text-accent font-heading text-3xl font-bold"
+                  x-text="user?.username?.[0]?.toUpperCase() || 'U'"></span>
+              </div>
+              <h2 class="font-semibold text-primary text-lg" x-text="user?.username"></h2>
+              <p class="text-sm text-gray-500" x-text="user?.email"></p>
+            </div>
+
+            <!-- Nav Links -->
+            <nav class="space-y-1">
+              <a href="/tai-khoan"
+                class="block py-2 px-3 rounded-lg hover:bg-light-bg text-primary text-sm transition-colors">Thông tin tài khoản</a>
+              <a href="/don-hang"
+                class="block py-2 px-3 rounded-lg bg-light-bg text-accent font-medium text-sm">Lịch sử đơn
+                hàng</a>
+              <a href="/yeu-thich.html"
+                class="block py-2 px-3 rounded-lg hover:bg-light-bg text-primary text-sm transition-colors">Sản phẩm yêu
+                thích</a>
+              <button @click="$store.auth.logout()"
+                class="w-full text-left py-2 px-3 rounded-lg hover:bg-red-50 text-error text-sm transition-colors">Đăng
+                xuất</button>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="md:col-span-2">
+
+          <!-- Order History Card -->
+          <div class="bg-white rounded-xl shadow-sm p-6">
+            <h3 class="font-heading text-lg text-primary font-semibold mb-4">Lịch sử đơn hàng</h3>
+
+            <!-- Empty State -->
+            <div class="flex flex-col items-center justify-center py-16 text-center">
+              <svg class="w-20 h-20 mb-5 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+              </svg>
+              <p class="text-gray-500 text-base font-medium mb-2">Bạn chưa có đơn hàng nào</p>
+              <p class="text-gray-400 text-sm mb-6">Hãy khám phá các sản phẩm vàng bạc của chúng tôi và đặt hàng ngay hôm nay.</p>
+              <a href="/san-pham.html"
+                class="inline-block bg-accent text-white px-6 py-3 rounded-lg text-sm font-semibold hover:bg-accent-dark transition-colors">
+                Mua sắm ngay
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

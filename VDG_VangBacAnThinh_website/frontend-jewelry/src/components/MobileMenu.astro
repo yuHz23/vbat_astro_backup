@@ -1,0 +1,70 @@
+<!-- Mobile Menu - Jewelry -->
+<div x-cloak x-show="$store.ui.mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+  x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100"
+  x-transition:leave-end="opacity-0" class="fixed inset-0 bg-black/50 z-50 lg:hidden"
+  @click.self="$store.ui.mobileMenuOpen = false">
+  <div x-cloak x-show="$store.ui.mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
+    x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0"
+    x-transition:leave-end="-translate-x-full" x-data="mobileMenu" class="w-80 bg-white h-full overflow-y-auto">
+    <div class="p-4 bg-primary text-text-light flex items-center justify-between">
+      <div>
+        <span class="font-heading font-bold text-accent text-lg block leading-none">VÀNG AN THỊNH</span>
+        <span class="text-[10px] tracking-[0.2em] text-gray-400 uppercase">Jewelry & Luxury</span>
+      </div>
+      <button @click="close()" class="text-text-light hover:text-accent">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <nav class="p-4 space-y-1">
+      <a href="/" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Trang chủ</a>
+
+      <!-- Vàng -->
+      <div>
+        <button @click="toggleSubmenu('vang')"
+          class="w-full flex justify-between items-center py-3 px-3 rounded-lg hover:bg-red-50 font-medium text-[#B31B24]">
+          <span>Vàng</span>
+          <svg :class="openSubmenu === 'vang' ? 'rotate-180' : ''" class="w-4 h-4 transition-transform"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div x-show="openSubmenu === 'vang'" x-transition class="pl-4 space-y-1">
+          <a href="/vang-tich-tru.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-[#B31B24]">Vàng tích trữ</a>
+          <a href="/bang-gia-vang.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-[#B31B24]">Bảng giá vàng</a>
+        </div>
+      </div>
+
+      <!-- Bạc -->
+      <div>
+        <button @click="toggleSubmenu('bac')"
+          class="w-full flex justify-between items-center py-3 px-3 rounded-lg hover:bg-blue-50 font-medium text-[#1565C0]">
+          <span>Bạc</span>
+          <svg :class="openSubmenu === 'bac' ? 'rotate-180' : ''" class="w-4 h-4 transition-transform"
+            fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div x-show="openSubmenu === 'bac'" x-transition class="pl-4 space-y-1">
+          <a href="/bac-tich-tru.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-[#1565C0]">Bạc tích trữ</a>
+          <a href="/bac-my-nghe.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-[#1565C0]">Bạc mỹ nghệ</a>
+          <a href="/bang-gia-bac.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-[#1565C0]">Bảng giá bạc</a>
+        </div>
+      </div>
+
+      <a href="/tin-tuc.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Tin tức</a>
+      <a href="/he-thong-cua-hang.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Cửa hàng</a>
+      <a href="/gioi-thieu.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Giới thiệu</a>
+      <a href="/lien-he.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Liên hệ</a>
+    </nav>
+    <div class="p-4 border-t">
+      <div class="text-sm text-gray-500">
+        <p class="font-semibold text-primary">0363 778 889</p>
+        <p class="mt-1">141P Trương Định, Tương Mai, Hà Nội</p>
+      </div>
+    </div>
+  </div>
+</div>

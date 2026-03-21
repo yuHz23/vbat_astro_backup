@@ -1,0 +1,86 @@
+---
+// Standalone VNPay return page - no Layout wrapper (minimal page with no header/footer)
+---
+
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kết quả thanh toán - Vàng An Thịnh</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/css/main.css" />
+  <script type="module" src="/src/js/app.js" defer></script>
+</head>
+
+<body class="bg-light-bg min-h-screen flex items-center justify-center p-4" x-data="vnpayReturn">
+
+  <div class="max-w-md w-full bg-white rounded-2xl shadow-lg p-8 text-center" x-show="!loading" x-cloak>
+    <!-- SUCCESS -->
+    <template x-if="status === 'success'">
+      <div>
+        <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h1 class="font-heading text-2xl text-primary font-bold mb-3">Thanh toán thành công!</h1>
+        <p class="text-gray-600 mb-2">Mã đơn hàng: <strong class="text-primary" x-text="orderId"></strong></p>
+        <p class="text-gray-600 mb-6">Số tiền: <strong class="text-accent" x-text="amount"></strong></p>
+        <p class="text-sm text-gray-500 mb-8">Cảm ơn bạn đã mua sắm tại Vàng An Thịnh. Chúng tôi sẽ sớm liên hệ để giao hàng.</p>
+      </div>
+    </template>
+
+    <!-- FAILED -->
+    <template x-if="status === 'error'">
+      <div>
+        <div class="w-20 h-20 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+        <h1 class="font-heading text-2xl text-error font-bold mb-3">Thanh toán thất bại</h1>
+        <p class="text-gray-600 mb-2">Mã đơn hàng: <strong class="text-primary" x-text="orderId"></strong></p>
+        <p class="text-sm text-gray-500 mb-8">Giao dịch của bạn không thành công hoặc đã bị hủy. Vui lòng thử lại.</p>
+      </div>
+    </template>
+
+    <div class="flex flex-col gap-3">
+      <a href="/tai-khoan.html" class="block w-full bg-accent text-white py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Về trang tài khoản</a>
+      <a href="/" class="block w-full border border-gray-300 text-primary py-3 rounded-lg font-semibold hover:bg-light-bg transition-colors">Về trang chủ</a>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('vnpayReturn', () => ({
+        loading: true,
+        status: '',
+        orderId: '',
+        amount: '',
+
+        init() {
+          const params = new URLSearchParams(window.location.search);
+          const rspCode = params.get('vnp_ResponseCode');
+
+          this.orderId = params.get('vnp_TxnRef') || localStorage.getItem('last_order_number') || 'Không rõ';
+
+          let rawAmount = params.get('vnp_Amount');
+          if (rawAmount) {
+            this.amount = new Intl.NumberFormat('vi-VN').format(parseInt(rawAmount) / 100) + ' ₫';
+          } else {
+            this.amount = '—';
+          }
+
+          if (rspCode === '00') {
+            this.status = 'success';
+          } else {
+            this.status = 'error';
+          }
+
+          this.loading = false;
+        }
+      }));
+    });
+  </script>
+</body>
+</html>

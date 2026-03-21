@@ -1,0 +1,65 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Layout title="Bạc Mỹ Nghệ - Vàng An Thịnh Jewelry" variant="inner">
+
+  <Breadcrumb items={[{label: 'Trang chủ', href: '/'}, {label: 'Bạc'}, {label: 'Bạc mỹ nghệ'}]} />
+
+  <main class="max-w-7xl mx-auto px-4 py-10">
+    <div class="text-center mb-12">
+      <div class="inline-block bg-blue-50 text-[#1565C0] text-xs font-bold uppercase tracking-[0.3em] px-4 py-1.5 rounded-full mb-4">Bạc mỹ nghệ</div>
+      <h1 class="font-heading text-4xl md:text-5xl text-[#1565C0] italic mb-3">Bạc Mỹ Nghệ</h1>
+      <p class="text-gray-500 max-w-lg mx-auto">Đồng bạc kỷ niệm, bạc mỹ nghệ quốc tế - Sưu tầm & Quà tặng ý nghĩa</p>
+      <div class="w-16 h-[2px] bg-[#1565C0] mx-auto mt-4"></div>
+    </div>
+
+    <div x-data="{
+      products: [],
+      async init() {
+        try {
+          const res = await (await fetch('/api/products?filters[category][name][$eq]=BẠC MỸ NGHỆ&populate=images&pagination[pageSize]=30&sort[0]=price:desc')).json();
+          this.products = res.data || [];
+        } catch(e) { console.error(e); }
+      }
+    }">
+      <div x-show="products.length === 0" class="text-center py-16 text-gray-400">Đang tải sản phẩm...</div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+        <template x-for="product in products" :key="product.id">
+          <div x-data="productCard" class="bg-white rounded-xl border border-blue-100 flex flex-col group relative hover:shadow-lg hover:border-blue-200 transition-all h-full">
+            <span x-show="product.status === 'available'" class="absolute top-3 left-3 bg-blue-50 text-[#1565C0] text-[10px] px-2.5 py-1 rounded-full font-semibold z-10 uppercase tracking-wider">Còn hàng</span>
+            <span x-show="product.status === 'out_of_stock'" class="absolute top-3 left-3 bg-gray-100 text-gray-500 text-[10px] px-2.5 py-1 rounded-full font-semibold z-10 uppercase tracking-wider">Hết hàng</span>
+
+            <a :href="'/san-pham-chi-tiet.html?slug=' + product.slug" class="block p-5 flex-1">
+              <div class="relative overflow-hidden aspect-square mb-4 rounded-lg bg-blue-50/30">
+                <img :src="getStrapiMedia(product.images?.[0]?.url)" :alt="product.name"
+                  class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <h3 class="text-sm font-semibold text-primary line-clamp-2 leading-snug group-hover:text-[#1565C0] transition-colors" x-text="product.name"></h3>
+              <p class="text-xs text-gray-400 mt-1" x-text="product.karatType + ' | ' + product.goldWeight + 'g'"></p>
+            </a>
+
+            <div class="px-5 pb-5 mt-auto border-t border-blue-50 pt-3">
+              <div class="flex justify-between items-end">
+                <div>
+                  <div class="text-[11px] text-green-600 font-semibold uppercase mb-0.5">Bán ra</div>
+                  <div class="text-base font-bold text-[#1565C0] leading-none" x-text="formatPriceVND(product.price)"></div>
+                  <div class="text-[11px] text-gray-400 font-medium uppercase mt-1.5 mb-0.5">Mua vào</div>
+                  <div class="text-xs text-gray-500 leading-none" x-text="formatPriceVND(product.compareAtPrice)"></div>
+                </div>
+                <button @click="addToCart(product)" x-show="product.status === 'available'"
+                  class="p-2.5 text-gray-300 hover:text-white bg-white hover:bg-[#1565C0] border border-blue-100 hover:border-[#1565C0] rounded-full transition-all" title="Thêm vào giỏ">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </main>
+
+</Layout>

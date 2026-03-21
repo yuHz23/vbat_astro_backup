@@ -1,0 +1,65 @@
+---
+import '../css/main.css';
+import Header from '../components/Header.astro';
+import HeaderInner from '../components/HeaderInner.astro';
+import TopBar from '../components/TopBar.astro';
+import TopBarInner from '../components/TopBarInner.astro';
+import MobileMenu from '../components/MobileMenu.astro';
+import CartDrawer from '../components/CartDrawer.astro';
+import SearchOverlay from '../components/SearchOverlay.astro';
+import Footer from '../components/Footer.astro';
+import FloatingHotline from '../components/FloatingHotline.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import TickerBar from '../components/TickerBar.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  variant?: 'home' | 'inner';
+  showTicker?: boolean;
+}
+
+const {
+  title,
+  description = 'Vàng An Thịnh Jewelry - Trang sức cao cấp, vàng bạc uy tín tại Hà Nội.',
+  variant = 'inner',
+  showTicker = false,
+} = Astro.props;
+
+const isHome = variant === 'home';
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
+    rel="stylesheet" />
+</head>
+
+<body x-data>
+
+  {isHome ? <TopBar /> : <TopBarInner />}
+  {isHome ? <Header /> : <HeaderInner />}
+  {showTicker && <TickerBar />}
+  {isHome && <SearchOverlay />}
+
+  <MobileMenu />
+  <CartDrawer />
+
+  <slot />
+
+  <Footer />
+  <FloatingHotline />
+  <ThemeToggle />
+
+</body>
+
+</html>

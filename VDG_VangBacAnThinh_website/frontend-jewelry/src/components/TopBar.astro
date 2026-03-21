@@ -1,0 +1,24 @@
+<!-- Top Bar (Home variant - Jewelry) -->
+<div class="bg-primary text-gray-300 text-xs py-1.5 border-b border-white/10">
+  <div class="max-w-[1400px] mx-auto px-4 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <span>CSKH: <a href="tel:0363778889" class="text-accent hover:text-accent-light transition-colors font-medium">0363 778 889</a></span>
+      <span class="hidden md:inline text-gray-400">&#x2022;</span>
+      <span class="hidden md:inline">141P Trương Định, Tương Mai, Hà Nội</span>
+    </div>
+    <div class="flex items-center gap-4">
+      <template x-if="!$store.auth.isLoggedIn">
+        <div class="flex gap-3">
+          <a href="/dang-nhap.html" class="hover:text-accent transition-colors">Đăng nhập</a>
+          <a href="/dang-ky.html" class="hover:text-accent transition-colors">Đăng ký</a>
+        </div>
+      </template>
+      <template x-if="$store.auth.isLoggedIn">
+        <div class="flex gap-3">
+          <a href="/tai-khoan.html" class="hover:text-white transition-colors font-medium text-accent" x-text="$store.auth.user?.username"></a>
+          <button @click="$store.auth.logout()" class="hover:text-white transition-colors">Đăng xuất</button>
+        </div>
+      </template>
+    </div>
+  </div>
+</div>

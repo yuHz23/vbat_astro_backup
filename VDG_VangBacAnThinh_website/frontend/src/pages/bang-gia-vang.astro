@@ -1,0 +1,324 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Giá Vàng Hôm Nay - Vàng An Thịnh"
+  description="Bảng giá vàng An Thịnh cập nhật liên tục. Giá vàng SJC, vàng 9999, vàng trang sức mới nhất hôm nay."
+  variant="home"
+  showTicker={true}
+>
+  <main>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden"
+      style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%); min-height: 280px;">
+      <!-- Animated background pattern -->
+      <div class="absolute inset-0 opacity-5"
+        style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 30px 30px;">
+      </div>
+      <!-- Gold accent line -->
+      <div class="absolute bottom-0 left-0 right-0 h-1"
+        style="background: linear-gradient(90deg, #c9a84c, #f0d080, #c9a84c);"></div>
+
+      <div class="max-w-7xl mx-auto px-4 py-16 md:py-24 relative z-10">
+        <div class="text-center mb-4">
+          <div
+            class="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-1.5 mb-6 backdrop-blur-sm">
+            <span class="flex h-2 w-2 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-green-400"></span>
+            </span>
+            <span class="text-green-300 text-xs font-semibold tracking-widest uppercase">Cập nhật liên tục</span>
+          </div>
+          <h1 class="text-white font-heading text-4xl md:text-5xl lg:text-6xl font-bold mb-4 tracking-tight">
+            Bảng Giá
+            <span
+              style="background: linear-gradient(90deg, #f0d080, #c9a84c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Vàng
+              & Bạc</span>
+          </h1>
+          <p class="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
+            Giá vàng miếng, vàng 9999, vàng trang sức và bạc mỹ nghệ cập nhật theo thời gian thực tại Vàng An Thịnh
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Ticker Section -->
+    <div class="bg-white border-b border-gray-100 shadow-sm" x-data="{
+      goldBuy: '---', goldSell: '---',
+      silverBuy: '---', silverSell: '---',
+      async init() {
+        try {
+          const res = await (await fetch('/api/gold-prices?filters[isActive][$eq]=true&sort[0]=sortOrder:asc&pagination[pageSize]=20')).json();
+          if(res.data && res.data.length > 0) {
+            const gold = res.data.find(d => d.goldType === 'SJC') || res.data[0];
+            const silver = res.data.find(d => String(d.goldType).toLowerCase().includes('bạc')) || res.data.find(d => d.goldType === 'Bạc') || null;
+            this.goldBuy = new Intl.NumberFormat('vi-VN').format(gold.buyPrice);
+            this.goldSell = new Intl.NumberFormat('vi-VN').format(gold.sellPrice);
+            if(silver) {
+              this.silverBuy = new Intl.NumberFormat('vi-VN').format(silver.buyPrice);
+              this.silverSell = new Intl.NumberFormat('vi-VN').format(silver.sellPrice);
+            }
+          }
+        } catch(e) {}
+      }
+    }">
+      <div
+        class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap gap-6 items-center justify-center md:justify-start text-sm">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1.5">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center" style="background: #c9a84c;">
+              <span class="text-white text-[10px] font-bold">V</span>
+            </div>
+            <span class="font-bold text-gray-800">Vàng SJC</span>
+          </div>
+          <span class="text-gray-400 text-xs">MV:</span>
+          <span class="font-bold text-pq-red text-sm" x-text="goldBuy"></span>
+          <span class="text-gray-400 text-xs">BR:</span>
+          <span class="font-bold text-emerald-600 text-sm" x-text="goldSell"></span>
+          <span class="text-gray-400 text-xs">Vnđ</span>
+        </div>
+        <div class="w-px h-5 bg-gray-200 hidden md:block"></div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-1.5">
+            <div class="w-6 h-6 rounded-full flex items-center justify-center bg-gray-400">
+              <span class="text-white text-[10px] font-bold">B</span>
+            </div>
+            <span class="font-bold text-gray-800">Bạc</span>
+          </div>
+          <span class="text-gray-400 text-xs">MV:</span>
+          <span class="font-bold text-blue-600 text-sm" x-text="silverBuy"></span>
+          <span class="text-gray-400 text-xs">BR:</span>
+          <span class="font-bold text-emerald-600 text-sm" x-text="silverSell"></span>
+          <span class="text-gray-400 text-xs">Vnđ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Cards Section -->
+    <section class="py-12 md:py-16" style="background: #f7f8fa;">
+      <div class="max-w-5xl mx-auto px-4">
+
+        <!-- Section Title -->
+        <div class="text-center mb-10">
+          <p class="text-gray-500 text-sm font-medium uppercase tracking-widest mb-2">Chọn loại giá để xem chi tiết</p>
+          <div class="h-[2px] w-16 mx-auto rounded-full" style="background: linear-gradient(90deg, #c9a84c, #f0d080);">
+          </div>
+        </div>
+
+        <!-- Two Cards -->
+        <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+
+          <!-- GOLD CARD -->
+          <div
+            class="bg-white rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1 group">
+            <!-- Card Header -->
+            <div class="relative p-6 pb-5" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+              <div class="absolute top-0 right-0 w-32 h-32 opacity-5"
+                style="background: radial-gradient(circle, #c9a84c 0%, transparent 70%); transform: translate(30%, -30%);">
+              </div>
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg"
+                      style="background: linear-gradient(135deg, #c9a84c, #f0d080);">
+                      <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2 class="text-white font-heading text-xl font-bold tracking-wide">BẢNG GIÁ VÀNG</h2>
+                      <div class="flex items-center gap-1 mt-0.5">
+                        <svg class="w-3 h-3" fill="#c9a84c" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <svg class="w-3 h-3" fill="#c9a84c" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <svg class="w-3 h-3" fill="#c9a84c" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <svg class="w-3 h-3" fill="#c9a84c30" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <svg class="w-3 h-3" fill="#c9a84c30" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bg-white/10 border border-white/20 rounded-lg px-2.5 py-1 text-[10px] text-green-300 font-bold tracking-wider flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                  LIVE
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-6">
+              <p class="text-gray-600 text-sm leading-relaxed mb-5">
+                Cập nhật liên tục Giá Vàng miếng, Vàng 999,9<br>
+                Vàng trang sức &#x2013; tại <strong>Vàng An Thịnh</strong> theo thời gian thực.
+              </p>
+
+              <!-- Price Preview -->
+              <div class="bg-gray-50 rounded-xl p-4 mb-5 border border-gray-100"
+                x-data="{mv: '---', br: '---', init() { this.loadGold(); }, async loadGold() { try { const r = await (await fetch('/api/gold-prices?filters[isActive][$eq]=true&filters[goldType][$eq]=SJC&pagination[pageSize]=1')).json(); if(r.data?.[0]) { this.mv = new Intl.NumberFormat('vi-VN').format(r.data[0].buyPrice); this.br = new Intl.NumberFormat('vi-VN').format(r.data[0].sellPrice); } } catch(e) {} } }">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Vàng SJC (Hôm nay)</span>
+                  <span class="text-xs text-gray-400">Vnđ / lượng</span>
+                </div>
+                <div class="flex gap-6">
+                  <div>
+                    <div class="text-xs text-gray-400 mb-0.5">Mua vào</div>
+                    <div class="font-bold text-pq-red text-lg" x-text="mv"></div>
+                  </div>
+                  <div class="w-px bg-gray-200"></div>
+                  <div>
+                    <div class="text-xs text-gray-400 mb-0.5">Bán ra</div>
+                    <div class="font-bold text-emerald-600 text-lg" x-text="br"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CTA Button -->
+              <a href="/gia-vang.html"
+                class="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-sm text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg"
+                style="background: linear-gradient(135deg, #c9a84c, #e8c559);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Xem chi tiết Bảng Giá Vàng
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- SILVER CARD -->
+          <div
+            class="bg-white rounded-2xl overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.08)] border border-gray-100 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-1 group">
+            <!-- Card Header -->
+            <div class="relative p-6 pb-5" style="background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);">
+              <div class="absolute top-0 right-0 w-32 h-32 opacity-5"
+                style="background: radial-gradient(circle, #cbd5e0 0%, transparent 70%); transform: translate(30%, -30%);">
+              </div>
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg"
+                      style="background: linear-gradient(135deg, #718096, #a0aec0);">
+                      <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h2 class="text-white font-heading text-xl font-bold tracking-wide">BẢNG GIÁ BẠC</h2>
+                      <div class="flex items-center gap-1 mt-0.5">
+                        <svg class="w-3 h-3" fill="#a0aec0" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <svg class="w-3 h-3" fill="#a0aec0" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <svg class="w-3 h-3" fill="#a0aec0" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <svg class="w-3 h-3" fill="#a0aec030" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                        <svg class="w-3 h-3" fill="#a0aec030" viewBox="0 0 24 24">
+                          <circle cx="12" cy="12" r="10" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bg-white/10 border border-white/20 rounded-lg px-2.5 py-1 text-[10px] text-green-300 font-bold tracking-wider flex items-center gap-1">
+                  <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                  LIVE
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-6">
+              <p class="text-gray-600 text-sm leading-relaxed mb-5">
+                Cập nhật liên tục Giá bạc miếng, Bạc thỏi<br>
+                Bạc mỹ nghệ &#x2013; tại <strong>Vàng An Thịnh</strong> theo thời gian thực.
+              </p>
+
+              <!-- Price Preview -->
+              <div class="bg-gray-50 rounded-xl p-4 mb-5 border border-gray-100"
+                x-data="{mv: '---', br: '---', init() { this.loadSilver(); }, async loadSilver() { try { const r = await (await fetch('/api/gold-prices?filters[isActive][$eq]=true&filters[goldType][$eq]=Bạc&pagination[pageSize]=1')).json(); if(r.data?.[0]) { this.mv = new Intl.NumberFormat('vi-VN').format(r.data[0].buyPrice); this.br = new Intl.NumberFormat('vi-VN').format(r.data[0].sellPrice); } } catch(e) {} } }">
+                <div class="flex justify-between items-center mb-2">
+                  <span class="text-xs text-gray-500 font-semibold uppercase tracking-wider">Bạc mỹ nghệ (Hôm
+                    nay)</span>
+                  <span class="text-xs text-gray-400">Vnđ / chỉ</span>
+                </div>
+                <div class="flex gap-6">
+                  <div>
+                    <div class="text-xs text-gray-400 mb-0.5">Mua vào</div>
+                    <div class="font-bold text-blue-600 text-lg" x-text="mv"></div>
+                  </div>
+                  <div class="w-px bg-gray-200"></div>
+                  <div>
+                    <div class="text-xs text-gray-400 mb-0.5">Bán ra</div>
+                    <div class="font-bold text-emerald-600 text-lg" x-text="br"></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CTA Button -->
+              <a href="/gia-bac.html"
+                class="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-sm text-white transition-all duration-200 hover:opacity-90 hover:shadow-lg"
+                style="background: linear-gradient(135deg, #718096, #a0aec0);">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+                Xem chi tiết Bảng Giá Bạc
+                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom Info Bar -->
+        <div
+          class="mt-10 bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center flex-shrink-0">
+              <svg class="w-5 h-5 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div class="text-sm text-gray-600">
+              <strong class="text-gray-800">Lưu ý:</strong> Giá niêm yết là giá <strong>Vàng An Thịnh</strong> áp dụng
+              trong ngày.
+              Đơn vị: <strong>triệu đồng/lượng</strong>. Liên hệ hotline
+              <a href="tel:0363778889" class="text-pq-red font-bold hover:underline">0363.778.889</a> để được báo giá
+              chính xác nhất.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+</Layout>

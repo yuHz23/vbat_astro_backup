@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gold_histories",
+  "info": {
+    "singularName": "gold-history",
+    "pluralName": "gold-histories",
+    "displayName": "Gold History"
+  },
+  "options": {
+    "comment": ""
+  },
+  "attributes": {
+    "goldType": {
+      "type": "string"
+    },
+    "goldName": {
+      "type": "string"
+    },
+    "buyPrice": {
+      "type": "decimal"
+    },
+    "sellPrice": {
+      "type": "decimal"
+    },
+    "recordDate": {
+      "type": "string"
+    },
+    "unit": {
+      "type": "string"
+    }
+  }
+}

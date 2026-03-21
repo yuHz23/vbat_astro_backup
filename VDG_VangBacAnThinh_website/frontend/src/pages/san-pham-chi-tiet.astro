@@ -1,0 +1,221 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Chi Tiết Sản Phẩm - Vàng An Thịnh" description="Xem chi tiết sản phẩm trang sức vàng bạc cao cấp tại Vàng An Thịnh." variant="inner" showTicker={false}>
+
+  <main x-data="productDetail">
+
+    <!-- Loading -->
+    <div x-show="loading" class="min-h-[60vh] flex items-center justify-center">
+      <div class="text-center">
+        <div class="inline-block w-10 h-10 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+        <p class="mt-4 text-gray-500 text-sm">Đang tải sản phẩm...</p>
+      </div>
+    </div>
+
+    <!-- Product Not Found -->
+    <div x-show="!loading && !product" class="min-h-[60vh] flex items-center justify-center">
+      <div class="text-center">
+        <svg class="w-20 h-20 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <p class="text-gray-500 text-lg mb-2">Không tìm thấy sản phẩm</p>
+        <a href="/san-pham.html" class="text-accent hover:underline text-sm">Quay lại trang sản phẩm</a>
+      </div>
+    </div>
+
+    <div x-show="!loading && product" x-cloak>
+
+      <!-- Breadcrumb -->
+      <div class="bg-light-bg border-b">
+        <div class="max-w-7xl mx-auto px-4 py-3">
+          <nav class="flex items-center gap-2 text-sm text-gray-500 flex-wrap">
+            <a href="/" class="hover:text-accent transition-colors">Trang chủ</a>
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <a href="/san-pham.html" class="hover:text-accent transition-colors">Sản Phẩm</a>
+            <template x-if="product?.category">
+              <span class="flex items-center gap-2">
+                <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                <a :href="'/san-pham.html?category=' + product.category.slug" class="hover:text-accent transition-colors" x-text="product.category.name"></a>
+              </span>
+            </template>
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            <span class="text-primary font-medium line-clamp-1" x-text="product?.name"></span>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Product Detail Section -->
+      <section class="py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+
+            <!-- Left - Image Gallery -->
+            <div class="w-full lg:w-1/2">
+              <!-- Main Image -->
+              <div class="relative overflow-hidden rounded-xl bg-light-bg aspect-square mb-4">
+                <img
+                  :src="product?.images?.length ? getStrapiMedia(product.images[selectedImage]?.url) : '/placeholder.jpg'"
+                  :alt="product?.name"
+                  class="w-full h-full object-cover"
+                />
+                <span x-show="product?.compareAtPrice" class="absolute top-4 left-4 bg-error text-white text-sm px-3 py-1 rounded-full font-semibold">SALE</span>
+              </div>
+
+              <!-- Thumbnails -->
+              <div x-show="product?.images?.length > 1" class="grid grid-cols-5 gap-2">
+                <template x-for="(img, index) in product?.images" :key="index">
+                  <button
+                    @click="selectImage(index)"
+                    :class="selectedImage === index ? 'ring-2 ring-accent' : 'ring-1 ring-gray-200 hover:ring-accent'"
+                    class="aspect-square rounded-lg overflow-hidden transition-all"
+                  >
+                    <img :src="getStrapiMedia(img.url)" :alt="product?.name + ' - Ảnh ' + (index + 1)" class="w-full h-full object-cover" />
+                  </button>
+                </template>
+              </div>
+            </div>
+
+            <!-- Right - Product Info -->
+            <div class="w-full lg:w-1/2">
+              <!-- Product Name -->
+              <h1 class="font-heading text-2xl md:text-3xl text-primary mb-4" x-text="product?.name"></h1>
+
+              <!-- Price -->
+              <div class="flex items-center gap-3 mb-6">
+                <span class="text-2xl md:text-3xl font-bold text-accent" x-text="formatPriceVND(currentPrice)"></span>
+                <span x-show="product?.compareAtPrice" class="text-lg text-gray-400 line-through" x-text="formatPriceVND(product?.compareAtPrice)"></span>
+                <span x-show="product?.compareAtPrice" class="bg-error/10 text-error text-sm px-2 py-1 rounded-full font-medium"
+                  x-text="'-' + Math.round((1 - product?.price / product?.compareAtPrice) * 100) + '%'"></span>
+              </div>
+
+              <!-- Variant Selector -->
+              <div x-show="product?.variants?.length > 0" class="mb-6">
+                <h3 class="text-sm font-semibold text-primary mb-2">Phân loại:</h3>
+                <div class="flex flex-wrap gap-2">
+                  <template x-for="variant in product?.variants" :key="variant.variantName">
+                    <button
+                      @click="selectedVariant = selectedVariant === variant.variantName ? null : variant.variantName"
+                      :class="selectedVariant === variant.variantName ? 'border-accent bg-accent/10 text-accent' : 'border-gray-300 text-gray-600 hover:border-accent'"
+                      class="border-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                      x-text="variant.variantName"
+                    ></button>
+                  </template>
+                </div>
+              </div>
+
+              <!-- Quantity -->
+              <div class="mb-6">
+                <h3 class="text-sm font-semibold text-primary mb-2">Số lượng:</h3>
+                <div class="flex items-center gap-3">
+                  <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <button @click="quantity = Math.max(1, quantity - 1)" class="w-10 h-10 flex items-center justify-center hover:bg-light-bg transition-colors text-lg font-medium">-</button>
+                    <span class="w-14 h-10 flex items-center justify-center border-x border-gray-300 text-sm font-semibold" x-text="quantity"></span>
+                    <button @click="quantity = Math.min(99, quantity + 1)" class="w-10 h-10 flex items-center justify-center hover:bg-light-bg transition-colors text-lg font-medium">+</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Add to Cart -->
+              <div class="flex gap-3 mb-8">
+                <button @click="addToCart()" class="flex-1 bg-accent text-white py-3 px-6 rounded-lg font-semibold hover:bg-accent-dark transition-colors flex items-center justify-center gap-2 text-sm md:text-base">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                  Thêm vào giỏ hàng
+                </button>
+                <button class="w-12 h-12 border-2 border-gray-300 rounded-lg flex items-center justify-center hover:border-accent hover:text-accent transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                </button>
+              </div>
+
+              <!-- Product Meta -->
+              <div class="border-t pt-6 space-y-3">
+                <div x-show="product?.sku" class="flex items-center gap-2 text-sm">
+                  <span class="text-gray-500 w-28">Mã sản phẩm:</span>
+                  <span class="font-medium text-primary" x-text="product?.sku"></span>
+                </div>
+                <div x-show="product?.karatType" class="flex items-center gap-2 text-sm">
+                  <span class="text-gray-500 w-28">Tuổi vàng:</span>
+                  <span class="font-medium text-primary" x-text="product?.karatType"></span>
+                </div>
+                <div x-show="product?.goldWeight" class="flex items-center gap-2 text-sm">
+                  <span class="text-gray-500 w-28">Trọng lượng vàng:</span>
+                  <span class="font-medium text-primary" x-text="product?.goldWeight + ' chỉ'"></span>
+                </div>
+                <div x-show="product?.category" class="flex items-center gap-2 text-sm">
+                  <span class="text-gray-500 w-28">Danh mục:</span>
+                  <a :href="'/san-pham.html?category=' + product?.category?.slug" class="font-medium text-accent hover:underline" x-text="product?.category?.name"></a>
+                </div>
+              </div>
+
+              <!-- Trust Badges -->
+              <div class="mt-8 grid grid-cols-3 gap-3">
+                <div class="bg-light-bg rounded-lg p-3 text-center">
+                  <svg class="w-6 h-6 mx-auto mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                  <p class="text-xs text-gray-600 font-medium">Cam kết chính hãng</p>
+                </div>
+                <div class="bg-light-bg rounded-lg p-3 text-center">
+                  <svg class="w-6 h-6 mx-auto mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                  <p class="text-xs text-gray-600 font-medium">Đổi trả 48h</p>
+                </div>
+                <div class="bg-light-bg rounded-lg p-3 text-center">
+                  <svg class="w-6 h-6 mx-auto mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <p class="text-xs text-gray-600 font-medium">Giá tốt nhất</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- Description Section -->
+      <section x-show="product?.description" class="py-8 md:py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="max-w-4xl">
+            <h2 class="font-heading text-2xl text-primary mb-6 flex items-center gap-3">
+              <div class="w-1 h-8 bg-accent rounded"></div>
+              Mô tả sản phẩm
+            </h2>
+            <div class="prose prose-sm max-w-none text-gray-600 leading-relaxed" x-html="product?.description"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Related Products -->
+      <section x-show="relatedProducts.length > 0" class="py-12 md:py-16 bg-light-bg">
+        <div class="max-w-7xl mx-auto px-4">
+          <div class="text-center mb-10">
+            <h2 class="font-heading text-2xl md:text-3xl text-primary mb-2">Sản Phẩm Liên Quan</h2>
+            <div class="w-20 h-1 bg-accent mx-auto"></div>
+          </div>
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <template x-for="rp in relatedProducts" :key="rp.id">
+              <div class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow overflow-hidden group">
+                <a :href="'/san-pham-chi-tiet.html?slug=' + rp.slug" class="block">
+                  <div class="relative overflow-hidden aspect-square">
+                    <img :src="getStrapiMedia(rp.images?.[0]?.url)" :alt="rp.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <span x-show="rp.compareAtPrice" class="absolute top-3 left-3 bg-error text-white text-xs px-2 py-1 rounded-full font-semibold">SALE</span>
+                  </div>
+                  <div class="p-3 md:p-4">
+                    <h3 class="text-sm font-medium text-primary line-clamp-2 mb-2" x-text="rp.name"></h3>
+                    <div class="flex items-center gap-2 flex-wrap">
+                      <span class="text-accent font-bold text-sm md:text-base" x-text="formatPriceVND(rp.price)"></span>
+                      <span x-show="rp.compareAtPrice" class="text-gray-400 text-xs line-through" x-text="formatPriceVND(rp.compareAtPrice)"></span>
+                    </div>
+                  </div>
+                </a>
+                <div class="px-3 md:px-4 pb-3 md:pb-4">
+                  <button @click="$store.cart.add({ id: rp.id, name: rp.name, price: rp.price, slug: rp.slug, image: getStrapiMedia(rp.images?.[0]?.url) }, 1)" class="w-full bg-primary text-text-light py-2 rounded-lg text-sm font-medium hover:bg-accent transition-colors">
+                    Thêm vào giỏ
+                  </button>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+  </main>
+
+</Layout>

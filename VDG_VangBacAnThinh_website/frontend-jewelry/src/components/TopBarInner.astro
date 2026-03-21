@@ -1,0 +1,25 @@
+<!-- Top Bar (Inner variant) -->
+<div class="bg-primary text-text-light text-sm py-2">
+  <div class="max-w-7xl mx-auto px-4 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <span>📞 Hotline: <a href="tel:0363778889" class="text-accent hover:text-accent-light font-semibold">0363 778 889</a></span>
+      <span class="hidden md:inline">📍 Số 141P Trương Định, Phường Tương Mai, Hà Nội</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <template x-if="!$store.auth.isLoggedIn">
+        <div class="flex gap-2">
+          <a href="/dang-nhap.html" class="hover:text-accent">Đăng nhập</a>
+          <span>|</span>
+          <a href="/dang-ky.html" class="hover:text-accent">Đăng ký</a>
+        </div>
+      </template>
+      <template x-if="$store.auth.isLoggedIn">
+        <div class="flex gap-2">
+          <a href="/tai-khoan.html" class="hover:text-accent" x-text="$store.auth.user?.username"></a>
+          <span>|</span>
+          <button @click="$store.auth.logout()" class="hover:text-accent">Đăng xuất</button>
+        </div>
+      </template>
+    </div>
+  </div>
+</div>

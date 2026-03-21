@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Layout title="Liên hệ - Vàng An Thịnh" description="Liên hệ Vàng An Thịnh - Mua bán vàng bạc uy tín tại Hà Nội. Hotline: 0363 778 889." variant="inner">
+  <main class="min-h-screen">
+
+    <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Liên hệ"}]} />
+
+    <!-- Page Header -->
+    <div class="bg-gradient-to-r from-primary to-primary-light py-12">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <h1 class="font-heading text-3xl md:text-4xl text-accent mb-2">Liên Hệ Với Chúng Tôi</h1>
+        <p class="text-text-light text-lg">Chúng tôi luôn sẵn sàng hỗ trợ bạn</p>
+      </div>
+    </div>
+
+    <!-- Contact Content -->
+    <section class="py-16">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid lg:grid-cols-2 gap-12">
+
+          <!-- Contact Form -->
+          <div x-data="contactPage" class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="font-heading text-2xl text-primary mb-6">Gửi Tin Nhắn</h2>
+
+            <div x-show="submitted" x-transition class="mb-6 bg-green-50 border border-green-200 text-green-700 rounded-lg p-4">
+              <p class="font-semibold">Cảm ơn bạn đã liên hệ!</p>
+              <p class="text-sm mt-1">Chúng tôi sẽ phản hồi trong thời gian sớm nhất.</p>
+            </div>
+
+            <div x-show="error" x-transition class="mb-4 bg-red-50 border border-red-200 text-error text-sm rounded-lg p-3" x-text="error"></div>
+
+            <form x-show="!submitted" @submit.prevent="submit()" class="space-y-5">
+              <div>
+                <label for="contact-name" class="block text-sm font-medium text-primary mb-1">Họ và tên *</label>
+                <input id="contact-name" type="text" x-model="name" required placeholder="Nhập họ và tên"
+                  class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors" />
+              </div>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                  <label for="contact-phone" class="block text-sm font-medium text-primary mb-1">Số điện thoại *</label>
+                  <input id="contact-phone" type="tel" x-model="phone" required placeholder="0xxx xxx xxx"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors" />
+                </div>
+                <div>
+                  <label for="contact-email" class="block text-sm font-medium text-primary mb-1">Email</label>
+                  <input id="contact-email" type="email" x-model="email" placeholder="email@example.com"
+                    class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors" />
+                </div>
+              </div>
+              <div>
+                <label for="contact-message" class="block text-sm font-medium text-primary mb-1">Nội dung *</label>
+                <textarea id="contact-message" x-model="message" required rows="5" placeholder="Nhập nội dung tin nhắn..."
+                  class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors resize-none"></textarea>
+              </div>
+              <button type="submit" class="w-full bg-accent text-white py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors text-sm">
+                Gửi tin nhắn
+              </button>
+            </form>
+          </div>
+
+          <!-- Contact Info -->
+          <div class="space-y-8">
+            <!-- Info Cards -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+              <h2 class="font-heading text-2xl text-primary mb-6">Thông Tin Liên Hệ</h2>
+              <div class="space-y-6">
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-primary">Địa chỉ</h3>
+                    <p class="text-gray-600 text-sm mt-1">Số 141P Trương Định, Phường Tương Mai, Quận Hoàng Mai, Hà Nội</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-primary">Hotline</h3>
+                    <p class="text-sm mt-1"><a href="tel:0363778889" class="text-accent font-semibold hover:text-accent-dark text-lg">0363 778 889</a></p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-primary">Giờ làm việc</h3>
+                    <p class="text-gray-600 text-sm mt-1">Thứ 2 - Chủ nhật: 8:00 - 20:00</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Map -->
+            <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3725.2!2d105.84!3d20.99!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDAwJzAwLjAiTiAxMDXCsDUwJzAwLjAiRQ!5e0!3m2!1svi!2s!4v1"
+                width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                class="w-full"
+              ></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Layout>

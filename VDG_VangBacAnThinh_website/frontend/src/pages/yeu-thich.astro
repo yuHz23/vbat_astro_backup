@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Layout title="Yêu thích - Vàng An Thịnh" description="Sản phẩm yêu thích tại Vàng An Thịnh." variant="inner" showTicker={false}>
+
+  <Breadcrumb items={[
+    { label: 'Trang chủ', href: '/' },
+    { label: 'Yêu thích' }
+  ]} />
+
+  <section class="py-12" x-data="{
+    wishlist: JSON.parse(localStorage.getItem('wishlist') || '[]'),
+    removeFromWishlist(id) {
+      this.wishlist = this.wishlist.filter(item => item.id !== id);
+      localStorage.setItem('wishlist', JSON.stringify(this.wishlist));
+    }
+  }">
+    <div class="max-w-7xl mx-auto px-4">
+      <h1 class="font-heading text-3xl text-primary mb-8">Sản Phẩm Yêu Thích</h1>
+
+      <template x-if="wishlist.length === 0">
+        <div class="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100">
+          <svg class="w-24 h-24 mx-auto mb-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+          <h2 class="text-xl text-gray-500 font-medium mb-2">Chưa có sản phẩm yêu thích</h2>
+          <p class="text-gray-400 text-sm mb-6">Hãy thêm sản phẩm yêu thích để theo dõi giá và mua sau</p>
+          <a href="/san-pham.html" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Khám phá sản phẩm</a>
+        </div>
+      </template>
+
+      <div x-show="wishlist.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <template x-for="item in wishlist" :key="item.id">
+          <div class="bg-white rounded-xl shadow-sm border border-gray-100 hover:shadow-lg transition-shadow overflow-hidden group relative">
+            <button @click="removeFromWishlist(item.id)" class="absolute top-3 right-3 z-10 w-8 h-8 bg-white rounded-full shadow flex items-center justify-center text-error hover:bg-red-50 transition-colors">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+            <a :href="'/san-pham-chi-tiet.html?slug=' + item.slug" class="block">
+              <div class="relative overflow-hidden aspect-square">
+                <img :src="item.image" :alt="item.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="p-4 bg-white">
+                <h3 class="text-sm font-medium text-primary line-clamp-2 mb-2" x-text="item.name"></h3>
+                <span class="text-accent font-bold" x-text="new Intl.NumberFormat('vi-VN').format(item.price) + ' ₫'"></span>
+              </div>
+            </a>
+            <div class="px-4 pb-4 bg-white">
+              <button @click="$store.cart.add({id: item.id, name: item.name, price: item.price, image: item.image, slug: item.slug})" class="w-full bg-primary text-text-light py-2 rounded-lg text-sm font-medium hover:bg-accent transition-colors">Thêm vào giỏ</button>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+  </section>
+
+</Layout>

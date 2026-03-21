@@ -1,0 +1,21 @@
+<!-- Floating Theme Toggle Button -->
+<a id="theme-toggle" href="#"
+  class="fixed bottom-6 left-6 bg-rose-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-rose-600 transition-colors z-40 group"
+  title="Chuyển sang giao diện Trang Sức">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+  </svg>
+  <span
+    class="absolute left-16 bg-gray-900 text-white text-xs font-medium px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+    Giao diện Trang Sức
+  </span>
+</a>
+
+<script is:inline>
+  document.getElementById('theme-toggle').addEventListener('click', function (e) {
+    e.preventDefault();
+    const currentPath = window.location.pathname + window.location.search;
+    window.location.href = window.location.protocol + '//' + window.location.hostname + ':4000' + currentPath;
+  });
+</script>

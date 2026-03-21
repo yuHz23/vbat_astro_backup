@@ -1,0 +1,137 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Layout title="Giới Thiệu - Vàng An Thịnh" description="Vàng An Thịnh - Thương hiệu mua bán vàng bạc uy tín hàng đầu tại Hà Nội. Tìm hiểu về sứ mệnh và giá trị của chúng tôi." variant="inner">
+  <main>
+
+    <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Giới thiệu"}]} />
+
+    <!-- Hero -->
+    <section class="bg-gradient-to-r from-primary to-primary-light py-20">
+      <div class="max-w-7xl mx-auto px-4 text-center">
+        <div class="w-24 h-24 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
+          <span class="text-white font-heading text-3xl font-bold">VA</span>
+        </div>
+        <h1 class="font-heading text-4xl md:text-5xl text-accent mb-4 gold-shimmer">VÀNG AN THỊNH</h1>
+        <p class="text-text-light text-xl md:text-2xl max-w-2xl mx-auto">Thương hiệu mua bán vàng bạc uy tín hàng đầu tại Hà Nội</p>
+      </div>
+    </section>
+
+    <!-- Brand Story -->
+    <section class="py-16">
+      <div class="max-w-4xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="font-heading text-3xl text-primary mb-2">Câu Chuyện Thương Hiệu</h2>
+          <div class="w-20 h-1 bg-accent mx-auto"></div>
+        </div>
+        <div class="space-y-6 text-gray-700 leading-relaxed text-lg">
+          <p>
+            <strong class="text-primary">Vàng An Thịnh</strong> được thành lập với sứ mệnh mang đến cho khách hàng những sản phẩm vàng bạc chất lượng cao cùng dịch vụ tận tâm và chuyên nghiệp. Tọa lạc tại Số 141P Trương Định, Phường Tương Mai, Quận Hoàng Mai, Hà Nội, chúng tôi tự hào là địa chỉ tin cậy cho mọi nhu cầu về vàng bạc, trang sức.
+          </p>
+          <p>
+            Với đội ngũ nhân viên giàu kinh nghiệm và am hiểu sâu sắc về ngành vàng bạc, Vàng An Thịnh luôn đảm bảo mỗi sản phẩm đến tay khách hàng đều đạt tiêu chuẩn chất lượng cao nhất. Chúng tôi cam kết mang đến giá cả minh bạch, cạnh tranh và luôn cập nhật giá vàng theo thị trường.
+          </p>
+          <p>
+            Trải qua nhiều năm hoạt động, Vàng An Thịnh đã xây dựng được lòng tin vững chắc từ hàng nghìn khách hàng. Mỗi giao dịch không chỉ là một lần mua bán, mà còn là sự khởi đầu của một mối quan hệ tin cậy lâu dài.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mission & Values -->
+    <section class="py-16 bg-white">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="font-heading text-3xl text-primary mb-2">Sứ Mệnh &amp; Giá Trị</h2>
+          <div class="w-20 h-1 bg-accent mx-auto"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="text-center p-8 bg-light-bg rounded-xl">
+            <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </div>
+            <h3 class="font-heading text-xl text-primary mb-3">Uy Tín</h3>
+            <p class="text-gray-600">Cam kết chất lượng vàng bạc đạt chuẩn. Mỗi sản phẩm đều được kiểm định nghiêm ngặt trước khi đến tay khách hàng.</p>
+          </div>
+          <div class="text-center p-8 bg-light-bg rounded-xl">
+            <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <h3 class="font-heading text-xl text-primary mb-3">Minh Bạch</h3>
+            <p class="text-gray-600">Giá cả công khai, minh bạch theo thị trường. Cập nhật liên tục để khách hàng luôn nắm bắt được xu hướng giá vàng.</p>
+          </div>
+          <div class="text-center p-8 bg-light-bg rounded-xl">
+            <div class="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+            </div>
+            <h3 class="font-heading text-xl text-primary mb-3">Tận Tâm</h3>
+            <p class="text-gray-600">Đội ngũ tư vấn chuyên nghiệp, tận tình hỗ trợ khách hàng từ khâu lựa chọn đến dịch vụ hậu mãi chu đáo.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-16">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="font-heading text-3xl text-primary mb-2">Tại Sao Chọn Vàng An Thịnh?</h2>
+          <div class="w-20 h-1 bg-accent mx-auto"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="flex gap-4 p-6 bg-white rounded-xl shadow-sm">
+            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-accent font-bold text-lg">01</span>
+            </div>
+            <div>
+              <h3 class="font-heading text-lg text-primary mb-2">Sản phẩm chất lượng cao</h3>
+              <p class="text-gray-600 text-sm">Vàng bạc, trang sức được kiểm định chặt chẽ, đảm bảo độ tinh khiết và chất lượng hàng đầu.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-6 bg-white rounded-xl shadow-sm">
+            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-accent font-bold text-lg">02</span>
+            </div>
+            <div>
+              <h3 class="font-heading text-lg text-primary mb-2">Giá vàng cập nhật liên tục</h3>
+              <p class="text-gray-600 text-sm">Bảng giá vàng được cập nhật theo thời gian thực, giúp khách hàng đưa ra quyết định đúng đắn.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-6 bg-white rounded-xl shadow-sm">
+            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-accent font-bold text-lg">03</span>
+            </div>
+            <div>
+              <h3 class="font-heading text-lg text-primary mb-2">Dịch vụ chuyên nghiệp</h3>
+              <p class="text-gray-600 text-sm">Đội ngũ nhân viên được đào tạo bài bản, tư vấn tận tình và hỗ trợ khách hàng mọi lúc.</p>
+            </div>
+          </div>
+          <div class="flex gap-4 p-6 bg-white rounded-xl shadow-sm">
+            <div class="w-12 h-12 bg-primary rounded-lg flex items-center justify-center flex-shrink-0">
+              <span class="text-accent font-bold text-lg">04</span>
+            </div>
+            <div>
+              <h3 class="font-heading text-lg text-primary mb-2">Chính sách bảo hành rõ ràng</h3>
+              <p class="text-gray-600 text-sm">Cam kết bảo hành, đổi trả theo chính sách minh bạch, bảo vệ quyền lợi khách hàng tối đa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-16 bg-primary">
+      <div class="max-w-3xl mx-auto px-4 text-center">
+        <h2 class="font-heading text-3xl text-accent mb-4">Ghé Thăm Cửa Hàng</h2>
+        <p class="text-text-light mb-8 text-lg">Hãy đến với Vàng An Thịnh để trải nghiệm dịch vụ và sản phẩm tốt nhất. Chúng tôi luôn sẵn sàng phục vụ bạn!</p>
+        <div class="flex flex-wrap gap-4 justify-center">
+          <a href="/he-thong-cua-hang" class="bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Xem cửa hàng</a>
+          <a href="/lien-he" class="border-2 border-accent text-accent px-8 py-3 rounded-lg font-semibold hover:bg-accent hover:text-white transition-colors">Liên hệ ngay</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</Layout>

@@ -1,0 +1,133 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Layout title="Thanh toán - Vàng An Thịnh" description="Thanh toán đơn hàng tại Vàng An Thịnh." variant="inner" showTicker={false}>
+
+  <Breadcrumb items={[
+    { label: 'Trang chủ', href: '/' },
+    { label: 'Giỏ hàng', href: '/gio-hang' },
+    { label: 'Thanh toán' }
+  ]} />
+
+  <section class="py-12" x-data="checkoutPage">
+    <div class="max-w-6xl mx-auto px-4">
+
+      <template x-if="submitted">
+        <!-- Success State -->
+        <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-10 text-center">
+          <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h1 class="font-heading text-3xl text-primary font-bold mb-4">Đặt hàng thành công!</h1>
+          <p class="text-gray-600 mb-2">Cảm ơn bạn đã tin tưởng Vàng An Thịnh.</p>
+          <p class="text-gray-600 mb-6">Mã đơn hàng của bạn là: <strong class="text-primary font-bold" x-text="orderNumber"></strong></p>
+          <p class="text-sm text-gray-500 mb-8 max-w-md mx-auto">Nhân viên của chúng tôi sẽ liên hệ với bạn theo số điện thoại đã cung cấp để xác nhận và tư vấn thêm về phương thức giao hàng.</p>
+          <a href="/" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Về trang chủ</a>
+        </div>
+      </template>
+
+      <template x-if="!submitted && cartItems.length === 0">
+        <!-- Empty Cart -->
+        <div class="text-center py-20 bg-white rounded-2xl shadow-sm">
+          <h2 class="text-xl text-gray-500 font-medium mb-4">Không có sản phẩm nào để thanh toán</h2>
+          <a href="/san-pham.html" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Tiếp tục mua sắm</a>
+        </div>
+      </template>
+
+      <template x-if="!submitted && cartItems.length > 0">
+        <!-- Checkout Form -->
+        <div class="grid lg:grid-cols-5 gap-8">
+          <div class="lg:col-span-3">
+            <div class="bg-white rounded-2xl shadow-sm p-6 lg:p-8">
+              <h1 class="font-heading text-2xl text-primary font-bold mb-6">Thông tin liên hệ</h1>
+
+              <div x-show="error" x-transition class="mb-6 bg-red-50 border border-red-200 text-error text-sm rounded-lg p-3" x-text="error"></div>
+
+              <form @submit.prevent="submitOrder" class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div>
+                    <label for="contactName" class="block text-sm font-medium text-primary mb-1">Họ tên *</label>
+                    <input type="text" id="contactName" x-model="contactName" required placeholder="Nhập họ và tên" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm" />
+                  </div>
+                  <div>
+                    <label for="contactPhone" class="block text-sm font-medium text-primary mb-1">Số điện thoại *</label>
+                    <input type="tel" id="contactPhone" x-model="contactPhone" required placeholder="Nhập số điện thoại" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm" />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="contactZalo" class="block text-sm font-medium text-primary mb-1">Số Zalo (Nếu có)</label>
+                  <input type="tel" id="contactZalo" x-model="contactZalo" placeholder="Nhập số Zalo để tiện trao đổi" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm" />
+                </div>
+
+                <div>
+                  <label for="notes" class="block text-sm font-medium text-primary mb-1">Ghi chú thêm</label>
+                  <textarea id="notes" x-model="notes" rows="3" placeholder="Yêu cầu riêng, lưu ý..." class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm"></textarea>
+                </div>
+
+                <!-- Submit button -->
+                <div class="border-t pt-6 mt-8">
+                  <button type="submit" :disabled="submitting" class="w-full bg-accent text-white py-4 rounded-xl font-bold text-lg hover:bg-accent-dark transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+                    <span x-show="!submitting">Xác nhận đặt hàng</span>
+                    <span x-show="submitting" class="flex items-center gap-2">
+                      <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+                      </svg>
+                      Đang xử lý...
+                    </span>
+                  </button>
+                  <p class="text-center text-sm text-gray-500 mt-4 max-w-md mx-auto">Click "Xác nhận đặt hàng", nhân viên của Vàng An Thịnh sẽ liên hệ với quý khách để tư vấn sớm nhất.</p>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Order Summary Sidebar -->
+          <div class="lg:col-span-2">
+            <div class="bg-white rounded-2xl shadow-sm p-6 lg:p-8 sticky top-24">
+              <h2 class="font-heading text-xl text-primary font-bold mb-6 pb-4 border-b">Đơn hàng của bạn (<span x-text="cartItems.length"></span>)</h2>
+
+              <div class="space-y-4 max-h-80 overflow-y-auto pr-2 mb-6">
+                <template x-for="item in cartItems" :key="item.key">
+                  <div class="flex gap-4">
+                    <div class="relative w-16 h-16 rounded shadow-sm border overflow-hidden shrink-0">
+                      <img :src="item.image" class="w-full h-full object-cover" :alt="item.name" />
+                      <span class="absolute -top-1 -right-1 bg-gray-500 text-white text-[10px] w-4 h-4 rounded-full flex items-center justify-center font-bold" x-text="item.quantity"></span>
+                    </div>
+                    <div class="flex-1 text-sm">
+                      <h4 class="font-medium text-primary line-clamp-2" x-text="item.name"></h4>
+                      <p x-show="item.variant" class="text-gray-500 mt-1" x-text="item.variant"></p>
+                      <p class="text-accent font-semibold mt-1" x-text="formatPriceVND(item.price * item.quantity)"></p>
+                    </div>
+                  </div>
+                </template>
+              </div>
+
+              <div class="border-t pt-4 space-y-3 text-sm">
+                <div class="flex justify-between items-center text-gray-600">
+                  <span>Tạm tính</span>
+                  <span class="font-medium text-primary" x-text="formatPriceVND(cartTotal)"></span>
+                </div>
+                <div class="flex justify-between items-center text-gray-600">
+                  <span>Phí giao hàng</span>
+                  <span class="text-primary italic">Liên hệ</span>
+                </div>
+                <div class="flex justify-between items-center pt-3 border-t">
+                  <span class="font-bold text-lg text-primary">Tổng cộng</span>
+                  <span class="font-bold text-xl text-accent" x-text="formatPriceVND(cartTotal)"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </template>
+
+    </div>
+  </section>
+
+</Layout>

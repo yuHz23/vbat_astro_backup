@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Layout title="Tin Tức - Vàng An Thịnh" description="Tin tức mới nhất về thị trường vàng bạc, kiến thức trang sức từ Vàng An Thịnh." variant="inner" showTicker={false}>
+
+  <!-- Breadcrumb -->
+  <Breadcrumb items={[
+    { label: 'Trang chủ', href: '/' },
+    { label: 'Tin tức' }
+  ]} />
+
+  <!-- Page Header -->
+  <section class="bg-primary py-12">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <h1 class="font-heading text-3xl md:text-4xl text-accent mb-3">Tin Tức &amp; Kiến Thức</h1>
+      <p class="text-text-light text-lg">Cập nhật tin tức thị trường vàng bạc, kiến thức trang sức và những thông tin hữu ích</p>
+    </div>
+  </section>
+
+  <!-- Articles Grid -->
+  <section class="py-12" x-data="{
+    articles: [],
+    loading: true,
+    async init() {
+      try {
+        const res = await (await fetch('/api/articles?populate=coverImage,articleCategory&sort[0]=publishedDate:desc&pagination[pageSize]=9')).json();
+        this.articles = res.data || [];
+      } catch(e) { console.error(e); }
+      finally { this.loading = false; }
+    }
+  }">
+    <div class="max-w-7xl mx-auto px-4">
+      <div x-show="loading" class="text-center py-16 text-gray-500">Đang tải bài viết...</div>
+
+      <div x-show="!loading && articles.length === 0" class="text-center py-16 text-gray-500">
+        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/></svg>
+        <p class="text-lg">Chưa có bài viết nào.</p>
+      </div>
+
+      <div x-show="!loading && articles.length > 0" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <template x-for="article in articles" :key="article.id">
+          <a :href="'/bai-viet.html?slug=' + article.slug" class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow group">
+            <div class="aspect-video overflow-hidden">
+              <img
+                :src="article.coverImage?.url ? (article.coverImage.url.startsWith('http') ? article.coverImage.url : 'http://localhost:1337' + article.coverImage.url) : '/placeholder.jpg'"
+                :alt="article.title"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div class="p-5">
+              <div class="flex items-center gap-3 mb-3">
+                <span x-show="article.articleCategory" class="text-xs bg-accent/10 text-accent px-2 py-1 rounded-full font-medium" x-text="article.articleCategory?.name"></span>
+                <span class="text-xs text-gray-400" x-text="article.publishedDate ? new Date(article.publishedDate).toLocaleDateString('vi-VN') : ''"></span>
+              </div>
+              <h3 class="font-heading text-lg text-primary group-hover:text-accent transition-colors line-clamp-2 mb-2" x-text="article.title"></h3>
+              <p class="text-sm text-gray-600 line-clamp-3" x-text="article.excerpt"></p>
+              <span class="inline-block mt-3 text-sm text-accent font-medium group-hover:underline">Đọc tiếp &rarr;</span>
+            </div>
+          </a>
+        </template>
+      </div>
+    </div>
+  </section>
+
+</Layout>

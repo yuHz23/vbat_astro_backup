@@ -1,0 +1,67 @@
+<!-- Cart Drawer -->
+<div x-cloak x-show="$store.cart.isOpen" x-transition:enter="transition ease-out duration-300"
+  x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+  x-transition:leave="transition ease-in duration-200" class="fixed inset-0 bg-black/50 z-50"
+  @click.self="$store.cart.isOpen = false">
+  <div x-cloak x-show="$store.cart.isOpen" x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="translate-x-full" x-transition:enter-end="translate-x-0"
+    x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0"
+    x-transition:leave-end="translate-x-full"
+    class="absolute right-0 top-0 w-96 max-w-full h-full bg-white shadow-2xl flex flex-col">
+    <div class="p-4 bg-primary text-text-light flex items-center justify-between">
+      <span class="font-heading font-semibold text-lg">Giỏ hàng (<span x-text="$store.cart.count"></span>)</span>
+      <button @click="$store.cart.isOpen = false" class="text-text-light hover:text-accent">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+    <div class="flex-1 overflow-y-auto p-4 space-y-4">
+      <template x-if="$store.cart.items.length === 0">
+        <div class="text-center py-10 text-gray-500">
+          <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+              d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <p>Giỏ hàng trống</p>
+        </div>
+      </template>
+      <template x-for="item in $store.cart.items" :key="item.key">
+        <div class="flex gap-3 border-b pb-3">
+          <img :src="item.image" class="w-20 h-20 object-cover rounded" :alt="item.name" />
+          <div class="flex-1">
+            <h4 class="text-sm font-medium text-primary line-clamp-2" x-text="item.name"></h4>
+            <p x-show="item.variant" class="text-xs text-gray-500" x-text="item.variant"></p>
+            <p class="text-sm font-semibold text-accent mt-1"
+              x-text="new Intl.NumberFormat('vi-VN').format(item.price) + ' ₫'"></p>
+            <div class="flex items-center gap-2 mt-2">
+              <button @click="$store.cart.updateQuantity(item.key, item.quantity - 1)"
+                class="w-7 h-7 border rounded text-sm hover:bg-light-bg">-</button>
+              <span class="text-sm w-8 text-center" x-text="item.quantity"></span>
+              <button @click="$store.cart.updateQuantity(item.key, item.quantity + 1)"
+                class="w-7 h-7 border rounded text-sm hover:bg-light-bg">+</button>
+              <button @click="$store.cart.remove(item.key)" class="ml-auto text-gray-400 hover:text-error">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </template>
+    </div>
+    <div x-show="$store.cart.items.length > 0" class="p-4 border-t bg-light-bg">
+      <div class="flex justify-between mb-3">
+        <span class="font-medium">Tổng cộng:</span>
+        <span class="text-lg font-bold text-accent"
+          x-text="new Intl.NumberFormat('vi-VN').format($store.cart.total) + ' ₫'"></span>
+      </div>
+      <a href="/thanh-toan.html"
+        class="block w-full bg-accent text-white text-center py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Thanh
+        toán</a>
+      <a href="/gio-hang.html" class="block w-full text-center py-2 mt-2 text-primary hover:text-accent text-sm">Xem
+        giỏ hàng</a>
+    </div>
+  </div>
+</div>

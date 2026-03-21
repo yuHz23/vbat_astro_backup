@@ -1,0 +1,31 @@
+{
+  "collectionName": "components_product_product_variants",
+  "info": {
+    "displayName": "ProductVariant",
+    "icon": "grid",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "variantName": {
+      "type": "string",
+      "required": true
+    },
+    "variantType": {
+      "type": "enumeration",
+      "enum": ["size", "color", "material"],
+      "default": "size",
+      "required": true
+    },
+    "additionalPrice": {
+      "type": "decimal",
+      "default": 0
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    }
+  }
+}

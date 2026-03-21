@@ -1,0 +1,45 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Setting",
+    "description": "Global site settings"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "siteName": {
+      "type": "string",
+      "default": "Vàng An Thịnh"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "phone": {
+      "type": "string",
+      "default": "0363778889"
+    },
+    "email": {
+      "type": "email"
+    },
+    "address": {
+      "type": "string",
+      "default": "Số 141P Trương Định, Phường Tương Mai, Hà Nội"
+    },
+    "socialLinks": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.social-link"
+    },
+    "footerContent": {
+      "type": "richtext"
+    }
+  }
+}

@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+---
+
+<Layout title="Tìm kiếm - Vàng An Thịnh" description="Tìm kiếm sản phẩm vàng bạc trang sức tại Vàng An Thịnh." variant="inner" showTicker={false}>
+
+  <main class="min-h-screen" x-data="{
+    query: new URLSearchParams(window.location.search).get('q') || '',
+    products: [],
+    loading: true,
+    async init() {
+      if (this.query) { await this.searchProducts(); } else { this.loading = false; }
+    },
+    async searchProducts() {
+      this.loading = true;
+      try {
+        const res = await fetch('/api/products?filters[name][$containsi]=' + encodeURIComponent(this.query) + '&populate=images&pagination[pageSize]=20');
+        const data = await res.json();
+        this.products = data.data || [];
+      } catch(e) { console.error(e); }
+      this.loading = false;
+    },
+    newSearch() {
+      if (this.query.trim()) { window.location.href = '/tim-kiem.html?q=' + encodeURIComponent(this.query.trim()); }
+    }
+  }">
+    <div class="bg-white border-b">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <nav class="text-sm text-gray-500">
+          <a href="/" class="hover:text-accent">Trang chủ</a> <span class="mx-2">&#x203A;</span>
+          <span class="text-primary font-medium">Tìm kiếm</span>
+        </nav>
+      </div>
+    </div>
+    <div class="bg-white py-8 border-b">
+      <div class="max-w-3xl mx-auto px-4">
+        <form @submit.prevent="newSearch()" class="flex gap-3">
+          <input type="text" x-model="query" placeholder="Tìm kiếm sản phẩm vàng bạc, trang sức..." class="flex-1 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm" />
+          <button type="submit" class="bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors text-sm">Tìm kiếm</button>
+        </form>
+      </div>
+    </div>
+    <section class="py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <div x-show="query" class="mb-6">
+          <h1 class="font-heading text-2xl text-primary">Kết quả tìm kiếm cho: "<span x-text="query" class="text-accent"></span>"</h1>
+          <p class="text-gray-500 text-sm mt-1" x-text="products.length + ' sản phẩm được tìm thấy'"></p>
+        </div>
+        <div x-show="!query && !loading" class="text-center py-20">
+          <svg class="w-20 h-20 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          <h2 class="text-xl text-gray-500 font-medium">Nhập từ khóa để tìm kiếm</h2>
+          <p class="text-gray-400 text-sm mt-2">Tìm kiếm sản phẩm vàng, trang sức, nhẫn, dây chuyền...</p>
+        </div>
+        <div x-show="loading" class="text-center py-20">
+          <svg class="animate-spin w-8 h-8 mx-auto text-accent" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+          <p class="text-gray-500 mt-3">Đang tìm kiếm...</p>
+        </div>
+        <div x-show="query && !loading && products.length === 0" class="text-center py-20">
+          <svg class="w-20 h-20 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <h2 class="text-xl text-gray-500 font-medium">Không tìm thấy sản phẩm nào</h2>
+          <p class="text-gray-400 text-sm mt-2">Vui lòng thử lại với từ khóa khác</p>
+          <a href="/san-pham.html" class="inline-block mt-6 bg-accent text-white px-6 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors text-sm">Xem tất cả sản phẩm</a>
+        </div>
+        <div x-show="products.length > 0" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <template x-for="product in products" :key="product.id">
+            <div x-data="productCard" class="bg-white rounded-xl shadow-sm hover:shadow-lg transition-shadow overflow-hidden group">
+              <a :href="'/san-pham-chi-tiet.html?slug=' + product.slug" class="block">
+                <div class="relative overflow-hidden aspect-square">
+                  <img :src="getStrapiMedia(product.images?.[0]?.url)" :alt="product.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <span x-show="product.compareAtPrice" class="absolute top-3 left-3 bg-error text-white text-xs px-2 py-1 rounded-full font-semibold">SALE</span>
+                </div>
+                <div class="p-4">
+                  <h3 class="text-sm font-medium text-primary line-clamp-2 mb-2" x-text="product.name"></h3>
+                  <div class="flex items-center gap-2">
+                    <span class="text-accent font-bold" x-text="formatPriceVND(product.price)"></span>
+                    <span x-show="product.compareAtPrice" class="text-gray-400 text-sm line-through" x-text="formatPriceVND(product.compareAtPrice)"></span>
+                  </div>
+                </div>
+              </a>
+              <div class="px-4 pb-4">
+                <button @click="addToCart(product)" class="w-full bg-primary text-text-light py-2 rounded-lg text-sm font-medium hover:bg-accent transition-colors">Thêm vào giỏ</button>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</Layout>

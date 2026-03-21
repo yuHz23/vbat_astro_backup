@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: #2C2C2C;
+  --color-primary-light: #3D3D3D;
+  --color-primary-dark: #1A1A1A;
+  --color-accent: #C8A96E;
+  --color-accent-light: #D4BC8A;
+  --color-accent-dark: #B08C4A;
+  --color-rose: #F2D1D1;
+  --color-rose-light: #FBE8E8;
+  --color-rose-dark: #E4B3B3;
+  --color-blush: #F7E1DC;
+  --color-cream: #FFF8F3;
+  --color-light-bg: #FDF6F0;
+  --color-dark-bg: #1A1A1A;
+  --color-text-dark: #2C2C2C;
+  --color-text-light: #F7F0EA;
+  --color-success: #16A34A;
+  --color-error: #DC2626;
+  --color-warning: #F59E0B;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-script: 'Dancing Script', cursive;
+}
+
+body {
+  background: var(--color-light-bg);
+  color: var(--color-text-dark);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-light-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-rose-dark); border-radius: 4px; }
+
+.swiper-pagination-bullet-active {
+  background-color: var(--color-accent) !important;
+}
+
+[x-cloak] { display: none !important; }
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.gold-shimmer {
+  background: linear-gradient(90deg, var(--color-accent-dark), var(--color-accent-light), var(--color-accent-dark));
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+.animate-delay-1 { animation-delay: 0.2s; }
+.animate-delay-2 { animation-delay: 0.4s; }
+.animate-delay-3 { animation-delay: 0.6s; }
+
+.font-script { font-family: var(--font-script); }
+
+.price-up { color: var(--color-success); }
+.price-down { color: var(--color-error); }

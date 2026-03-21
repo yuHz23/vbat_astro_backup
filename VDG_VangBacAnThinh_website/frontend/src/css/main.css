@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-primary: #1B2B4A;
+  --color-primary-light: #2A4066;
+  --color-primary-dark: #121C30;
+  --color-accent: #C6A75E;
+  --color-accent-light: #D4BC7E;
+  --color-accent-dark: #A88B3E;
+  --color-light-bg: #F2F1EC;
+  --color-dark-bg: #0B1320;
+  --color-text-dark: #1A1A1A;
+  --color-text-light: #F2F1EC;
+  --color-success: #16A34A;
+  --color-error: #DC2626;
+  --color-warning: #F59E0B;
+
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+
+  --color-pq-red: #A80000;
+  --color-pq-navy: #1B2B4A;
+}
+
+body {
+  background: var(--color-light-bg);
+  color: var(--color-text-dark);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-light-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+/* Swiper overrides */
+.swiper-pagination-bullet-active {
+  background-color: var(--color-accent) !important;
+}
+
+/* Transitions */
+[x-cloak] {
+  display: none !important;
+}
+
+/* Gold shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.gold-shimmer {
+  background: linear-gradient(90deg, var(--color-accent-dark), var(--color-accent-light), var(--color-accent-dark));
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Price up/down colors */
+.price-up {
+  color: var(--color-success);
+}
+
+.price-down {
+  color: var(--color-error);
+}

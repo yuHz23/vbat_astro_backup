@@ -1,0 +1,392 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Vàng An Thịnh Jewelry - Trang Sức Cao Cấp" description="Vàng An Thịnh Jewelry - Trang sức vàng bạc cao cấp, thiết kế tinh xảo. Elegance Redefined Daily." variant="home" showTicker={true}>
+
+  <main>
+
+    <!-- Hero Section - Pink/Rose Jewelry Gallery (Dribbble-inspired) -->
+    <section class="bg-rose py-8 md:py-12">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-12 gap-3 md:gap-4 auto-rows-[140px] md:auto-rows-[180px]" x-data="{
+          products: [],
+          async init() {
+            try {
+              const res = await (await fetch('/api/products?filters[isFeatured][$eq]=true&populate=images&pagination[pageSize]=6&sort[0]=createdAt:desc')).json();
+              this.products = res.data || [];
+            } catch(e) {}
+          }
+        }">
+          <!-- Large hero image (top-left) -->
+          <div class="col-span-4 row-span-2 rounded-2xl overflow-hidden relative group">
+            <img :src="products[0]?.images?.[0]?.url ? (products[0].images[0].url.startsWith('http') ? products[0].images[0].url : 'http://localhost:1337' + products[0].images[0].url) : '/placeholder.jpg'"
+              alt="Trang sức vàng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a :href="products[0] ? '/san-pham-chi-tiet.html?slug=' + products[0].slug : '/san-pham.html'" class="absolute inset-0"></a>
+          </div>
+
+          <!-- Top middle -->
+          <div class="col-span-4 row-span-1 rounded-2xl overflow-hidden relative group">
+            <img :src="products[1]?.images?.[0]?.url ? (products[1].images[0].url.startsWith('http') ? products[1].images[0].url : 'http://localhost:1337' + products[1].images[0].url) : '/placeholder.jpg'"
+              alt="Dây chuyền vàng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a :href="products[1] ? '/san-pham-chi-tiet.html?slug=' + products[1].slug : '/san-pham.html'" class="absolute inset-0"></a>
+          </div>
+
+          <!-- Top right -->
+          <div class="col-span-4 row-span-1 rounded-2xl overflow-hidden relative group">
+            <img :src="products[2]?.images?.[0]?.url ? (products[2].images[0].url.startsWith('http') ? products[2].images[0].url : 'http://localhost:1337' + products[2].images[0].url) : '/placeholder.jpg'"
+              alt="Nhẫn vàng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a :href="products[2] ? '/san-pham-chi-tiet.html?slug=' + products[2].slug : '/san-pham.html'" class="absolute inset-0"></a>
+          </div>
+
+          <!-- Text block -->
+          <div class="col-span-4 row-span-1 flex items-center px-4 md:px-6">
+            <p class="text-primary/80 text-sm md:text-base leading-relaxed font-light">
+              Explore style and excellence via positive client testimonials and experiences.
+            </p>
+          </div>
+
+          <!-- Gemstone feature (right) -->
+          <div class="col-span-4 row-span-1 rounded-2xl overflow-hidden relative group">
+            <img :src="products[3]?.images?.[0]?.url ? (products[3].images[0].url.startsWith('http') ? products[3].images[0].url : 'http://localhost:1337' + products[3].images[0].url) : '/placeholder.jpg'"
+              alt="Đá quý" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a :href="products[3] ? '/san-pham-chi-tiet.html?slug=' + products[3].slug : '/san-pham.html'" class="absolute inset-0"></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Elegance Redefined Daily - Script Title -->
+    <section class="bg-rose py-10 md:py-16">
+      <div class="max-w-5xl mx-auto px-4 text-center">
+        <h2 class="font-script text-5xl md:text-7xl lg:text-8xl text-primary italic leading-tight animate-fade-in-up">
+          Elegance Redefined Daily
+        </h2>
+      </div>
+    </section>
+
+    <!-- Bottom Gallery Row -->
+    <section class="bg-rose pb-10 md:pb-16">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-3 gap-3 md:gap-4" x-data="{
+          products: [],
+          async init() {
+            try {
+              const res = await (await fetch('/api/products?filters[isBestSeller][$eq]=true&populate=images&pagination[pageSize]=3&sort[0]=createdAt:desc')).json();
+              this.products = res.data || [];
+            } catch(e) {}
+          }
+        }">
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden relative group">
+            <img :src="products[0]?.images?.[0]?.url ? (products[0].images[0].url.startsWith('http') ? products[0].images[0].url : 'http://localhost:1337' + products[0].images[0].url) : '/placeholder.jpg'"
+              alt="Trang sức" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a :href="products[0] ? '/san-pham-chi-tiet.html?slug=' + products[0].slug : '/san-pham.html'" class="absolute inset-0"></a>
+          </div>
+          <div class="aspect-[3/4] rounded-full overflow-hidden relative group">
+            <img :src="products[1]?.images?.[0]?.url ? (products[1].images[0].url.startsWith('http') ? products[1].images[0].url : 'http://localhost:1337' + products[1].images[0].url) : '/placeholder.jpg'"
+              alt="Trang sức" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a :href="products[1] ? '/san-pham-chi-tiet.html?slug=' + products[1].slug : '/san-pham.html'" class="absolute inset-0"></a>
+          </div>
+          <div class="aspect-[3/4] rounded-2xl overflow-hidden relative group">
+            <img :src="products[2]?.images?.[0]?.url ? (products[2].images[0].url.startsWith('http') ? products[2].images[0].url : 'http://localhost:1337' + products[2].images[0].url) : '/placeholder.jpg'"
+              alt="Trang sức" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+            <a :href="products[2] ? '/san-pham-chi-tiet.html?slug=' + products[2].slug : '/san-pham.html'" class="absolute inset-0"></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Price Tables (Jewelry style) -->
+    <section class="py-14 md:py-20 bg-cream">
+      <div class="max-w-5xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <h2 class="font-heading text-3xl md:text-4xl text-primary mb-3 italic">Bảng Giá Hôm Nay</h2>
+          <div class="w-16 h-[2px] bg-accent mx-auto"></div>
+        </div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <!-- Gold Price Card -->
+          <div class="bg-white rounded-2xl shadow-sm border border-rose/30 p-8 md:p-10 flex flex-col justify-between items-center text-center hover:shadow-lg transition-all group">
+            <div class="w-full">
+              <div class="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-5">
+                <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </div>
+              <h2 class="font-heading text-2xl md:text-3xl font-semibold text-primary mb-3 italic">Giá Vàng</h2>
+              <p class="text-gray-500 text-sm mb-8 leading-relaxed">Cập nhật liên tục giá Vàng miếng, Vàng 999,9 và trang sức vàng</p>
+            </div>
+            <a href="/bang-gia-vang.html" class="bg-accent text-white font-medium py-3 px-10 rounded-full hover:bg-accent-dark transition-colors text-sm tracking-wider uppercase">
+              Xem chi tiết
+            </a>
+          </div>
+
+          <!-- Silver Price Card -->
+          <div class="bg-white rounded-2xl shadow-sm border border-rose/30 p-8 md:p-10 flex flex-col justify-between items-center text-center hover:shadow-lg transition-all group">
+            <div class="w-full">
+              <div class="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-5">
+                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              </div>
+              <h2 class="font-heading text-2xl md:text-3xl font-semibold text-primary mb-3 italic">Giá Bạc</h2>
+              <p class="text-gray-500 text-sm mb-8 leading-relaxed">Cập nhật Giá bạc miếng, Bạc thỏi và bạc trang sức</p>
+            </div>
+            <a href="/bang-gia-bac.html" class="bg-gray-400 text-white font-medium py-3 px-10 rounded-full hover:bg-gray-500 transition-colors text-sm tracking-wider uppercase">
+              Xem chi tiết
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VÀNG TÍCH TRỮ - Red Theme -->
+    <section class="py-14 md:py-20 bg-gradient-to-br from-[#B31B24] to-[#8B0000] relative overflow-hidden" x-data="{
+      products: [],
+      async init() {
+        try {
+          const res = await (await fetch('/api/products?filters[category][name][$eq]=VÀNG&populate=images&pagination[pageSize]=4&sort[0]=price:asc')).json();
+          this.products = res.data || [];
+        } catch(e) { console.error(e); }
+      }
+    }">
+      <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <div class="flex flex-col xl:flex-row gap-10 items-center">
+          <!-- Text -->
+          <div class="xl:w-1/3 text-white text-center xl:text-left">
+            <div class="inline-block bg-white/10 text-white/90 text-xs font-bold uppercase tracking-[0.3em] px-4 py-1.5 rounded-full mb-4 border border-white/20">Vàng 999.9</div>
+            <h2 class="font-heading text-4xl md:text-5xl mb-4 font-bold leading-tight italic">Vàng Tích Trữ</h2>
+            <div class="w-16 h-[2px] bg-accent mb-6 mx-auto xl:mx-0"></div>
+            <p class="text-white/80 text-base mb-8 leading-relaxed">Nhẫn tròn trơn, Vàng miếng, Thần tài 999.9 - Tích lũy giá trị, vững bền tương lai.</p>
+            <a href="/vang-tich-tru.html" class="inline-block border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-[#B31B24] transition-colors font-medium uppercase text-sm tracking-wider">
+              Xem tất cả Vàng
+            </a>
+          </div>
+          <!-- Products -->
+          <div class="xl:w-2/3 w-full">
+            <div x-show="products.length === 0" class="text-center py-10 text-white/50">Đang tải sản phẩm...</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <template x-for="product in products" :key="product.id">
+                <div x-data="productCard" class="bg-white rounded-xl flex flex-col group relative hover:shadow-xl transition-all h-full">
+                  <span x-show="product.status === 'available'" class="absolute top-2 left-2 bg-red-50 text-[#B31B24] text-[10px] px-2 py-1 rounded-full font-semibold z-10">Còn hàng</span>
+                  <a :href="'/san-pham-chi-tiet.html?slug=' + product.slug" class="block p-4 flex-1">
+                    <div class="relative overflow-hidden aspect-square mb-3 rounded-lg bg-red-50/30">
+                      <img :src="getStrapiMedia(product.images?.[0]?.url)" :alt="product.name" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <h3 class="text-xs font-semibold text-primary line-clamp-2 leading-snug group-hover:text-[#B31B24] transition-colors" x-text="product.name"></h3>
+                  </a>
+                  <div class="px-4 pb-4 mt-auto border-t border-red-50 pt-2">
+                    <div class="text-sm font-bold text-[#B31B24]" x-text="formatPriceVND(product.price)"></div>
+                    <div class="text-[10px] text-gray-400 mt-0.5" x-text="'MV: ' + formatPriceVND(product.compareAtPrice)"></div>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BẠC TÍCH TRỮ - Blue Theme -->
+    <section class="py-14 md:py-20 bg-gradient-to-br from-[#1565C0] to-[#0D47A1] relative overflow-hidden" x-data="{
+      products: [],
+      async init() {
+        try {
+          const res = await (await fetch('/api/products?filters[category][name][$eq]=BẠC TÍCH TRỮ&populate=images&pagination[pageSize]=4&sort[0]=price:asc')).json();
+          this.products = res.data || [];
+        } catch(e) { console.error(e); }
+      }
+    }">
+      <div class="max-w-7xl mx-auto px-4 relative z-10">
+        <div class="flex flex-col xl:flex-row-reverse gap-10 items-center">
+          <!-- Text -->
+          <div class="xl:w-1/3 text-white text-center xl:text-right">
+            <div class="inline-block bg-white/10 text-white/90 text-xs font-bold uppercase tracking-[0.3em] px-4 py-1.5 rounded-full mb-4 border border-white/20">Bạc 999</div>
+            <h2 class="font-heading text-4xl md:text-5xl mb-4 font-bold leading-tight italic">Bạc Tích Trữ</h2>
+            <div class="w-16 h-[2px] bg-accent mb-6 mx-auto xl:mr-0 xl:ml-auto"></div>
+            <p class="text-white/80 text-base mb-8 leading-relaxed">Bạc thỏi, bạc miếng nguyên chất 999 - Đầu tư an toàn, giá trị bền vững.</p>
+            <a href="/bac-tich-tru.html" class="inline-block border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-[#1565C0] transition-colors font-medium uppercase text-sm tracking-wider">
+              Xem tất cả Bạc tích trữ
+            </a>
+          </div>
+          <!-- Products -->
+          <div class="xl:w-2/3 w-full">
+            <div x-show="products.length === 0" class="text-center py-10 text-white/50">Đang tải sản phẩm...</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <template x-for="product in products" :key="product.id">
+                <div x-data="productCard" class="bg-white rounded-xl flex flex-col group relative hover:shadow-xl transition-all h-full">
+                  <span x-show="product.status === 'available'" class="absolute top-2 left-2 bg-blue-50 text-[#1565C0] text-[10px] px-2 py-1 rounded-full font-semibold z-10">Còn hàng</span>
+                  <span x-show="product.status === 'out_of_stock'" class="absolute top-2 left-2 bg-gray-100 text-gray-500 text-[10px] px-2 py-1 rounded-full font-semibold z-10">Hết hàng</span>
+                  <a :href="'/san-pham-chi-tiet.html?slug=' + product.slug" class="block p-4 flex-1">
+                    <div class="relative overflow-hidden aspect-square mb-3 rounded-lg bg-blue-50/30">
+                      <img :src="getStrapiMedia(product.images?.[0]?.url)" :alt="product.name" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
+                    </div>
+                    <h3 class="text-xs font-semibold text-primary line-clamp-2 leading-snug group-hover:text-[#1565C0] transition-colors" x-text="product.name"></h3>
+                  </a>
+                  <div class="px-4 pb-4 mt-auto border-t border-blue-50 pt-2">
+                    <div class="text-sm font-bold text-[#1565C0]" x-text="formatPriceVND(product.price)"></div>
+                    <div class="text-[10px] text-gray-400 mt-0.5" x-text="'MV: ' + formatPriceVND(product.compareAtPrice)"></div>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BẠC MỸ NGHỆ - Blue Theme Light -->
+    <section class="py-14 md:py-20 bg-white" x-data="{
+      products: [],
+      async init() {
+        try {
+          const res = await (await fetch('/api/products?filters[category][name][$eq]=BẠC MỸ NGHỆ&populate=images&pagination[pageSize]=8&sort[0]=price:desc')).json();
+          this.products = res.data || [];
+        } catch(e) { console.error(e); }
+      }
+    }">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <p class="text-[#1565C0] text-sm uppercase tracking-[0.3em] mb-2">Sưu tầm & Quà tặng</p>
+          <h2 class="font-heading text-3xl md:text-4xl text-primary italic">Bạc Mỹ Nghệ</h2>
+          <div class="w-16 h-[2px] bg-[#1565C0] mx-auto mt-4"></div>
+        </div>
+
+        <div x-show="products.length === 0" class="text-center py-10 text-gray-400">Đang tải sản phẩm...</div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+          <template x-for="product in products" :key="product.id">
+            <div x-data="productCard" class="bg-white rounded-xl border border-blue-100 flex flex-col group relative hover:shadow-lg hover:border-blue-200 transition-all h-full">
+              <span x-show="product.status === 'available'" class="absolute top-3 left-3 bg-blue-50 text-[#1565C0] text-[10px] px-2.5 py-1 rounded-full font-semibold z-10 uppercase tracking-wider">Còn hàng</span>
+              <span x-show="product.status === 'out_of_stock'" class="absolute top-3 left-3 bg-gray-100 text-gray-500 text-[10px] px-2.5 py-1 rounded-full font-semibold z-10 uppercase tracking-wider">Hết hàng</span>
+
+              <a :href="'/san-pham-chi-tiet.html?slug=' + product.slug" class="block p-5 flex-1">
+                <div class="relative overflow-hidden aspect-square mb-4 rounded-lg bg-blue-50/30">
+                  <img :src="getStrapiMedia(product.images?.[0]?.url)" :alt="product.name" class="w-full h-full object-contain group-hover:scale-110 transition-transform duration-500" />
+                </div>
+                <h3 class="text-xs md:text-sm font-semibold text-primary line-clamp-2 leading-snug group-hover:text-[#1565C0] transition-colors" x-text="product.name"></h3>
+                <p class="text-[10px] text-gray-400 mt-1" x-text="product.karatType"></p>
+              </a>
+
+              <div class="px-5 pb-5 mt-auto border-t border-blue-50 pt-3">
+                <div class="flex justify-between items-end">
+                  <div>
+                    <div class="text-sm font-bold text-[#1565C0] leading-none" x-text="formatPriceVND(product.price)"></div>
+                    <div class="text-[10px] text-gray-400 mt-0.5" x-text="'MV: ' + formatPriceVND(product.compareAtPrice)"></div>
+                  </div>
+                  <button @click="addToCart(product)" x-show="product.status === 'available'" class="p-2.5 text-gray-300 hover:text-white bg-white hover:bg-[#1565C0] border border-blue-100 hover:border-[#1565C0] rounded-full transition-all" title="Thêm vào giỏ">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+
+        <div class="text-center mt-10">
+          <a href="/bac-my-nghe.html" class="inline-block border-2 border-[#1565C0] text-[#1565C0] px-10 py-3 rounded-full font-medium hover:bg-[#1565C0] hover:text-white transition-colors text-sm uppercase tracking-wider">
+            Xem tất cả Bạc mỹ nghệ
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-14 md:py-20 bg-rose-light" x-data="{
+      testimonials: [],
+      async init() {
+        try {
+          const res = await (await fetch('/api/testimonials?pagination[pageSize]=6')).json();
+          this.testimonials = res.data || [];
+        } catch(e) { console.error(e); }
+      }
+    }">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <p class="text-accent text-sm uppercase tracking-[0.3em] mb-2">Cảm nhận</p>
+          <h2 class="font-heading text-3xl md:text-4xl text-primary italic">Khách Hàng Nói Gì</h2>
+          <div class="w-16 h-[2px] bg-accent mx-auto mt-4"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <template x-for="t in testimonials" :key="t.id">
+            <div class="bg-white rounded-2xl p-7 shadow-sm hover:shadow-md transition-shadow">
+              <div class="flex items-center gap-1 mb-4">
+                <template x-for="i in 5" :key="i">
+                  <svg :class="i <= t.rating ? 'text-accent' : 'text-gray-200'" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </template>
+              </div>
+              <p class="text-gray-600 text-sm italic mb-5 leading-relaxed" x-text="`&quot;${t.content}&quot;`"></p>
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-rose rounded-full flex items-center justify-center text-accent font-heading font-bold text-sm" x-text="t.customerName?.[0]?.toUpperCase()"></div>
+                <span class="text-primary font-medium text-sm" x-text="t.customerName"></span>
+              </div>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest Articles -->
+    <section class="py-14 md:py-20 bg-white" x-data="{
+      articles: [],
+      async init() {
+        try {
+          const res = await (await fetch('/api/articles?populate=coverImage&sort[0]=publishedDate:desc&pagination[pageSize]=3')).json();
+          this.articles = res.data || [];
+        } catch(e) { console.error(e); }
+      }
+    }">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center mb-12">
+          <p class="text-accent text-sm uppercase tracking-[0.3em] mb-2">Tin mới</p>
+          <h2 class="font-heading text-3xl md:text-4xl text-primary italic">Tin Tức & Kiến Thức</h2>
+          <div class="w-16 h-[2px] bg-accent mx-auto mt-4"></div>
+        </div>
+        <div class="grid md:grid-cols-3 gap-6">
+          <template x-for="a in articles" :key="a.id">
+            <a :href="'/bai-viet.html?slug=' + a.slug" class="bg-white rounded-2xl overflow-hidden border border-rose/20 hover:shadow-lg transition-shadow group">
+              <div class="aspect-video overflow-hidden">
+                <img :src="a.coverImage?.url ? (a.coverImage.url.startsWith('http') ? a.coverImage.url : 'http://localhost:1337' + a.coverImage.url) : '/placeholder.jpg'"
+                  :alt="a.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              </div>
+              <div class="p-6">
+                <div class="text-xs text-accent mb-2 uppercase tracking-wider" x-text="a.publishedDate ? new Date(a.publishedDate).toLocaleDateString('vi-VN') : ''"></div>
+                <h3 class="font-heading text-lg text-primary group-hover:text-accent transition-colors line-clamp-2 mb-2 italic" x-text="a.title"></h3>
+                <p class="text-sm text-gray-500 line-clamp-3 leading-relaxed" x-text="a.excerpt"></p>
+              </div>
+            </a>
+          </template>
+        </div>
+        <div class="text-center mt-10">
+          <a href="/tin-tuc.html" class="inline-block border-2 border-primary text-primary px-10 py-3 rounded-full font-medium hover:bg-primary hover:text-white transition-colors text-sm uppercase tracking-wider">
+            Xem tất cả tin tức
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-14 md:py-20 bg-rose" x-data="newsletter">
+      <div class="max-w-3xl mx-auto px-4 text-center">
+        <p class="text-accent text-sm uppercase tracking-[0.3em] mb-2">Luôn cập nhật</p>
+        <h2 class="font-heading text-3xl md:text-4xl text-primary mb-4 italic">Đăng Ký Nhận Tin</h2>
+        <p class="text-primary/70 mb-8 text-sm">Nhận thông tin bộ sưu tập mới, ưu đãi đặc biệt và giá vàng cập nhật</p>
+        <form @submit.prevent="subscribe()" class="flex gap-3 max-w-md mx-auto">
+          <input type="email" x-model="email" placeholder="Email của bạn" required
+            class="flex-1 px-5 py-3.5 rounded-full border border-rose-dark/30 focus:outline-none focus:ring-2 focus:ring-accent bg-white text-sm" />
+          <button type="submit" :disabled="submitting"
+            class="bg-accent text-white px-8 py-3.5 rounded-full font-medium hover:bg-accent-dark transition-colors disabled:opacity-50 text-sm tracking-wider uppercase">
+            <span x-show="!submitting">Đăng ký</span>
+            <span x-show="submitting">...</span>
+          </button>
+        </form>
+        <p x-show="status === 'success'" class="mt-4 text-green-600 text-sm" x-text="message"></p>
+        <p x-show="status === 'error'" class="mt-4 text-red-500 text-sm" x-text="message"></p>
+      </div>
+    </section>
+
+  </main>
+
+</Layout>

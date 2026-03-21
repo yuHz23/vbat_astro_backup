@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>API Documentation - Giá Vàng</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/logo.svg">
+
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#f5a623">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Giá Vàng">
+    <link rel="apple-touch-icon" href="/icons/icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Giá vàng hôm nay cập nhật nhanh nhất, chính xác nhất. Xem giá vàng SJC, vàng 9999, vàng thế giới XAU/USD theo thời gian thực. Cập nhật mỗi giờ.">
+    <meta name="keywords" content="giá vàng, giá vàng hôm nay, giá vàng SJC, vàng 9999, XAU/USD, cập nhật giá vàng, giá vàng mới nhất, giá vàng nhanh nhất, vàng thế giới, giá vàng trực tuyến">
+    <meta name="author" content="Gold Price Tracker">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="1 hours">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="API Documentation - Giá Vàng">
+    <meta property="og:description" content="Xem giá vàng SJC, vàng 9999, vàng thế giới cập nhật nhanh nhất, chính xác nhất.">
+    <meta property="og:locale" content="vi_VN">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="API Documentation">
+    <meta name="twitter:description" content="Xem giá vàng SJC, vàng 9999, vàng thế giới cập nhật nhanh nhất, chính xác nhất.">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.vang.today/vi">
+
+    <!-- Alternate language versions -->
+    <link rel="alternate" hreflang="vi" href="/vi/api">
+    <link rel="alternate" hreflang="en" href="/en/api">
+    <link rel="alternate" hreflang="x-default" href="/en/api">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/assets/css/style.css?v=1772470641">
+    </head>
+<body>
+
+<!-- Pull to Refresh Indicator -->
+<div class="pull-indicator" id="pullIndicator">
+    <svg viewBox="0 0 24 24">
+        <path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/>
+    </svg>
+</div>
+
+<!-- Mobile Top Menu -->
+<div class="mobile-top-menu">
+    <a href="/vi/" class="menu-title">Giá Vàng Hôm Nay</a>
+    <div class="menu-actions">
+        <!-- Language Switch -->
+        <div class="menu-lang-group">
+            <a href="/en/api" class="menu-lang-btn ">EN</a>
+            <a href="/vi/api" class="menu-lang-btn active">VI</a>
+        </div>
+        <!-- Action Buttons -->
+        <div class="menu-icon-group">
+            <button class="menu-icon-btn" onclick="openFilterPopup()" title="Lọc vàng">
+                <svg viewBox="0 0 24 24"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+            </button>
+            <button class="menu-icon-btn" onclick="openSharePopup()" title="Chia sẻ">
+                <svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/></svg>
+            </button>
+            <button class="menu-icon-btn menu-notify-btn" id="notifyBtnMobile" onclick="togglePushSubscription()" title="Nhận thông báo">
+                <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            </button>
+                        <a href="/vi/dang-nhap" class="menu-icon-btn menu-login-icon">
+                <svg viewBox="0 0 24 24"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
+            </a>
+                    </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <!-- Page Header Bar -->
+    <div class="page-top-bar">
+        <a href="/vi/" class="page-back-link">
+            <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </a>
+        <div class="page-top-actions">
+            <div class="lang-switch-desktop">
+                <a href="/en/api" class="lang-btn ">EN</a>
+                <a href="/vi/api" class="lang-btn active">VI</a>
+            </div>
+                        <a href="/vi/dang-nhap" class="login-btn">
+                <svg viewBox="0 0 24 24"><path d="M11 7L9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"/></svg>
+                Đăng nhập            </a>
+                    </div>
+    </div>
+
+    <div class="header">
+        <h1>Hướng Dẫn Tích Hợp API</h1>
+        <p style="color: #ccc; margin-top: 10px;">API miễn phí để lấy dữ liệu giá vàng theo thời gian thực.</p>
+    </div>
+
+    <!-- Endpoints -->
+    <div class="content">
+        <div class="section">
+            <h2>Endpoints</h2>
+
+            <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                <div>
+                    <span style="display: inline-block; padding: 3px 8px; background: #4caf50; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 10px;">GET</span>
+                    <code style="color: #ffd700;">/api/prices</code>
+                </div>
+                <p style="color: #ccc; margin-top: 10px; font-size: 14px;">
+                    Lấy giá vàng hiện tại của tất cả loại vàng                </p>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 15px; margin-bottom: 15px;">
+                <div>
+                    <span style="display: inline-block; padding: 3px 8px; background: #4caf50; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 10px;">GET</span>
+                    <code style="color: #ffd700;">/api/prices?type={code}</code>
+                </div>
+                <p style="color: #ccc; margin-top: 10px; font-size: 14px;">
+                    Lấy giá vàng của một loại cụ thể                </p>
+            </div>
+
+            <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 15px;">
+                <div>
+                    <span style="display: inline-block; padding: 3px 8px; background: #4caf50; border-radius: 4px; font-size: 12px; font-weight: 600; margin-right: 10px;">GET</span>
+                    <code style="color: #ffd700;">/api/prices?type={code}&days={n}</code>
+                </div>
+                <p style="color: #ccc; margin-top: 10px; font-size: 14px;">
+                    Lấy lịch sử giá n ngày                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Parameters -->
+    <div class="content">
+        <div class="section">
+            <h2>Tham số</h2>
+
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <tr>
+                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ffd700; font-size: 12px; text-transform: uppercase;">Tham số</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ffd700; font-size: 12px; text-transform: uppercase;">Kiểu</th>
+                            <th style="padding: 10px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); color: #ffd700; font-size: 12px; text-transform: uppercase;">Mô tả</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05);"><code style="color: #4caf50;">type</code></td>
+                            <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #888;">string</td>
+                            <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc;">Mã loại vàng (XAUUSD, SJL1L10, SJ9999...)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05);"><code style="color: #4caf50;">days</code></td>
+                            <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #888;">integer</td>
+                            <td style="padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #ccc;">Số ngày lịch sử (1-30)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px;"><code style="color: #4caf50;">action</code></td>
+                            <td style="padding: 10px; color: #888;">string</td>
+                            <td style="padding: 10px; color: #ccc;">"current" để lấy giá hiện tại, "summary" để lấy tóm tắt</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sample Response -->
+    <div class="content">
+        <div class="section">
+            <h2>Phản hồi mẫu</h2>
+
+            <pre style="background: rgba(0,0,0,0.5); border-radius: 8px; padding: 15px; overflow-x: auto; font-family: monospace; font-size: 12px; color: #4caf50;">{
+  "success": true,
+  "current_time": 1732456789,
+  "data": [
+    {
+      "type_code": "SJL1L10",
+      "buy": 85500000,
+      "sell": 88000000,
+      "change_buy": 100000,
+      "change_sell": 100000,
+      "update_time": 1732456789
+    }
+  ]
+}</pre>
+        </div>
+    </div>
+
+    <!-- Gold Types -->
+    <div class="content">
+        <div class="section">
+            <h2>Các loại vàng hỗ trợ</h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 10px;">
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">XAUUSD</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">Vàng Thế Giới (XAU/USD)</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">SJL1L10</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">SJC 9999</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">SJ9999</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">Nhẫn SJC</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">DOHNL</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">DOJI Hà Nội</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">DOHCML</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">DOJI HCM</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">DOJINHTV</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">DOJI Nữ Trang</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">BTSJC</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">Bảo Tín SJC</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">BT9999NTT</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">Bảo Tín 9999</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">PQHNVM</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">PNJ Hà Nội</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">PQHN24NTT</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">PNJ 24K</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">VNGSJC</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">VN Gold SJC</div>
+                </div>
+                                <div style="background: rgba(0,0,0,0.2); padding: 10px; border-radius: 6px;">
+                    <code style="color: #ffd700;">VIETTINMSJC</code>
+                    <div style="color: #888; font-size: 12px; margin-top: 4px;">Viettin SJC</div>
+                </div>
+                            </div>
+        </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="content">
+        <div class="section">
+            <h2>Lưu ý</h2>
+
+            <ul style="list-style: none; padding: 0;">
+                                <li style="padding: 8px 0; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <span style="color: #4caf50; margin-right: 8px;">✓</span>
+                    API hoàn toàn miễn phí, không cần API key                </li>
+                                <li style="padding: 8px 0; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <span style="color: #4caf50; margin-right: 8px;">✓</span>
+                    Dữ liệu được cập nhật mỗi 5 phút                </li>
+                                <li style="padding: 8px 0; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <span style="color: #4caf50; margin-right: 8px;">✓</span>
+                    Giá vàng trong nước tính bằng VND/lượng                </li>
+                                <li style="padding: 8px 0; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <span style="color: #4caf50; margin-right: 8px;">✓</span>
+                    Giá vàng thế giới (XAUUSD) tính bằng USD/oz                </li>
+                                <li style="padding: 8px 0; color: #ccc; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                    <span style="color: #4caf50; margin-right: 8px;">✓</span>
+                    CORS được bật, có thể gọi từ browser                </li>
+                            </ul>
+        </div>
+    </div>
+
+    <!-- Examples -->
+    <div class="content">
+        <div class="section">
+            <h2>Ví dụ sử dụng</h2>
+
+            <div style="margin-bottom: 15px;">
+                <p style="color: #888; font-size: 12px; margin-bottom: 5px;">JavaScript (fetch)</p>
+                <pre style="background: rgba(0,0,0,0.5); border-radius: 8px; padding: 15px; overflow-x: auto; font-family: monospace; font-size: 12px; color: #ccc;">fetch('/api/prices')
+  .then(res => res.json())
+  .then(data => console.log(data));</pre>
+            </div>
+
+            <div style="margin-bottom: 15px;">
+                <p style="color: #888; font-size: 12px; margin-bottom: 5px;">cURL</p>
+                <pre style="background: rgba(0,0,0,0.5); border-radius: 8px; padding: 15px; overflow-x: auto; font-family: monospace; font-size: 12px; color: #ccc;">curl "https://www.vang.today/api/prices?type=SJL1L10"</pre>
+            </div>
+
+            <div>
+                <p style="color: #888; font-size: 12px; margin-bottom: 5px;">PHP</p>
+                <pre style="background: rgba(0,0,0,0.5); border-radius: 8px; padding: 15px; overflow-x: auto; font-family: monospace; font-size: 12px; color: #ccc;">$data = json_decode(file_get_contents('https://www.vang.today/api/prices'));</pre>
+            </div>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/vi/" class="back-link">Quay lại trang chủ</a>
+    </div>
+
+
+    <div class="footer">
+                <div class="footer-links">
+            <a href="/vi/ban-quyen">© 2026</a>
+            <a href="/vi/">vang.today</a>
+            <span>|</span>
+            <a href="/vi/gioi-thieu">Giới thiệu</a>
+            <span>|</span>
+            <a href="/vi/telegram">Telegram Bot</a>
+            <span>|</span>
+            <a href="/vi/api">API</a>
+            <span>|</span>
+            <a href="/vi/blog">Blog</a>
+        </div>
+    </div>
+</div><!-- /.container -->
+
+<!-- Share Popup Overlay -->
+<div class="share-overlay" id="shareOverlay" onclick="closeSharePopup(event)">
+    <div class="share-popup" onclick="event.stopPropagation()">
+        <div class="share-popup-header">
+            <span class="share-popup-title">Chia sẻ giá vàng</span>
+            <button class="share-popup-close" onclick="closeSharePopup()">&times;</button>
+        </div>
+        <div class="share-options">
+            <button class="share-option share-facebook" onclick="shareToFacebook()">
+                <div class="share-option-icon">
+                    <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </div>
+                <span class="share-option-label">Facebook</span>
+            </button>
+            <button class="share-option share-twitter" onclick="shareToTwitter()">
+                <div class="share-option-icon">
+                    <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </div>
+                <span class="share-option-label">X</span>
+            </button>
+            <button class="share-option share-telegram" onclick="shareToTelegram()">
+                <div class="share-option-icon">
+                    <svg viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                </div>
+                <span class="share-option-label">Telegram</span>
+            </button>
+            <button class="share-option share-zalo" onclick="shareToZalo()">
+                <div class="share-option-icon">
+                    <svg viewBox="0 0 48 48"><path d="M12.5,42h23c4.6,0,8.5-3.9,8.5-8.5v-19C44,9.9,40.1,6,35.5,6h-23C7.9,6,4,9.9,4,14.5v19C4,38.1,7.9,42,12.5,42z M31.3,23.8l-4.1,5.7h4.3c0.4,0,0.7,0.3,0.7,0.7v0c0,0.4-0.3,0.7-0.7,0.7h-5.5c-0.4,0-0.6-0.3-0.6-0.6c0-0.2,0.1-0.3,0.2-0.5l4.1-5.7h-4c-0.4,0-0.7-0.3-0.7-0.7v0c0-0.4,0.3-0.7,0.7-0.7h5.1c0.4,0,0.6,0.3,0.6,0.6C31.4,23.5,31.4,23.7,31.3,23.8z M22.6,24.3l-1.8,6.5h-1.3c-0.4,0-0.8-0.2-1-0.6l-2.6-6.4l0,6.3c0,0.4-0.3,0.7-0.7,0.7h0c-0.4,0-0.7-0.3-0.7-0.7v-7.5c0-0.4,0.3-0.7,0.7-0.7h1.3c0.4,0,0.7,0.2,0.9,0.5l2.5,5.8l1.6-5.6c0.1-0.4,0.5-0.7,0.9-0.7h0.2c0.4,0,0.7,0.3,0.7,0.7v7.5c0,0.4-0.3,0.7-0.7,0.7h0c-0.4,0-0.7-0.3-0.7-0.7v-5.8H22.6z M37.4,24.9c0.4,0,0.7,0.3,0.7,0.7v0c0,0.4-0.3,0.7-0.7,0.7h-2.6v1.6h2.6c0.4,0,0.7,0.3,0.7,0.7v0c0,0.4-0.3,0.7-0.7,0.7h-3.3c-0.4,0-0.7-0.3-0.7-0.7v-5.9c0-0.4,0.3-0.7,0.7-0.7h3.3c0.4,0,0.7,0.3,0.7,0.7v0c0,0.4-0.3,0.7-0.7,0.7h-2.6v1.5H37.4z"/></svg>
+                </div>
+                <span class="share-option-label">Zalo</span>
+            </button>
+            <button class="share-option share-whatsapp" onclick="shareToWhatsApp()">
+                <div class="share-option-icon">
+                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </div>
+                <span class="share-option-label">WhatsApp</span>
+            </button>
+            <button class="share-option share-linkedin" onclick="shareToLinkedIn()">
+                <div class="share-option-icon">
+                    <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </div>
+                <span class="share-option-label">LinkedIn</span>
+            </button>
+            <button class="share-option share-email" onclick="shareToEmail()">
+                <div class="share-option-icon">
+                    <svg viewBox="0 0 24 24"><path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/></svg>
+                </div>
+                <span class="share-option-label">Email</span>
+            </button>
+            <button class="share-option share-copy" onclick="copyLink()">
+                <div class="share-option-icon">
+                    <svg viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                </div>
+                <span class="share-option-label">Sao chép link</span>
+            </button>
+        </div>
+        <div class="share-copy-section">
+            <input type="text" class="share-copy-input" id="shareUrl" value="https://www.vang.today/vi" readonly>
+            <button class="share-copy-btn" id="shareCopyBtn" onclick="copyLink()">Sao chép link</button>
+        </div>
+    </div>
+</div>
+
+<!-- Notification Popup Overlay -->
+<div class="notify-popup-overlay" id="notifyPopupOverlay" onclick="closeNotifyPopup()">
+    <div class="notify-popup" onclick="event.stopPropagation()">
+        <div class="notify-popup-icon" id="notifyPopupIcon">
+            <span id="notifyPopupEmoji"></span>
+        </div>
+        <div class="notify-popup-title" id="notifyPopupTitle"></div>
+        <div class="notify-popup-message" id="notifyPopupMessage"></div>
+        <div class="notify-popup-buttons" id="notifyPopupButtons">
+            <button class="notify-popup-btn" onclick="closeNotifyPopup()">OK</button>
+        </div>
+    </div>
+</div>
+
+<!-- Filter Popup Overlay -->
+<div class="filter-popup-overlay" id="filterPopupOverlay" onclick="closeFilterPopup(event)">
+    <div class="filter-popup" onclick="event.stopPropagation()">
+        <div class="filter-popup-header">
+            <span class="filter-popup-title">Lọc loại vàng</span>
+            <button class="filter-popup-close" onclick="closeFilterPopup()">&times;</button>
+        </div>
+        <div class="filter-select-actions">
+            <button class="filter-select-btn" onclick="selectAllFilter(true)">Chọn tất cả</button>
+            <button class="filter-select-btn" onclick="selectAllFilter(false)">Bỏ chọn</button>
+        </div>
+        <div class="filter-gold-types" id="filterGoldTypesList">
+            <!-- Populated by JavaScript -->
+        </div>
+        <div class="filter-popup-footer">
+            <button class="filter-popup-btn cancel" onclick="closeFilterPopup()">Hủy</button>
+            <button class="filter-popup-btn save" onclick="saveFilter()">Lưu</button>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Reload Button -->
+<button class="mobile-reload-btn" id="mobileReloadBtn" onclick="reloadPage()" aria-label="Reload">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+    </svg>
+</button>
+
+<!-- Chart Modal -->
+<div class="chart-modal" id="chartModal">
+    <div class="chart-modal-content">
+        <div class="chart-modal-header">
+            <h3 id="chartTitle">Price Chart</h3>
+            <button class="chart-modal-close" onclick="closeChart()">&times;</button>
+        </div>
+        <div class="chart-modal-body">
+            <div class="chart-container">
+                <canvas id="chartCanvas" class="chart-canvas"></canvas>
+            </div>
+            <div class="chart-legend">
+                <div class="chart-legend-item">
+                    <div class="chart-legend-color chart-legend-buy"></div>
+                    <span>Mua vào</span>
+                </div>
+                <div class="chart-legend-item">
+                    <div class="chart-legend-color chart-legend-sell"></div>
+                    <span>Bán ra</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Language texts for JS
+const LANG = 'vi';
+const TEXTS = {
+    update_at: 'Cập nhật lúc',
+    up: 'Tăng',
+    down: 'Giảm',
+    stable: 'Ổn định',
+    update_in: 'Cập nhật sau',
+    updating: 'Đang cập nhật...',
+    copied: 'Đã sao chép!',
+    copy_link: 'Sao chép link',
+    notify: 'Nhận thông báo',
+    select_gold_types: 'Chọn loại vàng muốn nhận thông báo',
+    select_all: 'Chọn tất cả',
+    deselect_all: 'Bỏ chọn tất cả',
+    notify_threshold: 'Thông báo khi giá biến động ≥100K VND hoặc ≥$1 USD',
+    cancel: 'Hủy',
+    subscribe: 'Đăng ký',
+    success: 'Thành công!',
+    error_occurred: 'Có lỗi xảy ra'
+};
+
+// Share functions
+function openSharePopup() {
+    document.getElementById('shareOverlay').classList.add('active');
+}
+
+function closeSharePopup(e) {
+    if (!e || e.target === document.getElementById('shareOverlay')) {
+        document.getElementById('shareOverlay').classList.remove('active');
+    }
+}
+
+function shareToFacebook() {
+    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
+}
+
+function shareToTwitter() {
+    window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href), '_blank');
+}
+
+function shareToTelegram() {
+    window.open('https://t.me/share/url?url=' + encodeURIComponent(window.location.href), '_blank');
+}
+
+function shareToZalo() {
+    window.open('https://zalo.me/share?url=' + encodeURIComponent(window.location.href), '_blank');
+}
+
+function shareToWhatsApp() {
+    window.open('https://wa.me/?text=' + encodeURIComponent(window.location.href), '_blank');
+}
+
+function shareToLinkedIn() {
+    window.open('https://www.linkedin.com/shareArticle?mini=true&url=' + encodeURIComponent(window.location.href), '_blank');
+}
+
+function shareToEmail() {
+    window.location.href = 'mailto:?subject=' + encodeURIComponent(document.title) + '&body=' + encodeURIComponent(window.location.href);
+}
+
+function copyLink() {
+    const input = document.getElementById('shareUrl');
+    input.select();
+    document.execCommand('copy');
+
+    const btn = document.getElementById('shareCopyBtn');
+    btn.textContent = TEXTS.copied;
+    btn.classList.add('copied');
+
+    setTimeout(() => {
+        btn.textContent = TEXTS.copy_link;
+        btn.classList.remove('copied');
+    }, 2000);
+}
+
+// Format VND in JavaScript
+function formatVNDJS(price) {
+    if (price == 0) return '-';
+    if (price < 10000) {
+        return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    return price.toLocaleString('vi-VN') + '<span class="currency-unit">₫</span>';
+}
+
+// Format change in JavaScript
+function formatChangeJS(change) {
+    if (change == 0) return '<span class="change-neutral">-</span>';
+    const sign = change > 0 ? '+' : '';
+    const cls = change > 0 ? 'change-up' : 'change-down';
+    const arrow = change > 0 ? '↑' : '↓';
+
+    if (Math.abs(change) < 10000) {
+        return `<span class="${cls}">${arrow} ${sign}${change.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`;
+    }
+    return `<span class="${cls}">${arrow} ${sign}${change.toLocaleString('vi-VN')}</span>`;
+}
+
+// Chart functions
+function showChart(title, data, isWorldGold) {
+    const modal = document.getElementById('chartModal');
+    const titleEl = document.getElementById('chartTitle');
+
+    titleEl.textContent = title;
+    modal.classList.add('show');
+
+    setTimeout(() => {
+        const canvas = document.getElementById('chartCanvas');
+        const ctx = canvas.getContext('2d');
+        const container = canvas.parentElement;
+        const containerWidth = container.offsetWidth || 560;
+
+        canvas.width = containerWidth * 2;
+        canvas.height = 300 * 2;
+        ctx.scale(2, 2);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        if (!data || data.length === 0) {
+            ctx.fillStyle = '#888';
+            ctx.font = '14px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('No data available', containerWidth / 2, 150);
+            return;
+        }
+
+        const labels = data.map(d => {
+            const date = new Date(d.date);
+            return `${date.getDate()}/${date.getMonth() + 1}`;
+        });
+        const buyPrices = data.map(d => d.buy);
+        const sellPrices = data.map(d => d.sell);
+
+        const allPrices = [...buyPrices, ...sellPrices].filter(p => p > 0);
+        const minPrice = Math.min(...allPrices);
+        const maxPrice = Math.max(...allPrices);
+        const priceRange = maxPrice - minPrice || 1;
+        const padding = priceRange * 0.1;
+
+        const chartWidth = containerWidth - 80;
+        const chartHeight = 240;
+        const chartLeft = 60;
+        const chartTop = 20;
+
+        // Draw grid lines
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+            const y = chartTop + (chartHeight / 4) * i;
+            ctx.beginPath();
+            ctx.moveTo(chartLeft, y);
+            ctx.lineTo(chartLeft + chartWidth, y);
+            ctx.stroke();
+
+            const price = maxPrice + padding - ((priceRange + padding * 2) / 4) * i;
+            ctx.fillStyle = '#888';
+            ctx.font = '10px sans-serif';
+            ctx.textAlign = 'right';
+            if (isWorldGold) {
+                ctx.fillText('$' + price.toFixed(0), chartLeft - 5, y + 3);
+            } else {
+                ctx.fillText((price / 1000000).toFixed(1) + 'M', chartLeft - 5, y + 3);
+            }
+        }
+
+        const pointSpacing = chartWidth / (data.length - 1 || 1);
+
+        function drawLine(prices, color) {
+            ctx.strokeStyle = color;
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+
+            let started = false;
+            prices.forEach((price, i) => {
+                if (price <= 0) return;
+                const x = chartLeft + i * pointSpacing;
+                const y = chartTop + chartHeight - ((price - minPrice + padding) / (priceRange + padding * 2)) * chartHeight;
+
+                if (!started) {
+                    ctx.moveTo(x, y);
+                    started = true;
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            });
+            ctx.stroke();
+
+            prices.forEach((price, i) => {
+                if (price <= 0) return;
+                const x = chartLeft + i * pointSpacing;
+                const y = chartTop + chartHeight - ((price - minPrice + padding) / (priceRange + padding * 2)) * chartHeight;
+
+                ctx.fillStyle = color;
+                ctx.beginPath();
+                ctx.arc(x, y, 4, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        drawLine(buyPrices, '#4caf50');
+        if (!isWorldGold) {
+            drawLine(sellPrices, '#f44336');
+        }
+
+        ctx.fillStyle = '#888';
+        ctx.font = '10px sans-serif';
+        ctx.textAlign = 'center';
+        labels.forEach((label, i) => {
+            const x = chartLeft + i * pointSpacing;
+            ctx.fillText(label, x, chartTop + chartHeight + 20);
+        });
+    }, 50);
+}
+
+function closeChart() {
+    document.getElementById('chartModal').classList.remove('show');
+}
+
+// Close modals
+document.addEventListener('click', function(e) {
+    const chartModal = document.getElementById('chartModal');
+    if (e.target === chartModal) {
+        closeChart();
+    }
+});
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        closeChart();
+        closeSharePopup();
+        closeFilterPopup();
+    }
+});
+
+// Mobile reload - always reload the entire page
+function reloadPage() {
+    const btn = document.getElementById('mobileReloadBtn');
+    btn.classList.add('loading');
+
+    // Small delay to show animation, then reload
+    setTimeout(() => {
+        location.reload();
+    }, 300);
+}
+
+// Pull to refresh
+let touchStartY = 0;
+let touchEndY = 0;
+let isPulling = false;
+const pullThreshold = 100;
+
+document.addEventListener('touchstart', function(e) {
+    if (window.scrollY === 0) {
+        touchStartY = e.touches[0].clientY;
+        isPulling = true;
+    }
+}, { passive: true });
+
+document.addEventListener('touchmove', function(e) {
+    if (!isPulling) return;
+    touchEndY = e.touches[0].clientY;
+    const pullDistance = touchEndY - touchStartY;
+
+    if (pullDistance > 0 && window.scrollY === 0) {
+        const indicator = document.getElementById('pullIndicator');
+        if (indicator) {
+            indicator.style.transform = `translateY(${Math.min(pullDistance / 2, 60)}px)`;
+            indicator.style.opacity = Math.min(pullDistance / pullThreshold, 1);
+
+            if (pullDistance > pullThreshold) {
+                indicator.classList.add('ready');
+            } else {
+                indicator.classList.remove('ready');
+            }
+        }
+    }
+}, { passive: true });
+
+document.addEventListener('touchend', function(e) {
+    if (!isPulling) return;
+    isPulling = false;
+
+    const pullDistance = touchEndY - touchStartY;
+    const indicator = document.getElementById('pullIndicator');
+
+    if (pullDistance > pullThreshold && window.scrollY === 0) {
+        if (indicator) {
+            indicator.classList.add('refreshing');
+        }
+
+        // Always reload the entire page
+        setTimeout(() => {
+            location.reload();
+        }, 300);
+    } else {
+        // Reset indicator if threshold not met
+        if (indicator) {
+            indicator.style.transform = 'translateY(0)';
+            indicator.style.opacity = '0';
+        }
+
+        touchStartY = 0;
+        touchEndY = 0;
+    }
+}, { passive: true });
+
+// Push Notification functions
+let vapidPublicKey = null;
+
+// Gold types for notifications
+const goldTypesForNotify = [
+    { code: 'XAUUSD', name: LANG === 'vi' ? 'Vàng Thế Giới' : 'World Gold', featured: true },
+    { code: 'SJL1L10', name: 'SJC 9999', featured: true },
+    { code: 'SJ9999', name: LANG === 'vi' ? 'SJC Nhẫn' : 'SJC Ring', featured: true },
+    { code: 'DOHNL', name: LANG === 'vi' ? 'DOJI Hà Nội' : 'DOJI Hanoi', featured: false },
+    { code: 'DOHCML', name: 'DOJI HCM', featured: false },
+    { code: 'BTSJC', name: LANG === 'vi' ? 'Bảo Tín SJC' : 'Bao Tin SJC', featured: false },
+    { code: 'BT9999NTT', name: LANG === 'vi' ? 'Bảo Tín 9999' : 'Bao Tin 9999', featured: false }
+];
+
+// Show notification popup
+function showNotifyPopup(title, message, type = 'info', buttons = null) {
+    const overlay = document.getElementById('notifyPopupOverlay');
+    const iconEl = document.getElementById('notifyPopupIcon');
+    const emojiEl = document.getElementById('notifyPopupEmoji');
+    const titleEl = document.getElementById('notifyPopupTitle');
+    const messageEl = document.getElementById('notifyPopupMessage');
+    const buttonsEl = document.getElementById('notifyPopupButtons');
+
+    iconEl.className = 'notify-popup-icon ' + type;
+    if (type === 'success') {
+        emojiEl.textContent = '🔔';
+    } else if (type === 'error') {
+        emojiEl.textContent = '❌';
+    } else if (type === 'confirm') {
+        emojiEl.textContent = '🔔';
+    } else {
+        emojiEl.textContent = '🔕';
+    }
+
+    titleEl.textContent = title;
+    messageEl.innerHTML = message;
+
+    if (buttons) {
+        buttonsEl.innerHTML = buttons;
+    } else {
+        buttonsEl.innerHTML = '<button class="notify-popup-btn" onclick="closeNotifyPopup()">OK</button>';
+    }
+
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+// Close notification popup
+function closeNotifyPopup() {
+    document.getElementById('notifyPopupOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+// Show subscribe confirm popup
+function showSubscribeConfirm() {
+    const title = LANG === 'vi' ? 'Chọn loại vàng muốn nhận thông báo' : 'Select Gold Types for Notifications';
+
+    let goldTypesHtml = `
+        <div class="notify-select-all">
+            <button onclick="selectAllGoldTypes(true)">${LANG === 'vi' ? 'Chọn tất cả' : 'Select all'}</button>
+            <button onclick="selectAllGoldTypes(false)">${LANG === 'vi' ? 'Bỏ chọn tất cả' : 'Deselect all'}</button>
+        </div>
+        <div class="notify-gold-types">
+    `;
+
+    goldTypesForNotify.forEach(type => {
+        const featuredClass = type.featured ? ' featured' : '';
+        goldTypesHtml += `
+            <div class="notify-gold-type-item${featuredClass}" onclick="toggleGoldTypeCheckbox('${type.code}')">
+                <input type="checkbox" id="goldType_${type.code}" value="${type.code}" ${type.featured ? 'checked' : ''}>
+                <label for="goldType_${type.code}">${type.name}</label>
+            </div>
+        `;
+    });
+
+    goldTypesHtml += '</div>';
+
+    const thresholdNote = LANG === 'vi' ? 'Thông báo khi giá biến động ≥100K VND hoặc ≥$1 USD' : 'Notify when price changes ≥100K VND or ≥$1 USD';
+    const message = goldTypesHtml + `<p style="font-size: 12px; color: #888; margin-top: 10px;">${thresholdNote}</p>`;
+
+    const cancelText = LANG === 'vi' ? 'Hủy' : 'Cancel';
+    const subscribeText = LANG === 'vi' ? 'Đăng ký' : 'Subscribe';
+    const buttons = `
+        <button class="notify-popup-btn cancel" onclick="closeNotifyPopup()">${cancelText}</button>
+        <button class="notify-popup-btn" onclick="doSubscribe()">${subscribeText}</button>
+    `;
+    showNotifyPopup(title, message, 'confirm', buttons);
+}
+
+// Toggle gold type checkbox
+function toggleGoldTypeCheckbox(code) {
+    const checkbox = document.getElementById('goldType_' + code);
+    if (checkbox) {
+        checkbox.checked = !checkbox.checked;
+    }
+}
+
+// Select/deselect all gold types
+function selectAllGoldTypes(select) {
+    goldTypesForNotify.forEach(type => {
+        const checkbox = document.getElementById('goldType_' + type.code);
+        if (checkbox) {
+            checkbox.checked = select;
+        }
+    });
+}
+
+// Get selected gold types
+function getSelectedGoldTypes() {
+    const selected = [];
+    goldTypesForNotify.forEach(type => {
+        const checkbox = document.getElementById('goldType_' + type.code);
+        if (checkbox && checkbox.checked) {
+            selected.push(type.code);
+        }
+    });
+    return selected;
+}
+
+// Show unsubscribe confirm popup
+function showUnsubscribeConfirm() {
+    const title = LANG === 'vi' ? 'Tắt thông báo?' : 'Disable Notifications?';
+    const message = LANG === 'vi' ? 'Bạn sẽ không nhận được thông báo khi giá vàng thay đổi nữa.' : 'You will no longer receive notifications when gold prices change.';
+    const noText = LANG === 'vi' ? 'Không' : 'No';
+    const yesText = LANG === 'vi' ? 'Đồng ý' : 'Yes';
+    const buttons = `
+        <button class="notify-popup-btn cancel" onclick="closeNotifyPopup()">${noText}</button>
+        <button class="notify-popup-btn" onclick="doUnsubscribe()">${yesText}</button>
+    `;
+    showNotifyPopup(title, message, 'info', buttons);
+}
+
+// Update button state
+function updateNotifyButtons(subscribed) {
+    const desktopBtn = document.getElementById('notifyBtnDesktop');
+    const mobileBtn = document.getElementById('notifyBtnMobile');
+
+    console.log('[Notify] Updating buttons. Subscribed:', subscribed);
+    console.log('[Notify] Desktop button found:', !!desktopBtn);
+    console.log('[Notify] Mobile button found:', !!mobileBtn);
+
+    if (desktopBtn) {
+        desktopBtn.classList.toggle('subscribed', subscribed);
+        console.log('[Notify] Desktop button classes:', desktopBtn.className);
+    }
+    if (mobileBtn) {
+        mobileBtn.classList.toggle('subscribed', subscribed);
+        console.log('[Notify] Mobile button classes:', mobileBtn.className);
+    }
+}
+
+// Check current subscription status
+async function checkPushSubscription() {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        console.log('[Notify] Service Worker or PushManager not supported');
+        return;
+    }
+
+    try {
+        const registration = await navigator.serviceWorker.ready;
+        const subscription = await registration.pushManager.getSubscription();
+        const isSubscribed = !!subscription;
+
+        console.log('[Notify] Subscription status:', isSubscribed);
+        updateNotifyButtons(isSubscribed);
+
+        return isSubscribed;
+    } catch (error) {
+        console.log('[Notify] Error checking subscription:', error);
+        return false;
+    }
+}
+
+// Convert URL safe base64 to Uint8Array
+function urlBase64ToUint8Array(base64String) {
+    const padding = '='.repeat((4 - base64String.length % 4) % 4);
+    const base64 = (base64String + padding).replace(/\-/g, '+').replace(/_/g, '/');
+    const rawData = window.atob(base64);
+    const outputArray = new Uint8Array(rawData.length);
+    for (let i = 0; i < rawData.length; ++i) {
+        outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+}
+
+// Toggle push subscription
+async function togglePushSubscription() {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+        showNotifyPopup(
+            LANG === 'vi' ? 'Không hỗ trợ' : 'Not Supported',
+            LANG === 'vi' ? 'Trình duyệt của bạn không hỗ trợ thông báo đẩy.' : 'Your browser does not support push notifications.',
+            'error'
+        );
+        return;
+    }
+
+    try {
+        const registration = await navigator.serviceWorker.ready;
+        const existingSubscription = await registration.pushManager.getSubscription();
+
+        if (existingSubscription) {
+            showUnsubscribeConfirm();
+        } else {
+            showSubscribeConfirm();
+        }
+    } catch (error) {
+        console.error('Push subscription error:', error);
+        showNotifyPopup(
+            LANG === 'vi' ? 'Có lỗi xảy ra' : 'Error Occurred',
+            LANG === 'vi' ? 'Không thể kiểm tra trạng thái thông báo.' : 'Could not check notification status.',
+            'error'
+        );
+    }
+}
+
+// Do actual subscribe
+async function doSubscribe() {
+    const selectedTypes = getSelectedGoldTypes();
+
+    if (selectedTypes.length === 0) {
+        showNotifyPopup(
+            LANG === 'vi' ? 'Chưa chọn loại vàng' : 'No Gold Types Selected',
+            LANG === 'vi' ? 'Vui lòng chọn ít nhất một loại vàng để nhận thông báo.' : 'Please select at least one gold type to receive notifications.',
+            'error'
+        );
+        return;
+    }
+
+    closeNotifyPopup();
+
+    try {
+        const permission = await Notification.requestPermission();
+
+        if (permission !== 'granted') {
+            showNotifyPopup(
+                LANG === 'vi' ? 'Cần quyền truy cập' : 'Permission Required',
+                LANG === 'vi' ? 'Vui lòng cho phép thông báo trong cài đặt trình duyệt để nhận cập nhật giá vàng.' : 'Please allow notifications in your browser settings to receive gold price updates.',
+                'error'
+            );
+            return;
+        }
+
+        const registration = await navigator.serviceWorker.ready;
+
+        if (!vapidPublicKey) {
+            const response = await fetch('/api/push-subscribe?vapid=1');
+            const data = await response.json();
+            if (!data.success) throw new Error('Failed to get VAPID key');
+            vapidPublicKey = data.publicKey;
+        }
+
+        const subscription = await registration.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(vapidPublicKey)
+        });
+
+        const subscriptionData = subscription.toJSON();
+        subscriptionData.gold_types = selectedTypes;
+
+        const saveResponse = await fetch('/api/push-subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(subscriptionData)
+        });
+
+        const saveData = await saveResponse.json();
+        if (!saveData.success) throw new Error('Failed to save subscription');
+
+        updateNotifyButtons(true);
+        const successMsg = (LANG === 'vi' ? 'Bạn đã đăng ký nhận thông báo cho ' : 'You have subscribed to notifications for ') + selectedTypes.length + (LANG === 'vi' ? ' loại vàng.' : ' gold types.');
+        showNotifyPopup(LANG === 'vi' ? 'Thành công!' : 'Success!', successMsg, 'success');
+    } catch (error) {
+        console.error('Subscribe error:', error);
+        showNotifyPopup(
+            LANG === 'vi' ? 'Có lỗi xảy ra' : 'Error Occurred',
+            LANG === 'vi' ? 'Không thể đăng ký thông báo. Vui lòng thử lại sau.' : 'Could not register for notifications. Please try again later.',
+            'error'
+        );
+    }
+}
+
+// Do actual unsubscribe
+async function doUnsubscribe() {
+    closeNotifyPopup();
+
+    try {
+        const registration = await navigator.serviceWorker.ready;
+        const existingSubscription = await registration.pushManager.getSubscription();
+
+        if (existingSubscription) {
+            await existingSubscription.unsubscribe();
+            await fetch('/api/push-subscribe', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ endpoint: existingSubscription.endpoint })
+            });
+        }
+
+        updateNotifyButtons(false);
+        showNotifyPopup(
+            LANG === 'vi' ? 'Đã tắt thông báo' : 'Notifications Disabled',
+            LANG === 'vi' ? 'Bạn đã hủy đăng ký nhận thông báo.' : 'You have unsubscribed from notifications.',
+            'info'
+        );
+    } catch (error) {
+        console.error('Unsubscribe error:', error);
+        showNotifyPopup(
+            LANG === 'vi' ? 'Có lỗi xảy ra' : 'Error Occurred',
+            LANG === 'vi' ? 'Không thể hủy đăng ký thông báo.' : 'Could not unsubscribe from notifications.',
+            'error'
+        );
+    }
+}
+
+// Register service worker and check subscription status
+if ('serviceWorker' in navigator) {
+    // Check subscription status immediately on page load
+    if (document.readyState === 'complete') {
+        checkPushSubscription();
+    } else {
+        window.addEventListener('load', () => {
+            checkPushSubscription();
+        });
+    }
+
+    // Also register service worker
+    navigator.serviceWorker.register('/sw.js')
+        .then(reg => {
+            console.log('[SW] Registered successfully');
+            // Check again after registration
+            checkPushSubscription();
+        })
+        .catch(err => console.log('[SW] Registration failed:', err));
+}
+
+// Gold Filter Functions
+let allGoldTypes = [];
+
+// Populate filter popup with gold types from current page
+function populateFilterPopup() {
+    const listItems = document.querySelectorAll('.list-item');
+    allGoldTypes = [];
+
+    console.log('[Filter] Found list items:', listItems.length);
+
+    listItems.forEach(item => {
+        const code = item.getAttribute('data-code');
+        const nameEl = item.querySelector('.list-name');
+        console.log('[Filter] Item code:', code, 'Name element:', nameEl);
+
+        if (code && nameEl) {
+            allGoldTypes.push({
+                code: code,
+                name: nameEl.textContent.trim()
+            });
+        }
+    });
+
+    console.log('[Filter] All gold types:', allGoldTypes);
+
+    const filterList = document.getElementById('filterGoldTypesList');
+    if (filterList && allGoldTypes.length > 0) {
+        const savedFilter = getSavedFilter();
+        let html = '';
+
+        allGoldTypes.forEach(type => {
+            const isChecked = savedFilter.length === 0 || savedFilter.includes(type.code);
+            html += `
+                <div class="filter-gold-type-item" onclick="toggleFilterCheckbox('${type.code}')">
+                    <input type="checkbox" id="filterType_${type.code}" value="${type.code}" ${isChecked ? 'checked' : ''}>
+                    <label for="filterType_${type.code}">${type.name} (${type.code})</label>
+                </div>
+            `;
+        });
+
+        filterList.innerHTML = html;
+        console.log('[Filter] Populated filter list with', allGoldTypes.length, 'items');
+    } else {
+        console.log('[Filter] Cannot populate - filterList:', !!filterList, 'types count:', allGoldTypes.length);
+    }
+}
+
+// Open filter popup
+function openFilterPopup() {
+    console.log('[Filter] Opening filter popup...');
+    populateFilterPopup();
+    const overlay = document.getElementById('filterPopupOverlay');
+    console.log('[Filter] Overlay element:', overlay);
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    console.log('[Filter] Popup should be visible now');
+}
+
+// Close filter popup
+function closeFilterPopup(e) {
+    if (!e || e.target === document.getElementById('filterPopupOverlay')) {
+        document.getElementById('filterPopupOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Toggle filter checkbox
+function toggleFilterCheckbox(code) {
+    const checkbox = document.getElementById('filterType_' + code);
+    if (checkbox) {
+        checkbox.checked = !checkbox.checked;
+    }
+}
+
+// Select/Deselect all filters
+function selectAllFilter(select) {
+    allGoldTypes.forEach(type => {
+        const checkbox = document.getElementById('filterType_' + type.code);
+        if (checkbox) {
+            checkbox.checked = select;
+        }
+    });
+}
+
+// Get saved filter from localStorage
+function getSavedFilter() {
+    const saved = localStorage.getItem('goldTypeFilter');
+    return saved ? JSON.parse(saved) : [];
+}
+
+// Save filter and apply
+function saveFilter() {
+    const selectedTypes = [];
+    allGoldTypes.forEach(type => {
+        const checkbox = document.getElementById('filterType_' + type.code);
+        if (checkbox && checkbox.checked) {
+            selectedTypes.push(type.code);
+        }
+    });
+
+    // Save to localStorage
+    localStorage.setItem('goldTypeFilter', JSON.stringify(selectedTypes));
+
+    // Apply filter
+    applyFilter(selectedTypes);
+
+    // Close popup
+    closeFilterPopup();
+}
+
+// Apply filter to gold list
+function applyFilter(selectedTypes) {
+    const listItems = document.querySelectorAll('.list-item');
+
+    // If no types selected or all types selected, show all
+    const showAll = selectedTypes.length === 0 || selectedTypes.length === allGoldTypes.length;
+
+    listItems.forEach(item => {
+        const code = item.getAttribute('data-code');
+        if (showAll || selectedTypes.includes(code)) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+// Apply filter on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const savedFilter = getSavedFilter();
+    if (savedFilter.length > 0) {
+        // Wait a bit for the page to fully render
+        setTimeout(() => {
+            populateFilterPopup();
+            applyFilter(savedFilter);
+        }, 100);
+    }
+});
+</script>
+
+
+</body>
+</html>

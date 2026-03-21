@@ -1,0 +1,87 @@
+<!-- Header (Home variant - Jewelry) -->
+<header x-data="header" class="bg-white/90 backdrop-blur-md text-primary sticky top-0 z-50 border-b border-rose/30">
+  <div class="max-w-[1400px] mx-auto px-4 py-3 flex items-center justify-between">
+
+    <!-- Logo & Nav Container (Left) -->
+    <div class="flex items-center gap-10">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 border border-accent/30 rounded-full flex items-center justify-center bg-accent/5">
+          <span class="text-accent font-heading font-bold tracking-wider">VA</span>
+        </div>
+        <div>
+          <div class="font-heading text-lg font-bold tracking-widest text-primary uppercase leading-none">Vàng An Thịnh</div>
+          <div class="text-[10px] tracking-[0.3em] text-accent uppercase">Jewelry & Luxury</div>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden lg:flex items-center gap-8 text-[13px] font-semibold tracking-wider uppercase">
+        <!-- Vàng Dropdown -->
+        <div class="relative group/vang">
+          <button class="flex items-center gap-1 text-primary/70 hover:text-[#B31B24] transition-colors">
+            Vàng
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="invisible opacity-0 group-hover/vang:visible group-hover/vang:opacity-100 transition-all duration-150 absolute left-0 top-full mt-3 w-[280px] bg-white rounded-xl shadow-2xl border border-red-100 p-4 z-50">
+            <div class="text-left space-y-1">
+              <a href="/vang-tich-tru.html" class="block px-4 py-2.5 rounded-lg hover:bg-red-50 text-sm font-semibold text-gray-800 hover:text-[#B31B24] transition-colors normal-case">Vàng tích trữ</a>
+              <a href="/bang-gia-vang.html" class="block px-4 py-2.5 rounded-lg hover:bg-red-50 text-sm font-semibold text-gray-800 hover:text-[#B31B24] transition-colors normal-case">Bảng giá vàng</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bạc Dropdown -->
+        <div class="relative group/bac">
+          <button class="flex items-center gap-1 text-primary/70 hover:text-[#1565C0] transition-colors">
+            Bạc
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div class="invisible opacity-0 group-hover/bac:visible group-hover/bac:opacity-100 transition-all duration-150 absolute left-0 top-full mt-3 w-[280px] bg-white rounded-xl shadow-2xl border border-blue-100 p-4 z-50">
+            <div class="text-left space-y-1">
+              <a href="/bac-tich-tru.html" class="block px-4 py-2.5 rounded-lg hover:bg-blue-50 text-sm font-semibold text-gray-800 hover:text-[#1565C0] transition-colors normal-case">Bạc tích trữ</a>
+              <a href="/bac-my-nghe.html" class="block px-4 py-2.5 rounded-lg hover:bg-blue-50 text-sm font-semibold text-gray-800 hover:text-[#1565C0] transition-colors normal-case">Bạc mỹ nghệ</a>
+              <a href="/bang-gia-bac.html" class="block px-4 py-2.5 rounded-lg hover:bg-blue-50 text-sm font-semibold text-gray-800 hover:text-[#1565C0] transition-colors normal-case">Bảng giá bạc</a>
+            </div>
+          </div>
+        </div>
+
+        <a href="/he-thong-cua-hang.html" class="text-primary/70 hover:text-accent transition-colors">Cửa hàng</a>
+      </nav>
+    </div>
+
+    <!-- Actions (Right) -->
+    <div class="flex items-center gap-4 border-l border-rose/30 pl-4">
+      <button @click="$store.ui.toggleSearch()" class="p-2 text-primary/60 hover:text-accent transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </button>
+      <a href="/tai-khoan.html" class="p-2 text-primary/60 hover:text-accent transition-colors">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        </svg>
+      </a>
+      <button @click="$store.cart.toggle()" class="p-2 text-primary/60 hover:text-accent transition-colors relative group">
+        <div class="relative">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+          <span x-show="$store.cart.count > 0" x-text="$store.cart.count" class="absolute -top-2 -right-2 bg-accent text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center"></span>
+        </div>
+      </button>
+      <button @click="$store.ui.toggleMobileMenu()" class="lg:hidden p-2 text-primary hover:text-accent transition-colors">
+        <svg x-show="!$store.ui.mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <svg x-show="$store.ui.mobileMenuOpen" x-cloak class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
