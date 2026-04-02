@@ -1,43 +1,51 @@
-<!-- Live Ticker Bar -->
-<div class="bg-gray-50 border-b border-gray-200 text-xs py-2 shadow-sm relative z-40" x-data="{
-  goldText: 'Đang tải...',
-  silverText: 'Đang tải...',
+<!-- Live Price Ticker - marquee right to left -->
+<div class="bg-primary text-white text-xs py-2 overflow-hidden relative z-40 border-b border-white/10" x-data="{
+  items: [],
   async init() {
     try {
-      const res = await (await fetch('/api/gold-prices?filters[isActive][$eq]=true&sort[0]=sortOrder:asc&pagination[pageSize]=10')).json();
-      if(res.data && res.data.length > 0) {
-        const gold = res.data.find(d => d.goldType === 'SJC') || res.data[0];
-        const silver = res.data.find(d => d.goldType === 'Bạc') || res.data.find(d => d.goldType === 'Nhẫn 9999') || res.data[1] || res.data[0];
-
-        this.goldText = `MV: ${new Intl.NumberFormat('vi-VN').format(gold.buyPrice)} / BR: ${new Intl.NumberFormat('vi-VN').format(gold.sellPrice)} Vnđ`;
-        this.silverText = `MV: ${new Intl.NumberFormat('vi-VN').format(silver.buyPrice)} / BR: ${new Intl.NumberFormat('vi-VN').format(silver.sellPrice)} Vnđ`;
+      const res = await (await fetch('/api/gold-prices?filters[isActive][$eq]=true&sort[0]=sortOrder:asc&pagination[pageSize]=20')).json();
+      if (res.data && res.data.length > 0) {
+        this.items = res.data.map(d => ({
+          name: d.goldName || d.goldType,
+          buy: d.buyPrice,
+          sell: d.sellPrice,
+          unit: d.unit || 'VNĐ/lượng',
+        }));
       }
     } catch(e) {}
-  }
+  },
+  fmt(n) { return new Intl.NumberFormat('en-US').format(n); }
 }">
-  <div class="max-w-[1400px] mx-auto px-4 flex justify-between items-center gap-8 overflow-hidden">
-    <!-- Gold Ticker -->
-    <div class="flex items-center gap-3 whitespace-nowrap min-w-0 pr-4 border-r border-gray-300">
-      <span class="font-bold text-pq-red">Vàng</span>
-      <span class="font-medium text-gray-700" x-text="goldText"></span>
-      <span class="bg-green-100 text-green-700 px-1.5 py-0.5 rounded flex items-center gap-0.5 text-[10px] font-bold">
-        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-        0.27%
-      </span>
-    </div>
-
-    <!-- Silver Ticker -->
-    <div class="flex items-center gap-3 whitespace-nowrap flex-1 overflow-hidden min-w-0">
-      <span class="font-bold text-gray-800">Bạc</span>
-      <span class="font-medium text-gray-700" x-text="silverText"></span>
-      <span class="bg-red-100 text-red-700 px-1.5 py-0.5 rounded flex items-center gap-0.5 text-[10px] font-bold">
-        <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-        </svg>
-        1.5%
-      </span>
+  <div class="flex items-center" x-show="items.length > 0">
+    <div class="ticker-track flex items-center gap-0 whitespace-nowrap">
+      <!-- Duplicate content for seamless loop -->
+      <template x-for="pass in [0, 1]" :key="pass">
+        <div class="flex items-center gap-0 shrink-0">
+          <template x-for="(item, i) in items" :key="pass + '-' + i">
+            <div class="flex items-center gap-2 px-5 border-r border-white/20">
+              <span class="font-bold text-accent" x-text="item.name"></span>
+              <span class="text-gray-300">MV:</span>
+              <span class="font-semibold text-green-300" x-text="fmt(item.buy)"></span>
+              <span class="text-gray-400">|</span>
+              <span class="text-gray-300">BR:</span>
+              <span class="font-semibold text-red-300" x-text="fmt(item.sell)"></span>
+            </div>
+          </template>
+        </div>
+      </template>
     </div>
   </div>
 </div>
+
+<style>
+  .ticker-track {
+    animation: ticker-scroll 120s linear infinite;
+  }
+  .ticker-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>

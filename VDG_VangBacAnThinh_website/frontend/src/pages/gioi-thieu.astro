@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
-<Layout title="Giới Thiệu - Vàng An Thịnh" description="Vàng An Thịnh - Thương hiệu mua bán vàng bạc uy tín hàng đầu tại Hà Nội. Tìm hiểu về sứ mệnh và giá trị của chúng tôi." variant="inner">
+<Layout title="Giới Thiệu - Vàng An Thịnh" description="Vàng An Thịnh - Thương hiệu mua bán vàng bạc uy tín hàng đầu tại Hà Nội. Tìm hiểu về sứ mệnh và giá trị của chúng tôi." variant="home">
   <main>
 
     <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Giới thiệu"}]} />
@@ -11,9 +11,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     <!-- Hero -->
     <section class="bg-gradient-to-r from-primary to-primary-light py-20">
       <div class="max-w-7xl mx-auto px-4 text-center">
-        <div class="w-24 h-24 bg-accent rounded-full flex items-center justify-center mx-auto mb-6">
-          <span class="text-white font-heading text-3xl font-bold">VA</span>
-        </div>
+        <img src="/logo-icon.png" alt="An Thịnh" class="w-24 h-24 rounded-full object-cover mx-auto mb-6" />
         <h1 class="font-heading text-4xl md:text-5xl text-accent mb-4 gold-shimmer">VÀNG AN THỊNH</h1>
         <p class="text-text-light text-xl md:text-2xl max-w-2xl mx-auto">Thương hiệu mua bán vàng bạc uy tín hàng đầu tại Hà Nội</p>
       </div>

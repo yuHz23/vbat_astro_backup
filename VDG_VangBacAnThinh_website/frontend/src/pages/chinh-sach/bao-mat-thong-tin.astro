@@ -1,0 +1,100 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PolicySidebar from '../../components/PolicySidebar.astro';
+---
+
+<Layout title="Chính sách bảo mật thông tin - Vàng An Thịnh" variant="home">
+  <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Chính sách"}, {label: "Chính sách bảo mật thông tin"}]} />
+
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-[280px_1fr] gap-8">
+        <PolicySidebar current="/chinh-sach/bao-mat-thong-tin.html" />
+
+        <article class="bg-white rounded-xl shadow-sm p-8 lg:p-10">
+          <h1 class="font-heading text-3xl text-primary mb-8">Chính sách bảo mật thông tin khách hàng</h1>
+
+          <div class="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
+
+            <p>An Thịnh cam kết bảo mật thông tin cá nhân của khách hàng theo đúng quy định pháp luật. Chính sách bảo mật này giải thích cách chúng tôi thu thập, sử dụng, bảo vệ và chia sẻ thông tin cá nhân của bạn khi bạn sử dụng website và dịch vụ của chúng tôi.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">1. Mục đích thu thập thông tin cá nhân</h2>
+            <p>An Thịnh thu thập thông tin cá nhân của khách hàng nhằm các mục đích sau:</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Xử lý đơn hàng, giao hàng và cung cấp dịch vụ cho khách hàng.</li>
+              <li>Xác minh danh tính khách hàng theo quy định pháp luật đối với giao dịch vàng bạc.</li>
+              <li>Gửi thông tin cập nhật về giá vàng, chương trình khuyến mãi và sản phẩm mới (khi khách hàng đồng ý nhận).</li>
+              <li>Hỗ trợ khách hàng, giải quyết khiếu nại và yêu cầu bảo hành.</li>
+              <li>Cải thiện chất lượng dịch vụ và trải nghiệm mua sắm trên website.</li>
+              <li>Tuân thủ các yêu cầu pháp luật về giao dịch vàng bạc và phòng chống rửa tiền.</li>
+            </ul>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">2. Phạm vi thu thập thông tin</h2>
+            <p>Chúng tôi có thể thu thập các thông tin sau khi khách hàng đăng ký tài khoản, đặt hàng hoặc sử dụng dịch vụ:</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Thông tin cá nhân:</strong> Họ tên, ngày sinh, số điện thoại, địa chỉ email, địa chỉ giao hàng.</li>
+              <li><strong>Giấy tờ tùy thân:</strong> Số CMND/CCCD/Hộ chiếu (theo quy định pháp luật đối với giao dịch vàng bạc).</li>
+              <li><strong>Thông tin giao dịch:</strong> Lịch sử mua hàng, phương thức thanh toán, giá trị giao dịch.</li>
+              <li><strong>Thông tin tài khoản:</strong> Tên đăng nhập, mật khẩu (được mã hóa), lịch sử đăng nhập.</li>
+              <li><strong>Thông tin kỹ thuật:</strong> Địa chỉ IP, loại trình duyệt, thiết bị, thời gian truy cập website.</li>
+            </ul>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">3. Thời gian lưu trữ thông tin</h2>
+            <p>Thông tin cá nhân của khách hàng được lưu trữ cho đến khi khách hàng yêu cầu hủy bỏ hoặc khách hàng tự đăng nhập và thực hiện hủy bỏ. Trong mọi trường hợp, thông tin cá nhân của khách hàng sẽ được bảo mật trên máy chủ của An Thịnh.</p>
+            <p>Đối với thông tin liên quan đến giao dịch vàng bạc, chúng tôi có nghĩa vụ lưu trữ theo thời hạn quy định của pháp luật.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">4. Không sử dụng thông tin cá nhân của khách hàng ngoài mục đích</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Không sử dụng, chuyển giao, cung cấp hoặc tiết lộ thông tin cá nhân cho bên thứ ba nào khác khi không có sự đồng ý của khách hàng.</li>
+              <li>Không sử dụng thông tin cá nhân của khách hàng ngoài các mục đích đã nêu tại Mục 1, trừ khi có sự đồng ý của khách hàng hoặc theo yêu cầu của cơ quan nhà nước có thẩm quyền.</li>
+              <li>Trong trường hợp phải cung cấp thông tin theo yêu cầu của cơ quan nhà nước có thẩm quyền, An Thịnh sẽ thông báo cho khách hàng trừ khi pháp luật quy định khác.</li>
+            </ul>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">5. Trường hợp chia sẻ thông tin</h2>
+            <p>Thông tin khách hàng chỉ được chia sẻ trong các trường hợp sau:</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Có sự đồng ý của khách hàng.</li>
+              <li>Theo yêu cầu của cơ quan nhà nước có thẩm quyền theo quy định pháp luật.</li>
+              <li>Cung cấp cho đối tác vận chuyển (chỉ bao gồm tên, số điện thoại, địa chỉ giao hàng) để thực hiện giao hàng.</li>
+              <li>Để bảo vệ quyền lợi hợp pháp của An Thịnh trong trường hợp xảy ra tranh chấp.</li>
+            </ul>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">6. Thông tin liên hệ</h2>
+            <p>Nếu khách hàng có bất kỳ câu hỏi hoặc yêu cầu nào liên quan đến chính sách bảo mật, vui lòng liên hệ:</p>
+            <ul class="list-none space-y-2">
+              <li><strong>Vàng An Thịnh</strong></li>
+              <li>Địa chỉ: Số 141P Trương Định, P. Tương Mai, Q. Hoàng Mai, Hà Nội</li>
+              <li>Hotline: <a href="tel:0363778889" class="text-accent font-semibold">0363 778 889</a></li>
+              <li>Email: <a href="mailto:ankhangthinh2025@gmail.com" class="text-accent">ankhangthinh2025@gmail.com</a></li>
+            </ul>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">7. Phương tiện và công cụ để người dùng tiếp cận và chỉnh sửa dữ liệu</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Khách hàng có quyền tự kiểm tra, cập nhật, điều chỉnh hoặc hủy bỏ thông tin cá nhân bằng cách đăng nhập vào tài khoản trên website và chỉnh sửa trong phần thông tin cá nhân.</li>
+              <li>Khách hàng có quyền yêu cầu An Thịnh xóa toàn bộ thông tin cá nhân khỏi hệ thống bằng cách gửi yêu cầu qua email hoặc liên hệ trực tiếp.</li>
+              <li>Khách hàng có quyền từ chối nhận thông tin quảng cáo, khuyến mãi bằng cách hủy đăng ký nhận email/SMS trong phần cài đặt tài khoản.</li>
+            </ul>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">8. Cam kết bảo mật thông tin cá nhân khách hàng</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Thông tin cá nhân của khách hàng được bảo mật tuyệt đối theo chính sách bảo vệ thông tin cá nhân của An Thịnh.</li>
+              <li>An Thịnh sử dụng các biện pháp kỹ thuật và tổ chức phù hợp để bảo vệ thông tin cá nhân khỏi truy cập trái phép, mất mát, tiết lộ hoặc thay đổi.</li>
+              <li>Trong trường hợp máy chủ lưu trữ thông tin bị tấn công dẫn đến mất dữ liệu cá nhân khách hàng, An Thịnh sẽ chịu trách nhiệm thông báo cho khách hàng và cơ quan chức năng trong thời gian sớm nhất.</li>
+              <li>An Thịnh cam kết tuân thủ Luật An ninh mạng, Nghị định về bảo vệ dữ liệu cá nhân và các quy định pháp luật liên quan.</li>
+              <li>Các cá nhân, tổ chức vi phạm quy định bảo mật thông tin khách hàng sẽ bị xử lý theo quy định của pháp luật Việt Nam.</li>
+            </ul>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">9. Thay đổi chính sách và điều khoản bổ sung</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>An Thịnh có quyền thay đổi, bổ sung chính sách bảo mật bất cứ lúc nào. Mọi thay đổi sẽ được cập nhật công khai trên website.</li>
+              <li>Việc khách hàng tiếp tục sử dụng website sau khi chính sách được cập nhật đồng nghĩa với việc chấp nhận các thay đổi đó.</li>
+              <li>Trong trường hợp có sự thay đổi lớn ảnh hưởng đến quyền lợi khách hàng, An Thịnh sẽ gửi thông báo qua email hoặc trên website.</li>
+            </ul>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

@@ -9,5 +9,23 @@ export default {
                 middlewares: [],
             },
         },
+        {
+            method: 'POST',
+            path: '/kyc/ocr',
+            handler: 'kyc.ocr',
+            config: {
+                policies: [],
+                middlewares: [],
+            },
+        },
+        {
+            method: 'POST',
+            path: '/kyc/manual-submit',
+            handler: 'kyc.manualSubmit',
+            config: {
+                policies: [],
+                middlewares: [],
+            },
+        },
     ],
 };

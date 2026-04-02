@@ -1,0 +1,90 @@
+name: Deploy VDG Astro 2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'VDG_VangBacAnThinh_website/**'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 147.93.157.156 >> ~/.ssh/known_hosts
+
+      - name: Upload backend
+        run: |
+          SERVER="root@147.93.157.156"
+          REMOTE="/root/VDG_astro_2/VDG_VangBacAnThinh_website"
+          scp -i ~/.ssh/id_ed25519 -r VDG_VangBacAnThinh_website/backend/src $SERVER:$REMOTE/backend/
+          scp -i ~/.ssh/id_ed25519 -r VDG_VangBacAnThinh_website/backend/config $SERVER:$REMOTE/backend/
+          scp -i ~/.ssh/id_ed25519 VDG_VangBacAnThinh_website/backend/package.json $SERVER:$REMOTE/backend/
+          scp -i ~/.ssh/id_ed25519 VDG_VangBacAnThinh_website/backend/tsconfig.json $SERVER:$REMOTE/backend/
+
+      - name: Upload frontend
+        run: |
+          SERVER="root@147.93.157.156"
+          REMOTE="/root/VDG_astro_2/VDG_VangBacAnThinh_website"
+          scp -i ~/.ssh/id_ed25519 -r VDG_VangBacAnThinh_website/frontend/src $SERVER:$REMOTE/frontend/
+          scp -i ~/.ssh/id_ed25519 -r VDG_VangBacAnThinh_website/frontend/public $SERVER:$REMOTE/frontend/
+          scp -i ~/.ssh/id_ed25519 VDG_VangBacAnThinh_website/frontend/package.json $SERVER:$REMOTE/frontend/
+          scp -i ~/.ssh/id_ed25519 VDG_VangBacAnThinh_website/frontend/astro.config.mjs $SERVER:$REMOTE/frontend/
+          scp -i ~/.ssh/id_ed25519 VDG_VangBacAnThinh_website/frontend/tsconfig.json $SERVER:$REMOTE/frontend/
+
+      - name: Install deps, rebuild, and restart services
+        run: |
+          ssh -i ~/.ssh/id_ed25519 root@147.93.157.156 'bash -s' << 'EOF'
+          export FNM_PATH="/root/.local/share/fnm"
+          export PATH="$FNM_PATH:$PATH"
+          eval "$(fnm env --shell bash)"
+          fnm use 22
+
+          REMOTE="/root/VDG_astro_2/VDG_VangBacAnThinh_website"
+
+          # Ensure uploads dir exists
+          mkdir -p $REMOTE/backend/public/uploads
+
+          # Install backend deps
+          cd $REMOTE/backend
+          npm install
+          npm rebuild better-sqlite3
+          npm run build
+
+          # Install frontend deps
+          cd $REMOTE/frontend
+          npm install
+
+          # Kill old processes
+          kill $(cat /tmp/strapi2.pid 2>/dev/null) 2>/dev/null
+          kill $(cat /tmp/astro2.pid 2>/dev/null) 2>/dev/null
+          sleep 2
+
+          # Start Strapi
+          cd $REMOTE/backend
+          nohup npm run develop > /tmp/strapi2.log 2>&1 &
+          echo $! > /tmp/strapi2.pid
+
+          # Wait for Strapi
+          for i in $(seq 1 90); do
+            if curl -s http://localhost:1337 > /dev/null 2>&1; then
+              echo "Strapi ready!"
+              break
+            fi
+            sleep 2
+          done
+
+          # Start Astro on port 3330
+          cd $REMOTE/frontend
+          nohup npm run dev -- --host 0.0.0.0 --port 3330 > /tmp/astro2.log 2>&1 &
+          echo $! > /tmp/astro2.pid
+          sleep 3
+          echo "Deploy complete!"
+          EOF

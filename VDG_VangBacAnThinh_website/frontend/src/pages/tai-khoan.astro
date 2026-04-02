@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Tài khoản - Vàng An Thịnh" description="Quản lý tài khoản Vàng An Thịnh - Thông tin cá nhân, đơn hàng, xác minh KYC." variant="inner">
+<Layout title="Tài khoản - Vàng An Thịnh" description="Quản lý tài khoản Vàng An Thịnh - Thông tin cá nhân, đơn hàng, xác minh KYC." variant="home">
   <main class="min-h-screen bg-light-bg" x-data="profilePage">
 
     <!-- Loading State -->
@@ -31,10 +31,10 @@ import Layout from '../layouts/Layout.astro';
             <div class="text-center mb-6">
               <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-3">
                 <span class="text-accent font-heading text-3xl font-bold"
-                  x-text="user?.username?.[0]?.toUpperCase() || 'U'"></span>
+                  x-text="(user?.fullName || user?.username)?.[0]?.toUpperCase() || 'U'"></span>
               </div>
-              <h2 class="font-semibold text-primary text-lg" x-text="user?.username"></h2>
-              <p class="text-sm text-gray-500" x-text="user?.email"></p>
+              <h2 class="font-semibold text-primary text-lg" x-text="user?.fullName || user?.username"></h2>
+              <p class="text-sm text-gray-500" x-text="user?.phone || user?.username"></p>
             </div>
 
             <!-- Nav Links -->
@@ -42,14 +42,9 @@ import Layout from '../layouts/Layout.astro';
               <a href="/tai-khoan"
                 class="block py-2 px-3 rounded-lg bg-light-bg text-accent font-medium text-sm">Thông tin tài khoản</a>
               <a href="/don-hang"
-                class="block py-2 px-3 rounded-lg hover:bg-light-bg text-primary text-sm transition-colors">Lịch sử đơn
-                hàng</a>
-              <a href="/yeu-thich.html"
-                class="block py-2 px-3 rounded-lg hover:bg-light-bg text-primary text-sm transition-colors">Sản phẩm yêu
-                thích</a>
+                class="block py-2 px-3 rounded-lg hover:bg-light-bg text-primary text-sm transition-colors">Lịch sử đơn hàng</a>
               <button @click="logout()"
-                class="w-full text-left py-2 px-3 rounded-lg hover:bg-red-50 text-error text-sm transition-colors">Đăng
-                xuất</button>
+                class="w-full text-left py-2 px-3 rounded-lg hover:bg-red-50 text-error text-sm transition-colors">Đăng xuất</button>
             </nav>
           </div>
         </div>
@@ -59,82 +54,240 @@ import Layout from '../layouts/Layout.astro';
 
           <!-- User Info Card -->
           <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="font-heading text-lg text-primary font-semibold mb-4">Thông tin cá nhân</h3>
-            <div class="space-y-4">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-heading text-lg text-primary font-semibold">Thông tin cá nhân</h3>
+              <button @click="editing = !editing" class="p-2 text-gray-400 hover:text-accent transition-colors" title="Chỉnh sửa">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- View Mode -->
+            <div x-show="!editing" class="space-y-4">
               <div class="flex items-center justify-between py-3 border-b border-gray-100">
-                <span class="text-sm text-gray-500">Tên đăng nhập</span>
-                <span class="text-sm font-medium text-primary" x-text="user?.username"></span>
+                <span class="text-sm text-gray-500">Họ và tên</span>
+                <span class="text-sm font-medium text-primary" x-text="user?.fullName || '—'"></span>
               </div>
               <div class="flex items-center justify-between py-3 border-b border-gray-100">
-                <span class="text-sm text-gray-500">Email</span>
-                <span class="text-sm font-medium text-primary" x-text="user?.email"></span>
+                <span class="text-sm text-gray-500">Số điện thoại</span>
+                <span class="text-sm font-medium text-primary" x-text="user?.phone || user?.username || '—'"></span>
               </div>
               <div class="flex items-center justify-between py-3">
                 <span class="text-sm text-gray-500">Trạng thái KYC</span>
                 <span class="text-sm font-semibold px-3 py-1 rounded-full" :class="kycColor" x-text="kycLabel"></span>
               </div>
             </div>
+
+            <!-- Edit Mode -->
+            <div x-show="editing" x-transition class="space-y-4">
+              <div x-show="editError" class="bg-red-50 border border-red-200 text-error text-sm rounded-lg p-3" x-text="editError"></div>
+              <div x-show="editSuccess" class="bg-green-50 border border-green-200 text-green-700 text-sm rounded-lg p-3">Cập nhật thành công!</div>
+              <div>
+                <label class="block text-sm text-gray-500 mb-1">Họ và tên</label>
+                <input type="text" x-model="editName" class="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent" />
+              </div>
+              <div>
+                <label class="block text-sm text-gray-500 mb-1">Số điện thoại</label>
+                <input type="tel" :value="user?.phone || user?.username" readonly class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm bg-gray-50 text-gray-500 cursor-not-allowed" />
+              </div>
+              <div class="flex gap-3">
+                <button @click="saveProfile()" :disabled="saving" class="bg-accent text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-accent-dark transition-colors disabled:opacity-50">
+                  <span x-show="!saving">Lưu thay đổi</span>
+                  <span x-show="saving">Đang lưu...</span>
+                </button>
+                <button @click="editing = false; editError = ''; editSuccess = false;" class="px-6 py-2.5 rounded-lg text-sm text-gray-500 hover:bg-gray-100 transition-colors">Hủy</button>
+              </div>
+            </div>
           </div>
 
-          <!-- KYC Upload Section -->
+          <!-- KYC Section -->
           <div class="bg-white rounded-xl shadow-sm p-6">
-            <h3 class="font-heading text-lg text-primary font-semibold mb-2">Xác minh danh tính (KYC)</h3>
-            <p class="text-sm text-gray-500 mb-4">Xác minh danh tính để mua bán vàng miếng và sử dụng đầy đủ tính năng.
-            </p>
+            <h3 class="font-heading text-lg text-primary font-semibold mb-2">Xác minh CCCD</h3>
+            <p class="text-sm text-gray-500 mb-4">Chụp hoặc tải lên ảnh CCCD mặt trước - hệ thống sẽ tự động nhận dạng và điền thông tin.</p>
 
+            <!-- Verified -->
             <template x-if="user?.kycStatus === 'verified'">
-              <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-sm text-green-700">
-                Tài khoản của bạn đã được xác minh thành công.
+              <div>
+                <div class="bg-green-50 border border-green-200 rounded-lg p-4 text-sm text-green-700 mb-4">
+                  <div class="flex items-center gap-2 mb-2">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                    <span class="font-semibold">Đã xác minh thành công</span>
+                  </div>
+                </div>
+                <!-- Show extracted info -->
+                <div class="space-y-3 text-sm">
+                  <div x-show="user?.cccdNumber" class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-500">Số CCCD</span>
+                    <span class="font-medium text-primary" x-text="user?.cccdNumber"></span>
+                  </div>
+                  <div x-show="user?.fullName" class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-500">Họ và tên</span>
+                    <span class="font-medium text-primary" x-text="user?.fullName"></span>
+                  </div>
+                  <div x-show="user?.dateOfBirth" class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-500">Ngày sinh</span>
+                    <span class="font-medium text-primary" x-text="user?.dateOfBirth"></span>
+                  </div>
+                  <div x-show="user?.gender" class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-500">Giới tính</span>
+                    <span class="font-medium text-primary" x-text="user?.gender"></span>
+                  </div>
+                  <div x-show="user?.placeOfOrigin" class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-500">Quê quán</span>
+                    <span class="font-medium text-primary text-right max-w-[60%]" x-text="user?.placeOfOrigin"></span>
+                  </div>
+                  <div x-show="user?.placeOfResidence" class="flex justify-between py-2 border-b border-gray-100">
+                    <span class="text-gray-500">Nơi thường trú</span>
+                    <span class="font-medium text-primary text-right max-w-[60%]" x-text="user?.placeOfResidence"></span>
+                  </div>
+                  <div x-show="user?.cccdExpiry" class="flex justify-between py-2">
+                    <span class="text-gray-500">Ngày hết hạn</span>
+                    <span class="font-medium text-primary" x-text="user?.cccdExpiry"></span>
+                  </div>
+                </div>
               </div>
             </template>
 
+            <!-- Pending -->
             <template x-if="user?.kycStatus === 'pending'">
               <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 text-sm text-yellow-700">
-                Hồ sơ KYC của bạn đang được xem xét. Vui lòng chờ trong 1-2 ngày làm việc.
+                Hồ sơ KYC đang được xem xét. Vui lòng chờ xác minh.
               </div>
             </template>
 
-            <template x-if="user?.kycStatus === 'rejected'">
-              <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700 mb-4">
-                Hồ sơ KYC bị từ chối. Vui lòng gửi lại với thông tin chính xác.
-              </div>
-            </template>
-
+            <!-- Not verified / Rejected - Upload Form -->
             <template x-if="!user?.kycStatus || user?.kycStatus === 'rejected'">
-              <div class="mt-4">
+              <div>
+                <template x-if="user?.kycStatus === 'rejected'">
+                  <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-sm text-red-700 mb-4">
+                    Hồ sơ bị từ chối. Vui lòng chụp lại ảnh CCCD rõ ràng hơn.
+                  </div>
+                </template>
+
                 <div x-show="kycError" class="mb-3 bg-red-50 text-error text-sm p-3 rounded-lg" x-text="kycError"></div>
-                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center" @dragover.prevent
-                  @drop.prevent="handleFileDrop">
-                  <svg class="w-12 h-12 mx-auto mb-3 text-gray-400" fill="none" stroke="currentColor"
-                    viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <p class="text-sm text-gray-500 mb-3">Tải lên 2 ảnh CMND/CCCD (mặt trước và mặt sau) hoặc kéo thả vào
-                    đây</p>
+                <div x-show="kycSuccess" class="mb-3 bg-green-50 text-green-700 text-sm p-3 rounded-lg" x-text="kycSuccess"></div>
 
-                  <input type="file" id="kycFiles" multiple accept="image/jpeg, image/png" class="hidden"
-                    @change="handleFileSelect" />
-                  <label for="kycFiles"
-                    class="cursor-pointer inline-block bg-accent text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-accent-dark transition-colors">
-                    Chọn tệp tải lên
-                  </label>
+                <!-- Step 1: Upload or Camera CCCD -->
+                <div x-show="!kycExtracted" class="space-y-4">
 
-                  <p class="text-xs text-gray-400 mt-2">Đã chọn: <span x-text="kycFiles.length"></span>/2 ảnh</p>
+                  <!-- Camera live view -->
+                  <div x-show="cameraActive" class="relative">
+                    <div class="relative rounded-xl overflow-hidden bg-black aspect-[3/2]">
+                      <video x-ref="cameraVideo" autoplay playsinline muted class="w-full h-full object-cover"></video>
+                      <!-- CCCD overlay guide -->
+                      <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                        <div class="rounded-xl w-[85%] h-[75%] relative transition-colors duration-300"
+                          :class="autoDetectReady ? 'border-2 border-green-400 shadow-[0_0_20px_rgba(74,222,128,0.4)]' : 'border-2 border-white/60'">
+                          <div class="absolute top-0 left-0 w-6 h-6 border-t-3 border-l-3 rounded-tl-lg transition-colors" :class="autoDetectReady ? 'border-green-400' : 'border-accent'"></div>
+                          <div class="absolute top-0 right-0 w-6 h-6 border-t-3 border-r-3 rounded-tr-lg transition-colors" :class="autoDetectReady ? 'border-green-400' : 'border-accent'"></div>
+                          <div class="absolute bottom-0 left-0 w-6 h-6 border-b-3 border-l-3 rounded-bl-lg transition-colors" :class="autoDetectReady ? 'border-green-400' : 'border-accent'"></div>
+                          <div class="absolute bottom-0 right-0 w-6 h-6 border-b-3 border-r-3 rounded-br-lg transition-colors" :class="autoDetectReady ? 'border-green-400' : 'border-accent'"></div>
+                        </div>
+                      </div>
+                      <!-- Status indicator -->
+                      <div class="absolute bottom-3 left-1/2 -translate-x-1/2 px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors"
+                        :class="autoDetectReady ? 'bg-green-500 text-white' : 'bg-black/60 text-white/80'"
+                        x-text="autoDetectStatus"></div>
+                    </div>
+                    <canvas x-ref="cameraCanvas" class="hidden"></canvas>
+                    <div class="flex gap-3 mt-3">
+                      <button @click="capturePhoto()" :disabled="submittingKyc"
+                        class="flex-1 bg-accent text-white py-3 rounded-lg text-sm font-bold hover:bg-accent-dark transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>
+                        <span x-show="!submittingKyc">Chụp ảnh</span>
+                        <span x-show="submittingKyc">Đang nhận dạng...</span>
+                      </button>
+                      <button @click="stopCamera()" class="px-5 py-3 rounded-lg text-sm text-gray-500 bg-gray-100 hover:bg-gray-200 transition-colors">Hủy</button>
+                    </div>
+                  </div>
+
+                  <!-- Upload / Camera buttons -->
+                  <div x-show="!cameraActive" class="space-y-3">
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-accent transition-colors"
+                      @dragover.prevent @drop.prevent="handleCccdDrop($event)">
+                      <svg class="w-10 h-10 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                      </svg>
+                      <p class="text-sm text-gray-600 font-medium mb-1">Chụp hoặc tải lên ảnh CCCD mặt trước</p>
+                      <p class="text-xs text-gray-400 mb-4">Hệ thống sẽ tự nhận dạng và điền thông tin</p>
+
+                      <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                        <!-- Live Camera -->
+                        <button @click="startCamera()"
+                          class="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-light transition-colors">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                          Mở camera
+                        </button>
+                        <!-- File upload -->
+                        <label for="cccdFile"
+                          class="inline-flex items-center gap-2 bg-accent text-white px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-accent-dark transition-colors cursor-pointer">
+                          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                          <span x-show="!submittingKyc">Chọn ảnh</span>
+                          <span x-show="submittingKyc">Đang xử lý...</span>
+                        </label>
+                        <input type="file" id="cccdFile" accept="image/*" class="hidden" @change="handleCccdSelect($event)" />
+                      </div>
+                    </div>
+
+                    <!-- Preview -->
+                    <div x-show="cccdPreview" class="text-center">
+                      <img :src="cccdPreview" class="max-w-sm mx-auto rounded-lg border shadow-sm" alt="Preview CCCD" />
+                    </div>
+                  </div>
                 </div>
 
-                <button x-show="kycFiles.length > 0" @click="uploadKyc" :disabled="submittingKyc"
-                  class="mt-4 w-full bg-primary text-white py-3 rounded-lg text-sm font-bold hover:bg-accent transition-colors disabled:opacity-50 flex justify-center gap-2 items-center">
-                  <span x-show="!submittingKyc">Gửi yêu cầu xác minh</span>
-                  <span x-show="submittingKyc" class="flex gap-2 items-center">
-                    <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
-                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z">
-                      </path>
-                    </svg>
-                    Đang gửi...
-                  </span>
-                </button>
+                <!-- Step 2: Review & confirm extracted data -->
+                <div x-show="kycExtracted" class="space-y-4">
+                  <div class="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm text-blue-700">
+                    Vui lòng kiểm tra và bổ sung thông tin bên dưới, sau đó bấm "Xác nhận".
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label class="block text-xs text-gray-500 mb-1">Số CCCD <span class="text-red-500">*</span></label>
+                      <input type="text" x-model="kycForm.cccdNumber" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent" />
+                    </div>
+                    <div>
+                      <label class="block text-xs text-gray-500 mb-1">Họ và tên <span class="text-red-500">*</span></label>
+                      <input type="text" x-model="kycForm.fullName" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent" />
+                    </div>
+                    <div>
+                      <label class="block text-xs text-gray-500 mb-1">Ngày sinh</label>
+                      <input type="text" x-model="kycForm.dateOfBirth" placeholder="DD/MM/YYYY" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent" />
+                    </div>
+                    <div>
+                      <label class="block text-xs text-gray-500 mb-1">Giới tính</label>
+                      <select x-model="kycForm.gender" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent">
+                        <option value="">Chọn</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                      </select>
+                    </div>
+                    <div class="md:col-span-2">
+                      <label class="block text-xs text-gray-500 mb-1">Quê quán</label>
+                      <input type="text" x-model="kycForm.placeOfOrigin" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent" />
+                    </div>
+                    <div class="md:col-span-2">
+                      <label class="block text-xs text-gray-500 mb-1">Nơi thường trú</label>
+                      <input type="text" x-model="kycForm.placeOfResidence" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent" />
+                    </div>
+                    <div>
+                      <label class="block text-xs text-gray-500 mb-1">Ngày hết hạn CCCD</label>
+                      <input type="text" x-model="kycForm.cccdExpiry" placeholder="DD/MM/YYYY" class="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-accent" />
+                    </div>
+                  </div>
+
+                  <div class="flex gap-3 pt-2">
+                    <button @click="confirmKyc()" :disabled="submittingKyc"
+                      class="flex-1 bg-accent text-white py-3 rounded-lg text-sm font-bold hover:bg-accent-dark transition-colors disabled:opacity-50">
+                      <span x-show="!submittingKyc">Xác nhận thông tin</span>
+                      <span x-show="submittingKyc">Đang gửi...</span>
+                    </button>
+                    <button @click="kycExtracted = false; cccdPreview = ''" class="px-6 py-3 rounded-lg text-sm text-gray-500 hover:bg-gray-100">Chụp lại</button>
+                  </div>
+                </div>
               </div>
             </template>
           </div>
@@ -145,26 +298,22 @@ import Layout from '../layouts/Layout.astro';
             <div class="grid grid-cols-2 gap-4">
               <a href="/don-hang"
                 class="flex items-center gap-3 p-4 border border-gray-100 rounded-lg hover:border-accent hover:bg-light-bg transition-colors group">
-                <svg class="w-8 h-8 text-gray-400 group-hover:text-accent transition-colors" fill="none"
-                  stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                <svg class="w-8 h-8 text-gray-400 group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
                 </svg>
                 <div>
                   <p class="text-sm font-medium text-primary">Đơn hàng</p>
                   <p class="text-xs text-gray-500">Xem lịch sử mua hàng</p>
                 </div>
               </a>
-              <a href="/yeu-thich.html"
+              <a href="/san-pham.html"
                 class="flex items-center gap-3 p-4 border border-gray-100 rounded-lg hover:border-accent hover:bg-light-bg transition-colors group">
-                <svg class="w-8 h-8 text-gray-400 group-hover:text-accent transition-colors" fill="none"
-                  stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                <svg class="w-8 h-8 text-gray-400 group-hover:text-accent transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
                 <div>
-                  <p class="text-sm font-medium text-primary">Yêu thích</p>
-                  <p class="text-xs text-gray-500">Sản phẩm đã lưu</p>
+                  <p class="text-sm font-medium text-primary">Mua sắm</p>
+                  <p class="text-xs text-gray-500">Khám phá sản phẩm</p>
                 </div>
               </a>
             </div>

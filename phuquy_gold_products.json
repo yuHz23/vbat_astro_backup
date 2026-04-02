@@ -1,0 +1,549 @@
+{
+  "scrape_date": "2026-03-23 14:59:15",
+  "source": "https://phuquy.com.vn/vang",
+  "total_products": 10,
+  "products": [
+    {
+      "name": "NHẪN TRÒN PHÚ QUÝ (999.9) 10 CHỈ",
+      "slug": "nhan-tron-tron-9999-10",
+      "detail_url": "https://phuquy.com.vn/san-pham/nhan-tron-tron-9999-10",
+      "sell_price": "163,000,000",
+      "buy_price": "160,000,000",
+      "status": "Đặt hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+        "https://minio.phuquy.com.vn/images/product/1765420725738_nhan-tron-phu-quy-10-chi-03%20(2).webp",
+        "https://minio.phuquy.com.vn/images/product/1773912418319_nhan-tron-phu-quy-10-chi-01-MS.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "NPQ10",
+          "Khối lượng": "37.5 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "10 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nNHẪN TRÒN PHÚ QUÝ (999.9) 10 CHỈ\n\nLà biểu tượng của sự thịnh vượng và tài lộc, nhẫn tròn Phú Quý không chỉ là phụ kiện làm đẹp tinh tế, đồng thời là phương thức đầu tư - tích lũy thông minh mang giá trị bền vững.\n\n- Được chế tác từ vàng 999.9, đảm bảo tuổi vàng và định lượng;\n\n- Đa dạng định lượng: 0,5 chỉ, 1 chỉ, 2 chỉ, 3 chỉ, 5 chỉ và 10 chỉ; phù hợp với nhu cầu sử dụng và điều kiện của khách hàng;\n\n- Ứng dụng công nghệ thẻ tiên tiến và hiện đại giúp bảo toàn trọn vẹn giá trị, đồng thời mang lại sự tiện lợi trong quá trình cất giữ;\n\n- Dễ dàng thanh khoản, mua bán thuận tiện.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: NPQ10\n\nChất liệu: Vàng 999.9\n\nĐịnh lượng: 10 chỉ\n\nKhối lượng: 37,5 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420725738_nhan-tron-phu-quy-10-chi-03%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773912418319_nhan-tron-phu-quy-10-chi-01-MS.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    },
+    {
+      "name": "NHẪN TRÒN PHÚ QUÝ 999,9 1 CHỈ",
+      "slug": "nhan-tron-tron-9999-1",
+      "detail_url": "https://phuquy.com.vn/san-pham/nhan-tron-tron-9999-1",
+      "sell_price": "16,300,000",
+      "buy_price": "16,000,000",
+      "status": "Đặt hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+        "https://minio.phuquy.com.vn/images/product/1765420639650_nhan-tron-phu-quy-1-chi-04%20(2).webp",
+        "https://minio.phuquy.com.vn/images/product/1773912244490_nhan-tron-phu-quy-1-chi-01-MS.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "NPQ1.0",
+          "Khối lượng": "3.75 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "1 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nNHẪN TRÒN PHÚ QUÝ 999,9 1 CHỈ\n\nLà biểu tượng của sự thịnh vượng và tài lộc, nhẫn tròn Phú Quý không chỉ là phụ kiện làm đẹp tinh tế, đồng thời là phương thức đầu tư - tích lũy thông minh mang giá trị bền vững.\n\n- Được chế tác từ vàng 999,9, đảm bảo tuổi vàng và định lượng;\n\n- Đa dạng định lượng: 0,5 chỉ, 1 chỉ, 2 chỉ, 3 chỉ, 5 chỉ và 10 chỉ; phù hợp với nhu cầu sử dụng và điều kiện của khách hàng;\n\n- Ứng dụng công nghệ thẻ tiên tiến và hiện đại giúp bảo toàn trọn vẹn giá trị, đồng thời mang lại sự tiện lợi trong quá trình cất giữ;\n\n- Dễ dàng thanh khoản, mua bán thuận tiện.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: NPQ1\n\nChất liệu: Vàng 999,9\n\nĐịnh lượng: 1 chỉ\n\nKhối lượng: 3,75 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420639650_nhan-tron-phu-quy-1-chi-04%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773912244490_nhan-tron-phu-quy-1-chi-01-MS.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    },
+    {
+      "name": "THẦN TÀI PHÚ QUÝ 999,9 1 CHỈ",
+      "slug": "than-tai-phu-quy-1-chi-9999",
+      "detail_url": "https://phuquy.com.vn/san-pham/than-tai-phu-quy-1-chi-9999",
+      "sell_price": "16,300,000",
+      "buy_price": "16,000,000",
+      "status": "Còn hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+        "https://minio.phuquy.com.vn/images/product/1773110266692_than%20tai%202_2.webp",
+        "https://minio.phuquy.com.vn/images/product/1773110266989_than%20tai%203_2.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "TPQ1C",
+          "Khối lượng": "3.75 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "1 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nTHẦN TÀI PHÚ QUÝ 999,9 1 CHỈ\n\nPhú Quý chính thức giới thiệu Vàng tích trữ Thần Tài Phú Quý 999,9 (1 chỉ), sản phẩm được phát triển dựa trên cảm hứng nghệ thuật dân gian, kết hợp kỹ thuật chế tác hiện đại và giá trị vàng nguyên chất.\n\nSản phẩm được chế tác từ vàng 999,9, đáp ứng tiêu chuẩn tích lũy, phù hợp với nhu cầu lưu giữ giá trị lâu dài. Thiết kế dạng thẻ nhựa gọn gàng, hiện đại giúp sản phẩm thuận tiện trong bảo quản, và biếu tặng.\n\nVới sự kết hợp giữa giá trị vật chất, thiết kế chỉn chu và nguồn cảm hứng nghệ thuật, Vàng miếng Thần Tài Phú Quý 1 chỉ là lựa chọn phù hợp cho khách hàng tìm kiếm một sản phẩm vàng mang tính sưu tầm, tích trữ hoặc quà tặng trang nhã trong các dịp đầu năm mới.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: TPQ1C\n\nChất liệu: Vàng 999,9\n\nĐịnh lượng: 1 chỉ\n\nTrọng lượng: 3,75 gram\n\nXuất xứ: VIỆT NAM",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266692_than%20tai%202_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266989_than%20tai%203_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    },
+    {
+      "name": "THẦN TÀI PHÚ QUÝ 999,9 1 LƯỢNG",
+      "slug": "phu-quy-1-luong-9999",
+      "detail_url": "https://phuquy.com.vn/san-pham/phu-quy-1-luong-9999",
+      "sell_price": "163,000,000",
+      "buy_price": "160,000,000",
+      "status": "Đặt hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+        "https://minio.phuquy.com.vn/images/product/1765420967273_dong-vang-than-tai-phu-quy-1-luong-03%20(2).webp",
+        "https://minio.phuquy.com.vn/images/product/1765420967596_dong-vang-than-tai-phu-quy-1-luong-04%20(2).webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "TPQ1L",
+          "Khối lượng": "37.5 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "10 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nTHẦN TÀI PHÚ QUÝ 999,9 1 LƯỢNG\n\nSản phẩm Thần tài Phú Quý 1 lượng nổi bật với biểu tượng ông Thần tài, từng chi tiết trên sản phẩm được sản xuất trên công nghệ dập nổi 3D cùng bao bì thẻ tiêu chuẩn quốc tế hiện đại, giúp giữ nguyên giá trị về thẩm mỹ và chất lượng sản phẩm.\n\nBên ngoài bao bao bì được dán Tem Đảm Bảo mang đến những sản phẩm với chất lượng trọn vẹn, đảm bảo quyền lợi của khách hàng, chống hàng giả, hàng nhái.\n\nSản phẩm được thiết kế và sản xuất độc quyền bởi Phú Quý.\n\nTHÔNG TIN SẢN PHẨM\n\nMã sản phẩm: TPQ1L\n\nChất liệu: Vàng 999,9\n\nĐịnh lượng: 1 lượng\n\nKhối lượng: 37,5 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420967273_dong-vang-than-tai-phu-quy-1-luong-03%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420967596_dong-vang-than-tai-phu-quy-1-luong-04%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420967983_dong-vang-than-tai-phu-quy-1-luong-05%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    },
+    {
+      "name": "ĐỒNG VÀNG RỒNG PHÚ QUÝ 999,9 1 LƯỢNG",
+      "slug": "vang-rong-phu-quy-9999-1l",
+      "detail_url": "https://phuquy.com.vn/san-pham/vang-rong-phu-quy-9999-1l",
+      "sell_price": "163,000,000",
+      "buy_price": "160,000,000",
+      "status": "Đặt hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+        "https://minio.phuquy.com.vn/images/product/1773110032552_card%20vang%20rong_1.webp",
+        "https://minio.phuquy.com.vn/images/product/1773110032876_rong%20vang%201L_1.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "VRPQ1L",
+          "Khối lượng": "37.5 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "10 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nĐỒNG VÀNG RỒNG PHÚ QUÝ 999,9 1 LƯỢNG\n\nTheo quan niệm xưa, rồng là biểu tượng cao quý đại diện cho sự quyền lực cùng khí chất mạnh mẽ, luôn khao khát chinh phục đỉnh cao mới. Với công nghệ dập nổi 3D tiên tiến, hình ảnh rồng vàng trên sản phẩm được chế tác đầy tinh xảo, sắc nét cùng độ hoàn thiện cao. Mặt sau là hình ảnh chữ “Lộc” với nhiều thông điệp ý nghĩa, tượng trưng cho sự thịnh vượng, sung túc trong cuộc sống.\n\nĐồng Vàng Rồng Phú Quý 999,9 1 lượng đồng thời áp dụng công nghệ thẻ nhựa theo tiêu chuẩn quốc tế, không chỉ hướng tới giá trị thẩm mỹ vượt trội, sản phẩm đem tới sự tiện lợi trong quá trình tích lũy, bảo toàn giá trị sản phẩm theo thời gian và thanh khoản dễ dàng khi cần.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: VRPQ1L\n\nChất liệu: Vàng 999,9\n\nĐịnh lượng: 1 lượng\n\nKhối lượng: 37,5 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032552_card%20vang%20rong_1.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032876_rong%20vang%201L_1.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110033250_rong%20vang%201L_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    },
+    {
+      "name": "PHÚ QUÝ CÁT TƯỜNG 999 1 CHỈ",
+      "slug": "vang-con-giap-1-chi-9999",
+      "detail_url": "https://phuquy.com.vn/san-pham/vang-con-giap-1-chi-9999",
+      "sell_price": "16,300,000",
+      "buy_price": "16,000,000",
+      "status": "Còn hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+        "https://minio.phuquy.com.vn/images/product/1773124067835_cat%20tuong%202_2.webp",
+        "https://minio.phuquy.com.vn/images/product/1773124068148_cat%20tuong%203_2.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "CNG1.0",
+          "Khối lượng": "3.75 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "1 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nPHÚ QUÝ CÁT TƯỜNG 999 1 CHỈ\n\nMừng xuân Bính Ngọ 2026, Phú Quý trân trọng ra mắt sản phẩm vàng tích trữ con giáp ngựa - Phú Quý Cát Tường 999.9 1 chỉ, tác phẩm kim hoàn mới mang hình tượng Ngựa Vàng uy phong trên dáng tròn đồng xu, gợi nhịp khởi đầu rộn ràng và tinh thần tiến bước cho năm mới.\n\nĐược chế tác từ vàng 999.9, kết hợp công nghệ dập nổi sắc nét, từng chi tiết được hoàn thiện chỉn chu, mang đến diện mạo hiện đại và sang trọng. Với thiết kế bao bì lì xì đỏ trang nhã, Phú Quý Cát Tường 1 chỉ là lựa chọn quà Tết tinh tế, vừa có giá trị tích trữ, vừa thể hiện sự trân trọng khi trao gửi đến người thân, đối tác và khách hàng.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: CNG1.0\n\nChất liệu: Vàng 999.9\n\nĐịnh lượng: 1 chỉ\n\nTrọng lượng: 3,75 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067835_cat%20tuong%202_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124068148_cat%20tuong%203_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    },
+    {
+      "name": "NHẪN TRÒN PHÚ QUÝ 999,9 0,5 CHỈ",
+      "slug": "nhan-tron-tron-9999-05",
+      "detail_url": "https://phuquy.com.vn/san-pham/nhan-tron-tron-9999-05",
+      "sell_price": "8,150,000",
+      "buy_price": "8,000,000",
+      "status": "Đặt hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+        "https://minio.phuquy.com.vn/images/product/1765420672435_nhan-tron-phu-quy-0,5-chi-01-MS.webp",
+        "https://minio.phuquy.com.vn/images/product/1765420672757_nhan-tron-phu-quy-0,5-chi-04.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "NPQ0.5",
+          "Khối lượng": "1.875 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "0.5 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nNHẪN TRÒN PHÚ QUÝ 999,9 0,5 CHỈ\n\nLà biểu tượng của sự thịnh vượng và tài lộc, nhẫn tròn Phú Quý không chỉ là phụ kiện làm đẹp tinh tế, đồng thời là phương thức đầu tư - tích lũy thông minh mang giá trị bền vững.\n\n- Được chế tác từ vàng 999.9, đảm bảo tuổi vàng và định lượng;\n\n- Đa dạng định lượng: 0,5 chỉ, 1 chỉ, 2 chỉ, 3 chỉ, 5 chỉ và 10 chỉ; phù hợp với nhu cầu sử dụng và điều kiện của khách hàng;\n\n- Ứng dụng công nghệ thẻ tiên tiến và hiện đại giúp bảo toàn trọn vẹn giá trị, đồng thời mang lại sự tiện lợi trong quá trình cất giữ;\n\n- Dễ dàng thanh khoản, mua bán thuận tiện.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: NPQ0.5\n\nChất liệu: Vàng 999,9\n\nĐịnh lượng: 0,5 chỉ\n\nKhối lượng: 1,875 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672435_nhan-tron-phu-quy-0,5-chi-01-MS.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672757_nhan-tron-phu-quy-0,5-chi-04.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    },
+    {
+      "name": "NHẪN TRÒN PHÚ QUÝ 999,9 3 CHỈ",
+      "slug": "nhan-tron-tron-9999-3",
+      "detail_url": "https://phuquy.com.vn/san-pham/nhan-tron-tron-9999-3",
+      "sell_price": "48,900,000",
+      "buy_price": "48,000,000",
+      "status": "Đặt hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp",
+        "https://minio.phuquy.com.vn/images/product/1765420743661_nhan-tron-phu-quy-3-chi-02%20(2).webp",
+        "https://minio.phuquy.com.vn/images/product/1773912353423_nhan-tron-phu-quy-3-chi-01-MS.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "NPQ3",
+          "Khối lượng": "11.25 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "3 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nNHẪN TRÒN PHÚ QUÝ 999,9 3 CHỈ\n\nLà biểu tượng của sự thịnh vượng và tài lộc, nhẫn tròn Phú Quý không chỉ là phụ kiện làm đẹp tinh tế, đồng thời là phương thức đầu tư - tích lũy thông minh mang giá trị bền vững.\n\n- Được chế tác từ vàng 999,9, đảm bảo tuổi vàng và định lượng;\n\n- Đa dạng định lượng: 0,5 chỉ, 1 chỉ, 2 chỉ, 3 chỉ, 5 chỉ và 10 chỉ; phù hợp với nhu cầu sử dụng và điều kiện của khách hàng;\n\n- Ứng dụng công nghệ thẻ tiên tiến và hiện đại giúp bảo toàn trọn vẹn giá trị, đồng thời mang lại sự tiện lợi trong quá trình cất giữ;\n\n- Dễ dàng thanh khoản, mua bán thuận tiện.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: NPQ3\n\nChất liệu: Vàng 999,9\n\nĐịnh lượng: 3 chỉ\n\nKhối lượng: 11,25 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420743661_nhan-tron-phu-quy-3-chi-02%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773912353423_nhan-tron-phu-quy-3-chi-01-MS.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp"
+        ]
+      }
+    },
+    {
+      "name": "NHẪN TRÒN PHÚ QUÝ 999,9 2 CHỈ",
+      "slug": "nhan-tron-tron-9999-2",
+      "detail_url": "https://phuquy.com.vn/san-pham/nhan-tron-tron-9999-2",
+      "sell_price": "32,600,000",
+      "buy_price": "32,000,000",
+      "status": "Đặt hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+        "https://minio.phuquy.com.vn/images/product/1765420465610_nhan-tron-phu-quy-2-chi-03.webp",
+        "https://minio.phuquy.com.vn/images/product/1773912289145_nhan-tron-phu-quy-2-chi-01-MS.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "NPQ2",
+          "Khối lượng": "7.5 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "2 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nNHẪN TRÒN PHÚ QUÝ 999,9 2 CHỈ\n\nLà biểu tượng của sự thịnh vượng và tài lộc, nhẫn tròn Phú Quý không chỉ là phụ kiện làm đẹp tinh tế, đồng thời là phương thức đầu tư - tích lũy thông minh mang giá trị bền vững.\n\n- Được chế tác từ vàng 999,9, đảm bảo tuổi vàng và định lượng;\n\n- Đa dạng định lượng: 0,5 chỉ, 1 chỉ, 2 chỉ, 3 chỉ, 5 chỉ và 10 chỉ; phù hợp với nhu cầu sử dụng và điều kiện của khách hàng;\n\n- Ứng dụng công nghệ thẻ tiên tiến và hiện đại giúp bảo toàn trọn vẹn giá trị, đồng thời mang lại sự tiện lợi trong quá trình cất giữ;\n\n- Dễ dàng thanh khoản, mua bán thuận tiện.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: NPQ2\n\nChất liệu: Vàng 999,9\n\nĐịnh lượng: 2 chỉ\n\nKhối lượng: 7,5 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420465610_nhan-tron-phu-quy-2-chi-03.webp",
+          "https://minio.phuquy.com.vn/images/product/1773912289145_nhan-tron-phu-quy-2-chi-01-MS.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    },
+    {
+      "name": "NHẪN TRÒN PHÚ QUÝ 999,9 5 CHỈ",
+      "slug": "nhan-tron-tron-9999-5",
+      "detail_url": "https://phuquy.com.vn/san-pham/nhan-tron-tron-9999-5",
+      "sell_price": "81,500,000",
+      "buy_price": "80,000,000",
+      "status": "Đặt hàng",
+      "images": [
+        "https://minio.phuquy.com.vn/images/product/1765420403889_nhan-tron-phu-quy-5-chi-01-MT.webp",
+        "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+        "https://minio.phuquy.com.vn/images/product/1773912376469_nhan-tron-phu-quy-5-chi-01-MS.webp"
+      ],
+      "description": "Một kênh đầu tư mới mẻ, phù hợp với hàng loạt đối tượng nhà đầu tư tại Việt Nam đang dần hình thành và phát triển mạnh mẽ.",
+      "specifications": {},
+      "related_products": [
+        "NHẪN TRÒN TRƠN 999.9 (5)",
+        "NHẪN TRÒN TRƠN 999.9 (1)",
+        "NHẪN TRÒN TRƠN 999.9 (0.5)",
+        "NHẪN TRÒN TRƠN 999.9 (2)",
+        "PHÚ QUÝ 1 LƯỢNG 999.9",
+        "VÀNG RỒNG PHÚ QUÝ 999.9 1L",
+        "NHẪN TRÒN TRƠN 999.9 (3)",
+        "THẦN TÀI PHÚ QUÝ 1 CHỈ (999.9)",
+        "NHẪN TRÒN TRƠN 999.9 (10)",
+        "VÀNG CON GIÁP 1 CHỈ (999.9)"
+      ],
+      "detail": {
+        "title": "Trang chủ",
+        "specifications": {
+          "Mã SP": "NPQ5",
+          "Khối lượng": "18.75 GRAM",
+          "Hàm lượng": "VÀNG 999,9",
+          "Định lượng": "5 CHỈ",
+          "Xuất xứ": "VIỆT NAM"
+        },
+        "sell_price": "48,900,000",
+        "buy_price": "48,000,000",
+        "description": "Chi tiết sản phẩm\nThông số sản phẩm\nVề bạc Phú Quý\n\nNHẪN TRÒN PHÚ QUÝ 999,9 5 CHỈ\n\nLà biểu tượng của sự thịnh vượng và tài lộc, nhẫn tròn Phú Quý không chỉ là phụ kiện làm đẹp tinh tế, đồng thời là phương thức đầu tư - tích lũy thông minh mang giá trị bền vững.\n\n- Được chế tác từ vàng 999,9, đảm bảo tuổi vàng và định lượng;\n\n- Đa dạng định lượng: 0,5 chỉ, 1 chỉ, 2 chỉ, 3 chỉ, 5 chỉ và 10 chỉ; phù hợp với nhu cầu sử dụng và điều kiện của khách hàng;\n\n- Ứng dụng công nghệ thẻ tiên tiến và hiện đại giúp bảo toàn trọn vẹn giá trị, đồng thời mang lại sự tiện lợi trong quá trình cất giữ;\n\n- Dễ dàng thanh khoản, mua bán thuận tiện.\n\nTHÔNG TIN SẢN PHẨM:\n\nMã sản phẩm: NPQ5\n\nChất liệu: Vàng 999,9\n\nĐịnh lượng: 5 chỉ\n\nKhối lượng: 18,75 gram\n\nXuất xứ: Việt Nam",
+        "all_page_images": [
+          "https://minio.phuquy.com.vn/images/product/1765420403889_nhan-tron-phu-quy-5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1759891262388_nhan-tron-phu-quy-5-chi-04%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1773912376469_nhan-tron-phu-quy-5-chi-01-MS.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420464968_nhan-tron-phu-quy-2-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420638971_nhan-tron-phu-quy-1-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1773124067490_cat%20tuong%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1773110266320_than%20tai%201_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420672071_nhan-tron-phu-quy-0,5-chi-01-MT.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420966893_dong-vang-than-tai-phu-quy-1-luong-01%20(2).webp",
+          "https://minio.phuquy.com.vn/images/product/1773110032189_card%20vang%20rong_2.webp",
+          "https://minio.phuquy.com.vn/images/product/1765420601468_nhan-tron-phu-quy-10-chi-01-MT%20(1).webp",
+          "https://minio.phuquy.com.vn/images/product/1765420440805_nhan-tron-phu-quy-3-chi-01-MT.webp"
+        ]
+      }
+    }
+  ]
+}

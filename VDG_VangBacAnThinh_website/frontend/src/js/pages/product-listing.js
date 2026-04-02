@@ -12,7 +12,8 @@ export function registerProductListing(Alpine) {
     selectedCategory: '',
     defaultCategory: '',
     allowedCategories: [],
-    sortBy: 'createdAt:desc',
+    productTypeFilter: '',
+    sortBy: 'sortOrder:asc',
     priceRange: [0, 999999999],
     karatFilter: '',
 
@@ -24,10 +25,9 @@ export function registerProductListing(Alpine) {
       if (urlCategory) {
         this.selectedCategory = urlCategory;
       } else if (path.includes('san-pham-bac')) {
-        this.allowedCategories = ['bac-tich-tru', 'bac-my-nghe'];
+        this.productTypeFilter = 'silver';
       } else if (path.includes('san-pham')) {
-        this.defaultCategory = 'vang';
-        this.selectedCategory = 'vang';
+        this.productTypeFilter = 'gold';
       }
 
       await Promise.all([this.fetchProducts(), this.fetchCategories()]);
@@ -42,6 +42,9 @@ export function registerProductListing(Alpine) {
           'pagination[pageSize]': this.pageSize.toString(),
           'sort[0]': this.sortBy,
         };
+        if (this.productTypeFilter) {
+          params['filters[productType][$eq]'] = this.productTypeFilter;
+        }
         if (this.selectedCategory) {
           params['filters[category][slug][$eq]'] = this.selectedCategory;
         } else if (this.allowedCategories.length > 0) {

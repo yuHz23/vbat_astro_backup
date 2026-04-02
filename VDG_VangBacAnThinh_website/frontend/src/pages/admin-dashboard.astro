@@ -1,0 +1,358 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Dashboard - Vàng An Thịnh" description="Quản lý đơn hàng và sản phẩm." variant="home">
+  <main class="min-h-screen bg-light-bg" x-data="dashboardPage" x-cloak>
+
+    <div class="max-w-6xl mx-auto px-4 py-8">
+
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-8">
+        <div>
+          <h1 class="font-heading text-3xl text-primary font-bold">Dashboard Quản Trị</h1>
+          <p class="text-sm text-gray-400 mt-1">
+            <span x-show="adminUser" x-text="'Xin chào, ' + (adminUser?.firstname || adminUser?.email || 'Admin')"></span>
+          </p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button @click="adminLogout()" class="bg-gray-200 text-gray-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-300 transition-colors">
+            Đăng xuất
+          </button>
+        </div>
+      </div>
+
+      <!-- Main Tabs -->
+      <div class="flex gap-2 mb-6 border-b border-gray-200 pb-3">
+        <button @click="mainTab = 'orders'" :class="mainTab === 'orders' ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-50'" class="px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-sm">
+          Đơn hàng
+        </button>
+        <button @click="switchToProducts()" :class="mainTab === 'products' ? 'bg-primary text-white' : 'bg-white text-gray-600 hover:bg-gray-50'" class="px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors shadow-sm">
+          Sản phẩm & Giá
+        </button>
+      </div>
+
+      <!-- ==================== ORDERS TAB ==================== -->
+      <div x-show="mainTab === 'orders'">
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+          <div class="bg-white rounded-xl shadow-sm p-4 text-center">
+            <p class="text-2xl font-bold text-primary" x-text="orders.length"></p>
+            <p class="text-xs text-gray-500 mt-1">Tổng đơn</p>
+          </div>
+          <div class="bg-yellow-50 rounded-xl shadow-sm p-4 text-center">
+            <p class="text-2xl font-bold text-yellow-600" x-text="orders.filter(o => o.orderStatus === 'pending').length"></p>
+            <p class="text-xs text-gray-500 mt-1">Chờ xử lý</p>
+          </div>
+          <div class="bg-green-50 rounded-xl shadow-sm p-4 text-center">
+            <p class="text-2xl font-bold text-green-600" x-text="orders.filter(o => o.orderStatus === 'paid').length"></p>
+            <p class="text-xs text-gray-500 mt-1">Đã thanh toán</p>
+          </div>
+          <div class="bg-green-100 rounded-xl shadow-sm p-4 text-center">
+            <p class="text-2xl font-bold text-green-700" x-text="orders.filter(o => o.orderStatus === 'completed').length"></p>
+            <p class="text-xs text-gray-500 mt-1">Hoàn thành</p>
+          </div>
+        </div>
+
+        <!-- Revenue -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="bg-white rounded-xl shadow-sm p-4">
+            <p class="text-xs text-gray-500">Doanh thu</p>
+            <p class="text-lg font-bold text-accent" x-text="formatPrice(orders.filter(o => o.orderStatus === 'paid' || o.orderStatus === 'completed').reduce((s, o) => s + (o.totalAmount || 0), 0))"></p>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm p-4">
+            <p class="text-xs text-gray-500">Chờ thanh toán</p>
+            <p class="text-lg font-bold text-yellow-600" x-text="formatPrice(orders.filter(o => o.orderStatus === 'pending').reduce((s, o) => s + (o.totalAmount || 0), 0))"></p>
+          </div>
+          <div class="bg-white rounded-xl shadow-sm p-4">
+            <p class="text-xs text-gray-500">Đã hủy</p>
+            <p class="text-lg font-bold text-red-500" x-text="formatPrice(orders.filter(o => o.orderStatus === 'cancelled').reduce((s, o) => s + (o.totalAmount || 0), 0))"></p>
+          </div>
+        </div>
+
+        <!-- Sub tabs -->
+        <div class="flex gap-2 mb-4">
+          <button @click="tab = 'active'" :class="tab === 'active' ? 'bg-accent text-white' : 'bg-white text-gray-600'" class="px-5 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm">
+            Đang xử lý <span class="opacity-75" x-text="'(' + activeOrders.length + ')'"></span>
+          </button>
+          <button @click="tab = 'history'" :class="tab === 'history' ? 'bg-accent text-white' : 'bg-white text-gray-600'" class="px-5 py-2 rounded-lg text-sm font-semibold transition-colors shadow-sm">
+            Lịch sử <span class="opacity-75" x-text="'(' + historyOrders.length + ')'"></span>
+          </button>
+          <button @click="loadOrders()" class="ml-auto bg-white text-gray-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors shadow-sm">
+            Tải lại
+          </button>
+        </div>
+
+        <!-- Filter -->
+        <div x-show="tab === 'active'" class="flex flex-wrap items-center gap-2 mb-4">
+          <button @click="filter = 'all'" :class="filter === 'all' ? 'bg-gray-800 text-white' : 'bg-white text-gray-600'" class="px-4 py-1.5 rounded-full text-xs font-medium transition-colors">Tất cả</button>
+          <button @click="filter = 'pending'" :class="filter === 'pending' ? 'bg-yellow-500 text-white' : 'bg-white text-gray-600'" class="px-4 py-1.5 rounded-full text-xs font-medium transition-colors">Chờ xử lý</button>
+          <button @click="filter = 'paid'" :class="filter === 'paid' ? 'bg-green-500 text-white' : 'bg-white text-gray-600'" class="px-4 py-1.5 rounded-full text-xs font-medium transition-colors">Đã thanh toán</button>
+        </div>
+
+        <!-- Loading -->
+        <div x-show="loading" class="flex justify-center py-16">
+          <svg class="animate-spin w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+        </div>
+
+        <!-- Active Orders -->
+        <div x-show="!loading && tab === 'active'" class="space-y-3">
+          <template x-for="order in activeOrders" :key="order.id">
+            <div class="bg-white rounded-xl shadow-sm p-5">
+              <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                <div>
+                  <span class="font-bold text-primary" x-text="order.orderNumber"></span>
+                  <span class="text-gray-400 text-sm ml-2" x-text="new Date(order.createdAt).toLocaleString('vi-VN')"></span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <select x-model="order._newStatus" class="border border-gray-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:border-accent">
+                    <option value="pending">Chờ xử lý</option>
+                    <option value="paid">Đã thanh toán</option>
+                    <option value="completed">Hoàn thành</option>
+                    <option value="cancelled">Đã hủy</option>
+                  </select>
+                  <button @click="updateStatus(order)" x-show="order._newStatus !== order.orderStatus"
+                    class="bg-accent text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:bg-accent-dark transition-colors">
+                    Cập nhật
+                  </button>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                <div><span class="text-gray-500">KH:</span> <span class="font-medium" x-text="order.contactName || '—'"></span></div>
+                <div><span class="text-gray-500">SĐT:</span> <a :href="'tel:' + order.contactPhone" class="font-medium text-accent" x-text="order.contactPhone || '—'"></a></div>
+                <div><span class="text-gray-500">Tổng:</span> <span class="font-bold text-accent" x-text="formatPrice(order.totalAmount)"></span></div>
+              </div>
+              <div x-show="order.items?.length > 0" class="mt-3 pt-3 border-t border-gray-100">
+                <template x-for="item in (order.items || [])" :key="item.id">
+                  <div class="flex justify-between text-sm text-gray-600 py-0.5">
+                    <span x-text="item.variantInfo || 'Sản phẩm'"></span>
+                    <span><span x-text="'x' + item.quantity"></span> <span class="ml-2 font-medium" x-text="formatPrice(item.unitPrice * item.quantity)"></span></span>
+                  </div>
+                </template>
+              </div>
+            </div>
+          </template>
+          <div x-show="activeOrders.length === 0" class="text-center py-16 text-gray-400">Không có đơn hàng đang xử lý.</div>
+        </div>
+
+        <!-- History -->
+        <div x-show="!loading && tab === 'history'" class="space-y-3">
+          <template x-for="order in historyOrders" :key="order.id">
+            <div class="bg-white rounded-xl shadow-sm p-5 opacity-90">
+              <div class="flex flex-wrap items-center justify-between gap-4 mb-3">
+                <div>
+                  <span class="font-bold text-primary" x-text="order.orderNumber"></span>
+                  <span class="text-gray-400 text-sm ml-2" x-text="new Date(order.createdAt).toLocaleString('vi-VN')"></span>
+                </div>
+                <span class="text-xs font-medium px-3 py-1 rounded-full"
+                  :class="order.orderStatus === 'completed' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+                  x-text="order.orderStatus === 'completed' ? 'Hoàn thành' : 'Đã hủy'"></span>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+                <div><span class="text-gray-500">KH:</span> <span class="font-medium" x-text="order.contactName || '—'"></span></div>
+                <div><span class="text-gray-500">SĐT:</span> <span class="font-medium" x-text="order.contactPhone || '—'"></span></div>
+                <div><span class="text-gray-500">Tổng:</span> <span class="font-bold text-accent" x-text="formatPrice(order.totalAmount)"></span></div>
+              </div>
+            </div>
+          </template>
+          <div x-show="historyOrders.length === 0" class="text-center py-16 text-gray-400">Chưa có đơn hàng hoàn tất.</div>
+        </div>
+      </div>
+
+      <!-- ==================== PRODUCTS TAB ==================== -->
+      <div x-show="mainTab === 'products'">
+
+        <!-- Header + Sync button -->
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <p class="text-sm text-gray-500">Giá tự động đồng bộ theo thị trường mỗi 12 giờ</p>
+          </div>
+          <div class="flex gap-3">
+            <button @click="showAddForm = !showAddForm" class="bg-green-600 text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm">
+              <span x-show="!showAddForm">+ Thêm sản phẩm</span>
+              <span x-show="showAddForm">Đóng form</span>
+            </button>
+            <button @click="loadProducts()" class="bg-white text-gray-600 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50 transition-colors shadow-sm">
+              Tải lại
+            </button>
+            <button @click="syncPrices()" :disabled="syncing"
+              class="bg-accent text-white px-5 py-2 rounded-lg text-sm font-semibold hover:bg-accent-dark transition-colors disabled:opacity-50 shadow-sm">
+              <span x-show="!syncing">Đồng bộ giá ngay</span>
+              <span x-show="syncing">Đang đồng bộ...</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Add Product Form -->
+        <div x-show="showAddForm" x-transition class="bg-white rounded-xl shadow-sm p-6 mb-6 border-2 border-green-200">
+          <h3 class="font-heading text-lg text-primary font-bold mb-4">Thêm sản phẩm mới</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Tên sản phẩm *</label>
+              <input type="text" x-model="newProduct.name" placeholder="VD: Nhẫn vàng 24K" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">SKU</label>
+              <input type="text" x-model="newProduct.sku" placeholder="VD: NHAN-VANG-24K" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Giá bán (VNĐ) *</label>
+              <input type="number" x-model="newProduct.price" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Giá mua (VNĐ)</label>
+              <input type="number" x-model="newProduct.compareAtPrice" placeholder="0" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Loại vàng/bạc</label>
+              <input type="text" x-model="newProduct.karatType" placeholder="VD: Vàng 999,9" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Loại sản phẩm</label>
+              <select x-model="newProduct.productType" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
+                <option value="gold">Vàng</option>
+                <option value="silver">Bạc</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Phân loại</label>
+              <select x-model="newProduct.subCategory" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
+                <option value="tich-tru">Tích trữ</option>
+                <option value="my-nghe">Mỹ nghệ</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Trạng thái</label>
+              <select x-model="newProduct.status" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent">
+                <option value="available">Còn hàng</option>
+                <option value="out_of_stock">Hết hàng</option>
+                <option value="coming_soon">Sắp có</option>
+                <option value="discontinued">Ngừng bán</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-gray-600 mb-1">Thứ tự</label>
+              <input type="number" x-model="newProduct.sortOrder" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-accent" />
+            </div>
+          </div>
+          <div class="flex gap-3 mt-5">
+            <button @click="createProduct()" :disabled="savingProduct"
+              class="bg-green-600 text-white px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors disabled:opacity-50">
+              <span x-show="!savingProduct">Thêm sản phẩm</span>
+              <span x-show="savingProduct">Đang lưu...</span>
+            </button>
+            <button @click="resetNewProduct()" class="bg-gray-200 text-gray-600 px-5 py-2.5 rounded-lg text-sm font-semibold hover:bg-gray-300 transition-colors">
+              Hủy
+            </button>
+          </div>
+        </div>
+
+        <!-- Loading -->
+        <div x-show="loadingProducts" class="flex justify-center py-16">
+          <svg class="animate-spin w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+          </svg>
+        </div>
+
+        <!-- Products Table -->
+        <div x-show="!loadingProducts" class="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gray-50 border-b">
+                  <th class="text-left py-3 px-4 font-semibold text-gray-600">SKU</th>
+                  <th class="text-left py-3 px-4 font-semibold text-gray-600">Sản phẩm</th>
+                  <th class="text-right py-3 px-4 font-semibold text-gray-600">Giá bán</th>
+                  <th class="text-right py-3 px-4 font-semibold text-gray-600">Giá mua</th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-600 min-w-[100px]">Trạng thái</th>
+                  <th class="text-center py-3 px-4 font-semibold text-gray-600 w-32">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                <template x-for="product in products" :key="product.id">
+                  <tr class="border-b border-gray-100 hover:bg-gray-50/50">
+                    <!-- Normal view -->
+                    <template x-if="editingProduct !== product.documentId">
+                      <td class="py-3 px-4 font-mono text-xs text-gray-500" x-text="product.sku"></td>
+                    </template>
+                    <template x-if="editingProduct !== product.documentId">
+                      <td class="py-3 px-4">
+                        <span class="font-medium text-gray-800" x-text="product.name"></span>
+                        <span class="text-xs text-gray-400 ml-1" x-text="product.karatType"></span>
+                      </td>
+                    </template>
+                    <template x-if="editingProduct !== product.documentId">
+                      <td class="py-3 px-4 text-right font-semibold text-accent" x-text="formatPrice(product.price)"></td>
+                    </template>
+                    <template x-if="editingProduct !== product.documentId">
+                      <td class="py-3 px-4 text-right text-gray-500" x-text="formatPrice(product.compareAtPrice)"></td>
+                    </template>
+                    <template x-if="editingProduct !== product.documentId">
+                      <td class="py-3 px-4 text-center">
+                        <span class="text-xs px-2 py-1 rounded-full whitespace-nowrap"
+                          :class="{
+                            'bg-green-100 text-green-700': product.status === 'available',
+                            'bg-red-100 text-red-600': product.status === 'out_of_stock',
+                            'bg-yellow-100 text-yellow-700': product.status === 'coming_soon',
+                            'bg-gray-100 text-gray-500': product.status === 'discontinued'
+                          }"
+                          x-text="product.status === 'available' ? 'Còn hàng' : product.status === 'out_of_stock' ? 'Hết hàng' : product.status === 'coming_soon' ? 'Sắp có' : 'Ngừng bán'"></span>
+                      </td>
+                    </template>
+                    <template x-if="editingProduct !== product.documentId">
+                      <td class="py-3 px-4 text-center">
+                        <button @click="startEdit(product)" class="text-accent hover:text-accent-dark text-xs font-semibold mr-2">Sửa</button>
+                        <button @click="deleteProduct(product)" :disabled="deletingProduct === product.documentId"
+                          class="text-red-500 hover:text-red-700 text-xs font-semibold disabled:opacity-50">
+                          <span x-show="deletingProduct !== product.documentId">Xóa</span>
+                          <span x-show="deletingProduct === product.documentId">...</span>
+                        </button>
+                      </td>
+                    </template>
+
+                    <!-- Edit view -->
+                    <template x-if="editingProduct === product.documentId">
+                      <td class="py-3 px-4 font-mono text-xs text-gray-500" x-text="product.sku"></td>
+                    </template>
+                    <template x-if="editingProduct === product.documentId">
+                      <td class="py-3 px-4 font-medium text-gray-800" x-text="product.name"></td>
+                    </template>
+                    <template x-if="editingProduct === product.documentId">
+                      <td class="py-2 px-4"><input type="number" x-model="editPrice" class="w-full border rounded px-2 py-1 text-sm text-right" /></td>
+                    </template>
+                    <template x-if="editingProduct === product.documentId">
+                      <td class="py-2 px-4"><input type="number" x-model="editComparePrice" class="w-full border rounded px-2 py-1 text-sm text-right" /></td>
+                    </template>
+                    <template x-if="editingProduct === product.documentId">
+                      <td class="py-2 px-4">
+                        <select x-model="editStatus" class="border rounded px-2 py-1 text-xs w-full">
+                          <option value="available">Còn hàng</option>
+                          <option value="out_of_stock">Hết hàng</option>
+                          <option value="coming_soon">Sắp có</option>
+                          <option value="discontinued">Ngừng bán</option>
+                        </select>
+                      </td>
+                    </template>
+                    <template x-if="editingProduct === product.documentId">
+                      <td class="py-2 px-4 text-center">
+                        <button @click="saveProduct(product)" class="bg-accent text-white px-3 py-1 rounded text-xs font-semibold mr-1">Lưu</button>
+                        <button @click="cancelEdit()" class="text-gray-500 hover:text-gray-700 text-xs">Hủy</button>
+                      </td>
+                    </template>
+                  </tr>
+                </template>
+              </tbody>
+            </table>
+          </div>
+          <div x-show="products.length === 0 && !loadingProducts" class="text-center py-16 text-gray-400">Chưa có sản phẩm.</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</Layout>

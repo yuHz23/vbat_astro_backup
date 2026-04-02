@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
-<Layout title="Thanh toán - Vàng An Thịnh" description="Thanh toán đơn hàng tại Vàng An Thịnh." variant="inner" showTicker={false}>
+<Layout title="Thanh toán - Vàng An Thịnh" description="Thanh toán đơn hàng tại Vàng An Thịnh." variant="home">
 
   <Breadcrumb items={[
     { label: 'Trang chủ', href: '/' },
@@ -11,65 +11,146 @@ import Breadcrumb from '../components/Breadcrumb.astro';
     { label: 'Thanh toán' }
   ]} />
 
-  <section class="py-12" x-data="checkoutPage">
+  <section class="py-12 min-h-screen" x-data="checkoutPage" x-cloak>
     <div class="max-w-6xl mx-auto px-4">
 
+      <!-- Order Success -->
       <template x-if="submitted">
-        <!-- Success State -->
         <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-10 text-center">
-          <div class="w-20 h-20 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+          <div class="w-24 h-24 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 class="font-heading text-3xl text-primary font-bold mb-4">Đặt hàng thành công!</h1>
-          <p class="text-gray-600 mb-2">Cảm ơn bạn đã tin tưởng Vàng An Thịnh.</p>
-          <p class="text-gray-600 mb-6">Mã đơn hàng của bạn là: <strong class="text-primary font-bold" x-text="orderNumber"></strong></p>
-          <p class="text-sm text-gray-500 mb-8 max-w-md mx-auto">Nhân viên của chúng tôi sẽ liên hệ với bạn theo số điện thoại đã cung cấp để xác nhận và tư vấn thêm về phương thức giao hàng.</p>
-          <a href="/" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Về trang chủ</a>
+          <h1 class="font-heading text-3xl text-primary font-bold mb-2">Đặt hàng thành công!</h1>
+          <p class="text-gray-500 text-base mb-4">Nhân viên CSKH sẽ liên hệ trong ít phút</p>
+          <p class="text-gray-600 mb-1">Mã đơn hàng: <strong class="text-primary font-bold" x-text="orderNumber"></strong></p>
+          <p class="text-gray-500 mb-2">Số tiền: <strong class="text-accent text-lg" x-text="formatPriceVND(savedTotal)"></strong></p>
+
+          <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mt-6 max-w-md mx-auto">
+            <div class="flex items-center justify-center gap-2 mb-2">
+              <span class="inline-block w-2.5 h-2.5 bg-yellow-400 rounded-full animate-pulse"></span>
+              <p class="text-yellow-700 text-sm font-semibold">Đơn hàng đang chờ xác nhận</p>
+            </div>
+            <p class="text-yellow-600 text-sm">Đặt hàng thành công, nhân viên CSKH sẽ liên hệ trong ít phút.</p>
+          </div>
+
+          <div class="flex flex-col items-center gap-3 mt-8">
+            <a href="https://zalo.me/0363778889" target="_blank" rel="noopener"
+              class="inline-flex items-center gap-3 bg-[#0068FF] text-white px-8 py-4 rounded-[999px] font-semibold hover:bg-[#0055DD] transition-all shadow-lg hover:shadow-xl text-lg">
+              <span class="text-white font-black text-base">Zalo</span>
+              Liên hệ xác nhận đơn hàng
+            </a>
+            <div class="flex flex-col sm:flex-row gap-3 mt-4">
+              <a href="/don-hang.html" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Theo dõi đơn hàng</a>
+              <a href="/san-pham.html" class="inline-block bg-gray-100 text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors">Tiếp tục mua sắm</a>
+            </div>
+          </div>
         </div>
       </template>
 
+      <!-- Empty cart -->
       <template x-if="!submitted && cartItems.length === 0">
-        <!-- Empty Cart -->
         <div class="text-center py-20 bg-white rounded-2xl shadow-sm">
           <h2 class="text-xl text-gray-500 font-medium mb-4">Không có sản phẩm nào để thanh toán</h2>
           <a href="/san-pham.html" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Tiếp tục mua sắm</a>
         </div>
       </template>
 
-      <template x-if="!submitted && cartItems.length > 0">
-        <!-- Checkout Form -->
+      <!-- Not logged in -->
+      <template x-if="!submitted && cartItems.length > 0 && !$store.auth.isLoggedIn">
+        <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-10 text-center">
+          <div class="w-20 h-20 bg-yellow-100 text-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m0 0v2m0-2h2m-2 0H10m5-7a3 3 0 11-6 0 3 3 0 016 0zm-9 8a7 7 0 1114 0H3z" />
+            </svg>
+          </div>
+          <h2 class="font-heading text-2xl text-primary font-bold mb-3">Bạn cần đăng nhập</h2>
+          <p class="text-gray-500 mb-6">Vui lòng đăng nhập hoặc đăng ký tài khoản để tiến hành thanh toán.</p>
+          <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <a href="/dang-nhap.html" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Đăng nhập</a>
+            <a href="/dang-ky.html" class="inline-block bg-gray-100 text-primary px-8 py-3 rounded-lg font-semibold hover:bg-gray-200 transition-colors">Đăng ký</a>
+          </div>
+        </div>
+      </template>
+
+      <!-- KYC Not Verified Warning -->
+      <template x-if="!submitted && cartItems.length > 0 && $store.auth.isLoggedIn && !isKycVerified">
+        <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-sm p-10 text-center">
+          <div class="w-20 h-20 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+            <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+            </svg>
+          </div>
+          <h2 class="font-heading text-2xl text-primary font-bold mb-3">Xác minh danh tính (KYC)</h2>
+
+          <template x-if="kycStatus === 'pending'">
+            <div>
+              <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6 max-w-md mx-auto">
+                <p class="text-yellow-700 text-sm font-medium">Hồ sơ CCCD của bạn đang chờ xác minh. Vui lòng đợi nhân viên duyệt (thường trong vòng 24h).</p>
+              </div>
+              <a href="/tai-khoan.html" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Xem trạng thái KYC</a>
+            </div>
+          </template>
+
+          <template x-if="kycStatus === 'rejected'">
+            <div>
+              <div class="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 max-w-md mx-auto">
+                <p class="text-red-700 text-sm font-medium">Hồ sơ CCCD đã bị từ chối. Vui lòng tải lên ảnh CCCD mới, rõ ràng hơn.</p>
+              </div>
+              <a href="/tai-khoan.html" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Cập nhật CCCD</a>
+            </div>
+          </template>
+
+          <template x-if="!kycStatus || kycStatus === ''">
+            <div>
+              <p class="text-gray-500 mb-4 max-w-md mx-auto">Theo quy định, bạn cần xác minh Căn cước công dân (CCCD) trước khi mua hàng. Vui lòng tải lên ảnh mặt trước và mặt sau CCCD.</p>
+              <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6 max-w-md mx-auto text-left">
+                <p class="text-blue-700 text-sm font-medium mb-2">Hướng dẫn:</p>
+                <ol class="text-blue-600 text-sm space-y-1 list-decimal pl-4">
+                  <li>Vào trang <strong>Tài khoản</strong></li>
+                  <li>Tải lên 2 ảnh CCCD (mặt trước + mặt sau)</li>
+                  <li>Đợi nhân viên xác minh (thường trong 24h)</li>
+                  <li>Quay lại thanh toán sau khi được duyệt</li>
+                </ol>
+              </div>
+              <a href="/tai-khoan.html" class="inline-block bg-accent text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Xác minh ngay</a>
+            </div>
+          </template>
+        </div>
+      </template>
+
+      <!-- Checkout Form (KYC Verified) -->
+      <template x-if="!submitted && cartItems.length > 0 && $store.auth.isLoggedIn && isKycVerified">
         <div class="grid lg:grid-cols-5 gap-8">
           <div class="lg:col-span-3">
             <div class="bg-white rounded-2xl shadow-sm p-6 lg:p-8">
-              <h1 class="font-heading text-2xl text-primary font-bold mb-6">Thông tin liên hệ</h1>
+              <div class="flex items-center gap-3 mb-6">
+                <h1 class="font-heading text-2xl text-primary font-bold">Thông tin liên hệ</h1>
+                <span class="bg-green-100 text-green-600 text-xs px-2 py-1 rounded-full font-medium">KYC Đã xác minh</span>
+              </div>
 
               <div x-show="error" x-transition class="mb-6 bg-red-50 border border-red-200 text-error text-sm rounded-lg p-3" x-text="error"></div>
 
               <form @submit.prevent="submitOrder" class="space-y-5">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
-                    <label for="contactName" class="block text-sm font-medium text-primary mb-1">Họ tên *</label>
-                    <input type="text" id="contactName" x-model="contactName" required placeholder="Nhập họ và tên" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm" />
+                    <label for="contactName" class="block text-sm font-medium text-primary mb-1">Họ tên</label>
+                    <input type="text" id="contactName" x-model="contactName" readonly
+                      class="w-full border border-gray-200 rounded-lg px-4 py-3 bg-gray-50 text-gray-700 text-sm cursor-not-allowed" />
                   </div>
                   <div>
-                    <label for="contactPhone" class="block text-sm font-medium text-primary mb-1">Số điện thoại *</label>
-                    <input type="tel" id="contactPhone" x-model="contactPhone" required placeholder="Nhập số điện thoại" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm" />
+                    <label for="contactPhone" class="block text-sm font-medium text-primary mb-1">Số điện thoại</label>
+                    <input type="tel" id="contactPhone" x-model="contactPhone" readonly
+                      class="w-full border border-gray-200 rounded-lg px-4 py-3 bg-gray-50 text-gray-700 text-sm cursor-not-allowed" />
                   </div>
-                </div>
-
-                <div>
-                  <label for="contactZalo" class="block text-sm font-medium text-primary mb-1">Số Zalo (Nếu có)</label>
-                  <input type="tel" id="contactZalo" x-model="contactZalo" placeholder="Nhập số Zalo để tiện trao đổi" class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm" />
                 </div>
 
                 <div>
                   <label for="notes" class="block text-sm font-medium text-primary mb-1">Ghi chú thêm</label>
-                  <textarea id="notes" x-model="notes" rows="3" placeholder="Yêu cầu riêng, lưu ý..." class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm"></textarea>
+                  <textarea id="notes" x-model="notes" rows="3" placeholder="Yêu cầu riêng, lưu ý..." class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm resize-none"></textarea>
                 </div>
 
-                <!-- Submit button -->
                 <div class="border-t pt-6 mt-8">
                   <button type="submit" :disabled="submitting" class="w-full bg-accent text-white py-4 rounded-xl font-bold text-lg hover:bg-accent-dark transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
                     <span x-show="!submitting">Xác nhận đặt hàng</span>
@@ -81,7 +162,6 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                       Đang xử lý...
                     </span>
                   </button>
-                  <p class="text-center text-sm text-gray-500 mt-4 max-w-md mx-auto">Click "Xác nhận đặt hàng", nhân viên của Vàng An Thịnh sẽ liên hệ với quý khách để tư vấn sớm nhất.</p>
                 </div>
               </form>
             </div>
@@ -90,7 +170,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
           <!-- Order Summary Sidebar -->
           <div class="lg:col-span-2">
             <div class="bg-white rounded-2xl shadow-sm p-6 lg:p-8 sticky top-24">
-              <h2 class="font-heading text-xl text-primary font-bold mb-6 pb-4 border-b">Đơn hàng của bạn (<span x-text="cartItems.length"></span>)</h2>
+              <h2 class="font-heading text-xl text-primary font-bold mb-6 pb-4 border-b">Đơn hàng (<span x-text="cartItems.length"></span>)</h2>
 
               <div class="space-y-4 max-h-80 overflow-y-auto pr-2 mb-6">
                 <template x-for="item in cartItems" :key="item.key">

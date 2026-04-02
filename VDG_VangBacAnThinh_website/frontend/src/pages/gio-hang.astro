@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
-<Layout title="Giỏ hàng - Vàng An Thịnh" description="Giỏ hàng mua sắm tại Vàng An Thịnh." variant="inner" showTicker={false}>
+<Layout title="Giỏ hàng - Vàng An Thịnh" description="Giỏ hàng mua sắm tại Vàng An Thịnh." variant="home" showTicker={false}>
 
   <Breadcrumb items={[
     { label: 'Trang chủ', href: '/' },
@@ -34,15 +34,15 @@ import Breadcrumb from '../components/Breadcrumb.astro';
                 <div class="flex-1">
                   <h3 class="font-medium text-primary" x-text="item.name"></h3>
                   <p x-show="item.variant" class="text-sm text-gray-500 mt-1" x-text="item.variant"></p>
-                  <p class="text-accent font-bold mt-2" x-text="new Intl.NumberFormat('vi-VN').format(item.price) + ' ₫'"></p>
+                  <p class="text-accent font-bold mt-2" x-text="new Intl.NumberFormat('vi-VN').format(item.price)"></p>
                   <div class="flex items-center justify-between mt-3">
                     <div class="flex items-center gap-2">
-                      <button @click="$store.cart.updateQuantity(item.key, item.quantity - 1)" class="w-8 h-8 border rounded-lg text-sm hover:bg-light-bg flex items-center justify-center">-</button>
+                      <button @click="item.quantity > 1 && $store.cart.updateQuantity(item.key, item.quantity - 1)" :class="item.quantity <= 1 ? 'opacity-30 cursor-not-allowed' : 'hover:bg-light-bg'" class="w-8 h-8 border rounded-lg text-sm flex items-center justify-center">-</button>
                       <span class="w-10 text-center font-medium" x-text="item.quantity"></span>
                       <button @click="$store.cart.updateQuantity(item.key, item.quantity + 1)" class="w-8 h-8 border rounded-lg text-sm hover:bg-light-bg flex items-center justify-center">+</button>
                     </div>
                     <div class="flex items-center gap-4">
-                      <span class="font-bold text-primary" x-text="new Intl.NumberFormat('vi-VN').format(item.price * item.quantity) + ' ₫'"></span>
+                      <span class="font-bold text-primary" x-text="new Intl.NumberFormat('vi-VN').format(item.price * item.quantity)"></span>
                       <button @click="$store.cart.remove(item.key)" class="text-gray-400 hover:text-error transition-colors">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                       </button>
@@ -57,11 +57,11 @@ import Breadcrumb from '../components/Breadcrumb.astro';
             <h2 class="font-heading text-xl text-primary mb-4">Tóm Tắt Đơn Hàng</h2>
             <div class="space-y-3 text-sm border-b pb-4 mb-4">
               <div class="flex justify-between"><span class="text-gray-500">Số lượng sản phẩm:</span><span class="font-medium" x-text="$store.cart.count"></span></div>
-              <div class="flex justify-between"><span class="text-gray-500">Tạm tính:</span><span class="font-medium" x-text="new Intl.NumberFormat('vi-VN').format($store.cart.total) + ' ₫'"></span></div>
+              <div class="flex justify-between"><span class="text-gray-500">Tạm tính:</span><span class="font-medium" x-text="new Intl.NumberFormat('vi-VN').format($store.cart.total)"></span></div>
             </div>
             <div class="flex justify-between text-lg font-bold mb-6">
               <span class="text-primary">Tổng cộng:</span>
-              <span class="text-accent" x-text="new Intl.NumberFormat('vi-VN').format($store.cart.total) + ' ₫'"></span>
+              <span class="text-accent" x-text="new Intl.NumberFormat('vi-VN').format($store.cart.total)"></span>
             </div>
             <a href="/thanh-toan.html" class="block w-full bg-accent text-white text-center py-3 rounded-lg font-semibold hover:bg-accent-dark transition-colors">Tiến hành thanh toán</a>
             <a href="/san-pham.html" class="block text-center mt-3 text-primary hover:text-accent text-sm">← Tiếp tục mua sắm</a>

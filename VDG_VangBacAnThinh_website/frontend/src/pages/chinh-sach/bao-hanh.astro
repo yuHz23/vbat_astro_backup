@@ -1,0 +1,164 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PolicySidebar from '../../components/PolicySidebar.astro';
+---
+
+<Layout title="Chính sách bảo hành - Vàng An Thịnh" variant="home">
+  <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Chính sách"}, {label: "Chính sách bảo hành"}]} />
+
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-[280px_1fr] gap-8">
+        <PolicySidebar current="/chinh-sach/bao-hanh.html" />
+
+        <article class="bg-white rounded-xl shadow-sm p-8 lg:p-10">
+          <h1 class="font-heading text-3xl text-primary mb-8">Chính sách bảo hành</h1>
+
+          <div class="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
+
+            <!-- Bảng nội dung bảo hành -->
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Nội dung bảo hành</h2>
+
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse border border-gray-200 text-sm">
+                <thead>
+                  <tr class="bg-primary text-white">
+                    <th class="border border-gray-200 px-4 py-3 text-center w-12">STT</th>
+                    <th class="border border-gray-200 px-4 py-3 text-left">Nội dung bảo hành</th>
+                    <th class="border border-gray-200 px-4 py-3 text-center">Bảo hành, sửa chữa miễn phí trọn đời</th>
+                    <th class="border border-gray-200 px-4 py-3 text-center">Bảo hành, sửa chữa miễn phí 12 tháng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Row 1: Nhẫn cưới -->
+                  <tr>
+                    <td class="border border-gray-200 px-4 py-3 text-center align-top font-semibold" rowspan="1">1</td>
+                    <td class="border border-gray-200 px-4 py-3">
+                      <p class="font-semibold mb-2">Nhẫn cưới:</p>
+                      <ul class="list-disc pl-5 space-y-1">
+                        <li>Xi mạ, đánh bóng</li>
+                        <li>Rung siêu âm</li>
+                        <li>Khắc chữ</li>
+                        <li>Ra vào số tay (không thêm vàng)</li>
+                      </ul>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-3 text-center align-middle">
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-3 text-center align-middle">
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-gray-300 text-xl">—</span>
+                    </td>
+                  </tr>
+                  <!-- Row 2: Toàn bộ sản phẩm trang sức -->
+                  <tr class="bg-gray-50">
+                    <td class="border border-gray-200 px-4 py-3 text-center align-top font-semibold">2</td>
+                    <td class="border border-gray-200 px-4 py-3">
+                      <p class="font-semibold mb-2">Toàn bộ các sản phẩm trang sức được chế tác bởi An Thịnh:</p>
+                      <ul class="list-disc pl-5 space-y-1">
+                        <li>Rung siêu âm, làm sạch</li>
+                        <li>Khắc chữ</li>
+                        <li>Đánh bóng, xi mạ (tối đa 03 lần)</li>
+                        <li>Ra vào số tay đối với nhẫn, cắt nối dây chuyền, lắc (không thêm vàng)</li>
+                        <li>Thay đá (trừ kim cương) miễn phí trong vòng 06 tháng</li>
+                      </ul>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-3 text-center align-middle">
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-3 text-center align-middle">
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span>
+                    </td>
+                  </tr>
+                  <!-- Row 3: Sản phẩm công nghệ chế tác đặc biệt -->
+                  <tr>
+                    <td class="border border-gray-200 px-4 py-3 text-center align-top font-semibold">3</td>
+                    <td class="border border-gray-200 px-4 py-3">
+                      <p class="font-semibold mb-2">Đối với những sản phẩm trang sức có công nghệ chế tác đặc biệt:</p>
+                      <p class="text-sm text-gray-500 mb-2">Những sản phẩm như dây, kiềng, vòng Ý sản xuất bằng máy, sản phẩm có họa tiết và kết cấu phức tạp (được phân biệt rõ tại Giấy chứng nhận vàng của sản phẩm).</p>
+                      <ul class="list-disc pl-5 space-y-1">
+                        <li>Rung siêu âm, làm sạch</li>
+                        <li>Khắc chữ</li>
+                        <li>Đánh bóng, Xi mạ (tối đa 03 lần)</li>
+                      </ul>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-3 text-center align-middle">
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span>
+                    </td>
+                    <td class="border border-gray-200 px-4 py-3 text-center align-middle">
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span><br>
+                      <span class="text-success text-xl">✔</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Lưu ý -->
+            <h2 class="font-heading text-xl text-primary mt-10 mb-4">Lưu ý</h2>
+
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-6 space-y-5">
+
+              <div>
+                <p class="font-semibold text-primary mb-2">Quý khách hàng được hưởng chế độ bảo hành, sửa chữa MIỄN PHÍ đối với những trường hợp:</p>
+              </div>
+
+              <div>
+                <p class="font-semibold mb-1">• Đối với những sản phẩm trong thời gian bảo hành MIỄN PHÍ cần đánh bóng, xi mạ:</p>
+                <p class="pl-4">Khách hàng sẽ được <strong>MIỄN PHÍ</strong> toàn bộ chi phí đánh bóng và xi mạ bởi thiết bị máy móc hiện đại.</p>
+                <p class="pl-4 mt-2 text-sm italic text-gray-600"><strong>Quý khách lưu ý:</strong> trong quá trình đánh bóng xi mạ sản phẩm, sẽ gây ra hao hụt về khối lượng so với khối lượng của sản phẩm trước khi sửa chữa và bảo hành. Nên An Thịnh sẽ thông báo khối lượng trước bảo hành và hao hụt dự kiến của sản phẩm sau khi bảo hành sửa chữa tới Quý khách hàng. An Thịnh xin phép không chịu trách nhiệm về sự hao hụt này.</p>
+              </div>
+
+              <div>
+                <p class="font-semibold mb-1">• Đối với những sản phẩm trong quá trình bảo hành cần phải thêm vàng để đảm bảo kết cấu của sản phẩm:</p>
+                <p class="pl-4">Khách hàng sẽ được <strong>MIỄN PHÍ</strong> toàn bộ công chế tác.</p>
+                <p class="pl-4">An Thịnh sẽ chỉ tính phí cho phần vàng thêm vào theo giá vàng nguyên liệu 10k, 14k, 18k An Thịnh niêm yết bán ra.</p>
+              </div>
+
+              <div>
+                <p class="font-semibold mb-1">• Đối với sản phẩm nhẫn cưới, An Thịnh áp dụng chính sách <strong>BẢO HÀNH, SỬA CHỮA MIỄN PHÍ TRỌN ĐỜI</strong>.</p>
+              </div>
+            </div>
+
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6 mt-6 space-y-3">
+              <p class="font-semibold text-red-700">An Thịnh xin phép không chịu trách nhiệm Bảo hành, sửa chữa MIỄN PHÍ đối với những trường hợp:</p>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>Sản phẩm trang sức tự tháo gỡ, hoặc sửa chữa bởi các tổ chức không được ủy quyền bởi An Thịnh.</li>
+                <li>Những hao mòn tự nhiên, do sử dụng và bảo quản sai quy cách.</li>
+                <li>Những hư hỏng do người sử dụng gây nên.</li>
+              </ul>
+            </div>
+
+            <div class="bg-amber-50 border border-amber-200 rounded-lg p-6 mt-6 space-y-3">
+              <p class="font-semibold text-primary">Đối với những sản phẩm có công nghệ chế tác đặc biệt:</p>
+              <ul class="list-disc pl-6 space-y-2">
+                <li>An Thịnh xin phép từ chối bảo hành đối với những trường hợp mà sản phẩm phải sửa chữa phức tạp không có khả năng phục hồi.</li>
+                <li>Trường hợp có thể sửa chữa được sẽ được nhận bảo hành, sửa chữa nhưng không đảm bảo 100% như lúc ban đầu.</li>
+              </ul>
+            </div>
+
+            <p class="text-sm text-gray-500 italic mt-6">Lưu ý: Chế độ bảo hành và biểu phí sửa chữa có thể thay đổi theo chính sách của An Thịnh tại từng thời điểm.</p>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

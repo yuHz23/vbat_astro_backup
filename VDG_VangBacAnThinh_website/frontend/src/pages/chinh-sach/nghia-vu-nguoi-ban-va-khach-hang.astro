@@ -1,0 +1,103 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PolicySidebar from '../../components/PolicySidebar.astro';
+---
+
+<Layout title="Nghĩa vụ của Người bán và Khách hàng - Vàng An Thịnh" variant="home">
+  <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Chính sách"}, {label: "Nghĩa vụ của Người bán và Khách hàng"}]} />
+
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-[280px_1fr] gap-8">
+        <PolicySidebar current="/chinh-sach/nghia-vu-nguoi-ban-va-khach-hang.html" />
+
+        <article class="bg-white rounded-xl shadow-sm p-8 lg:p-10">
+          <h1 class="font-heading text-3xl text-primary mb-8">Nghĩa vụ của Người bán và Nghĩa vụ của Khách hàng trong mỗi giao dịch</h1>
+
+          <div class="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Nghĩa vụ của Người bán</h2>
+            <p>Người bán có trách nhiệm thực hiện đầy đủ các nghĩa vụ sau đây trong mỗi giao dịch phát sinh trên website vanganthinh.com:</p>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Cung cấp và cập nhật thông tin</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Đăng tải, cập nhật đầy đủ, chính xác và kịp thời các thông tin liên quan đến hàng hóa, sản phẩm, dịch vụ được cung cấp trên Website theo quy định pháp luật hiện hành.</li>
+              <li>Đảm bảo các thông tin công bố không gây nhầm lẫn cho Khách hàng tại thời điểm xác lập giao dịch.</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Tư vấn và hướng dẫn</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Tư vấn, hướng dẫn và cung cấp các thông tin cần thiết liên quan đến sản phẩm, dịch vụ để Khách hàng hiểu rõ về sản phẩm khi khách hàng có nhu cầu.</li>
+              <li>Hỗ trợ Khách hàng trong phạm vi chức năng, quyền hạn và theo các chính sách đã được công bố trên website.</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Thiết lập và vận hành hệ thống giao dịch</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Thiết lập cơ chế cung cấp thông tin, đặt hàng và quản lý đơn hàng trên Website, cho phép Khách hàng thực hiện đúng quy trình đặt hàng, mua hàng, điều chỉnh thông tin đơn hàng theo các điều kiện và chính sách áp dụng tại từng thời điểm.</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Thực hiện nghĩa vụ giao hàng</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Giao hàng đúng đối tượng của hợp đồng, đúng chủng loại, số lượng, thời gian, địa điểm và phương thức giao hàng đã được xác lập trong đơn hàng hoặc theo thỏa thuận hợp pháp giữa các bên.</li>
+              <li>Cung cấp hóa đơn, chứng từ liên quan đến giao dịch theo quy định pháp luật và theo yêu cầu hợp lệ của Khách hàng (nếu có).</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Giải quyết phản ánh và khiếu nại</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Tiếp nhận, xử lý các yêu cầu hỗ trợ, thắc mắc, phản ánh và khiếu nại của Khách hàng liên quan đến giao dịch theo đúng quy trình và thời hạn được quy định tại các chính sách liên quan.</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Bảo hành hàng hóa</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Thực hiện nghĩa vụ bảo hành hàng hóa (nếu có) theo đúng nội dung, phạm vi và điều kiện quy định tại <a href="/chinh-sach/bao-hanh.html" class="text-accent">Chính sách bảo hành</a> được công bố trên Website.</li>
+            </ul>
+
+            <hr class="my-8 border-gray-200" />
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Nghĩa vụ của Khách hàng</h2>
+            <p>Khách hàng khi tham gia giao dịch trên Website có trách nhiệm thực hiện đầy đủ các nghĩa vụ sau:</p>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Nghĩa vụ thanh toán</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Thanh toán đầy đủ, đúng hạn và đúng số tiền theo đơn đặt hàng, kèm theo các hóa đơn, chứng từ theo quy định (nếu có).</li>
+              <li>Tuân thủ các phương thức thanh toán, trình tự và thủ tục thanh toán đã được Người bán công bố và theo quy định pháp luật hiện hành.</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Nghĩa vụ nhận hàng</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Nhận hàng đúng thời gian, địa điểm đã thỏa thuận trong đơn hàng.</li>
+              <li>Khách hàng cũng có nghĩa vụ nhận hàng và thiện chí thực hiện các biện pháp để Công ty Cổ phần Đầu tư vàng bạc An Thịnh giao hàng đúng thời gian và địa điểm đã thỏa thuận hoặc theo quy định của pháp luật.</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Nghĩa vụ kiểm tra hàng hóa</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Khách hàng phải kiểm tra hàng hóa theo thỏa thuận, theo <a href="/chinh-sach/van-chuyen.html" class="text-accent">Chính sách giao hàng</a> và <a href="/chinh-sach/thu-doi.html" class="text-accent">Chính sách đổi trả</a> được công bố trên Website.</li>
+              <li>Thông báo kịp thời cho Người bán khi phát hiện hàng hóa có sai sót, hư hỏng hoặc không phù hợp với nội dung đơn hàng trong thời hạn quy định.</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Nghĩa vụ cung cấp thông tin và hợp tác</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Cung cấp đầy đủ, trung thực và chính xác các thông tin liên quan đến giao dịch khi Người bán có yêu cầu nhằm phục vụ cho việc xử lý đơn hàng, thanh toán, bảo hành hoặc giải quyết khiếu nại.</li>
+              <li>Chịu trách nhiệm đối với các thông tin đã cung cấp.</li>
+            </ul>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">Nghĩa vụ tuân thủ chính sách</h3>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Khách hàng phải thường xuyên đọc và tuân theo các chính sách và hỗ trợ được đăng tải trên Website vanganthinh.com để có thể hiểu và thực hiện được các Chính sách tại thời điểm đó.</li>
+            </ul>
+
+            <hr class="my-8 border-gray-200" />
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Điều khoản áp dụng</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Nội dung này là một bộ phận không tách rời của <a href="/chinh-sach/dieu-khoan-mua-hang.html" class="text-accent">Điều kiện & Điều khoản mua hàng</a> được công bố trên website.</li>
+              <li>Chúng tôi không bao giờ yêu cầu khách hàng cung cấp mật khẩu tài khoản ngân hàng hoặc chuyển tiền đến tài khoản cá nhân.</li>
+            </ul>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

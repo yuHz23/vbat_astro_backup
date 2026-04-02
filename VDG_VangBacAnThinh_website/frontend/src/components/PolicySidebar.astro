@@ -1,0 +1,40 @@
+---
+interface Props {
+  current?: string;
+}
+const { current } = Astro.props;
+
+const policies = [
+  { href: '/chinh-sach/bao-hanh.html', label: 'Chính sách bảo hành' },
+  { href: '/chinh-sach/thu-doi.html', label: 'Chính sách thu đổi' },
+  { href: '/chinh-sach/bao-mat-thong-tin.html', label: 'Chính sách bảo mật thông tin' },
+  { href: '/chinh-sach/xu-ly-khieu-nai.html', label: 'Chính sách xử lý khiếu nại' },
+  { href: '/chinh-sach/dieu-khoan-mua-hang.html', label: 'Điều kiện, Điều khoản mua hàng' },
+  { href: '/chinh-sach/phuong-thuc-thanh-toan.html', label: 'Phương thức thanh toán' },
+  { href: '/chinh-sach/van-chuyen.html', label: 'Chính sách vận chuyển' },
+  { href: '/chinh-sach/nghia-vu-nguoi-ban-va-khach-hang.html', label: 'Nghĩa vụ của Người bán và Khách hàng' },
+];
+---
+
+<aside class="hidden lg:block">
+  <div class="bg-white rounded-xl shadow-sm p-5 sticky top-24">
+    <h3 class="font-heading text-lg text-primary font-semibold mb-4">Các chính sách của An Thịnh</h3>
+    <ul class="space-y-1">
+      {policies.map((p) => (
+        <li>
+          <a
+            href={p.href}
+            class:list={[
+              'block px-3 py-2 rounded-lg text-sm transition-colors',
+              current === p.href
+                ? 'bg-accent/10 text-accent font-medium'
+                : 'text-gray-600 hover:bg-gray-50 hover:text-primary',
+            ]}
+          >
+            {p.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</aside>

@@ -2,174 +2,136 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Sản Phẩm Bạc - Vàng An Thịnh" description="Khám phá bộ sưu tập trang sức vàng bạc cao cấp tại Vàng An Thịnh. Nhẫn, dây chuyền, vòng tay, bông tai chất lượng." variant="home" showTicker={true}>
+<Layout title="Sản Phẩm Bạc - Vàng An Thịnh" description="Khám phá bộ sưu tập bạc tích trữ và bạc mỹ nghệ cao cấp tại Vàng An Thịnh." variant="home" showTicker={true}>
 
-  <main x-data="productListing" class="bg-white">
+  <main x-data="silverPage" class="bg-white">
 
     <!-- Hero Banner -->
     <section class="max-w-[1400px] mx-auto px-4 py-4 mt-2">
-      <div
-        class="relative w-full h-[250px] md:h-[350px] rounded-xl overflow-hidden flex items-center bg-cover bg-center"
-        style="background-image: url('/silver-banner.png');">
-        <div class="absolute inset-0 bg-black/40"></div>
-        <div class="relative z-10 px-8 md:px-16 w-full lg:w-3/5 text-center md:text-left mx-auto md:mx-0">
-          <h2
-            class="font-heading text-3xl md:text-5xl lg:text-5xl text-white font-bold uppercase tracking-widest leading-tight drop-shadow-2xl">
-            Trang sức bạc<br /><span class="text-gray-200 mt-2 block italic font-normal lowercase font-heading">Tinh
-              xảo & Cao cấp</span></h2>
-        </div>
+      <div class="relative w-full rounded-xl overflow-hidden">
+        <img src="/banner-bac.png" class="w-full h-auto" alt="Banner Bạc An Thịnh" />
       </div>
     </section>
 
 
-    <!-- Breadcrumb & Filters -->
-    <section class="max-w-[1200px] mx-auto px-4 py-6">
-      <div class="flex flex-col gap-5">
-        <!-- Breadcrumb -->
-        <nav class="flex items-center gap-1.5 text-lg md:text-xl font-heading">
-          <a href="/" class="text-gray-500 hover:text-primary transition-colors font-normal">Trang chủ</a>
-          <span class="text-gray-400 font-light">/</span>
-          <span class="text-primary font-bold">Bạc</span>
-        </nav>
 
-        <!-- Filters Row (4 Dropdowns) -->
-        <div class="flex flex-wrap items-center gap-3">
-          <select x-model="sortBy" @change="applyFilter()"
-            class="bg-[#ECECEC] text-gray-700 border-none rounded-md px-4 py-2.5 text-[15px] focus:ring-0 cursor-pointer min-w-[180px] font-medium outline-none">
-            <option value="createdAt:desc">Sắp xếp theo giá</option>
-            <option value="price:asc">Giá thấp đến cao</option>
-            <option value="price:desc">Giá cao đến thấp</option>
-            <option value="createdAt:asc">Cũ nhất</option>
-            <option value="name:asc">Tên A - Z</option>
-          </select>
-
-          <select x-model="selectedCategory" @change="applyFilter()"
-            class="bg-[#ECECEC] text-gray-700 border-none rounded-md px-4 py-2.5 text-[15px] focus:ring-0 cursor-pointer min-w-[180px] font-medium outline-none">
-            <option value="">Loại sản phẩm</option>
-            <template x-for="cat in categories" :key="cat.id">
-              <option :value="cat.slug" x-text="cat.name"></option>
-            </template>
-          </select>
-
-          <select x-model="karatFilter" @change="applyFilter()"
-            class="bg-[#ECECEC] text-gray-700 border-none rounded-md px-4 py-2.5 text-[15px] focus:ring-0 cursor-pointer min-w-[180px] font-medium outline-none">
-            <option value="">Chất liệu</option>
-            <option value="24K">Vàng 24K (999.9)</option>
-            <option value="18K">Vàng 18K (750)</option>
-            <option value="14K">Vàng 14K (585)</option>
-            <option value="10K">Vàng 10K (416)</option>
-          </select>
-
-          <select
-            class="bg-[#ECECEC] text-gray-700 border-none rounded-md px-4 py-2.5 text-[15px] focus:ring-0 cursor-pointer min-w-[180px] font-medium outline-none">
-            <option value="">Trọng lượng (chỉ)</option>
-            <option value="0.5">0.5 Chỉ</option>
-            <option value="1">1 Chỉ</option>
-            <option value="2">2 Chỉ</option>
-            <option value="5">5 Chỉ</option>
-            <option value="10">1 Lượng</option>
-          </select>
-        </div>
-      </div>
-    </section>
-
-    <!-- Product Grid Section -->
-    <section class="max-w-[1200px] mx-auto px-4 pb-16">
-
+    <!-- ==================== BẠC TÍCH TRỮ ==================== -->
+    <section class="max-w-[1200px] mx-auto px-4 pb-10">
       <div class="flex items-center justify-between mb-8">
-        <h2 class="font-heading text-2xl font-bold text-primary uppercase tracking-wide">Sản phẩm Bạc</h2>
-        <span class="text-sm font-medium text-gray-500"><span x-text="products.length"></span> sản phẩm</span>
+        <h2 class="font-heading text-2xl font-bold text-primary uppercase tracking-wide">Bạc tích trữ</h2>
+        <span class="text-sm font-medium text-gray-500"><span x-text="tichTruProducts.length"></span> sản phẩm</span>
       </div>
 
-      <!-- Loading State -->
-      <div x-show="loading" class="text-center py-20">
+      <!-- Loading -->
+      <div x-show="loadingTichTru" class="text-center py-16">
         <div class="inline-block w-10 h-10 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
         <p class="mt-4 text-gray-500 font-medium">Đang tải sản phẩm...</p>
       </div>
 
-      <!-- Empty State -->
-      <div x-show="!loading && products.length === 0" class="text-center py-20 border border-gray-100 rounded-xl">
-        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-        </svg>
-        <p class="text-gray-500 font-medium">Không tìm thấy sản phẩm phù hợp.</p>
-      </div>
-
       <!-- Grid -->
-      <div x-show="!loading && products.length > 0"
+      <div x-show="!loadingTichTru && tichTruProducts.length > 0"
         class="grid grid-cols-2 lg:grid-cols-4 border-t border-l border-gray-100 bg-white">
-        <template x-for="(product, index) in products" :key="product.id">
-          <div
-            class="group relative block border-r border-b border-gray-100 bg-white hover:shadow-[0_0_20px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:z-10 flex flex-col min-h-[420px]">
-
+        <template x-for="(product, index) in tichTruProducts" :key="product.id">
+          <div class="group relative block border-r border-b border-gray-100 bg-white hover:shadow-[0_0_20px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:z-10 flex flex-col min-h-[420px]">
             <a :href="'/san-pham-chi-tiet.html?slug=' + product.slug" class="block flex-1 flex flex-col">
-              <!-- Top Badge -->
               <div class="absolute top-4 left-4 z-20">
-                <span :class="index % 3 === 0 ? 'bg-[#E5F7ED] text-[#00A76F]' : 'bg-[#E5F7ED] text-[#00A76F]'"
-                  class="text-xs px-2.5 py-1 rounded-sm font-semibold tracking-wide"
-                  x-text="index % 3 === 0 ? 'Đặt hàng' : 'Còn hàng'"></span>
+                <span class="text-xs px-2.5 py-1 rounded-sm font-semibold tracking-wide"
+                  :class="{
+                    'bg-[#E5F7ED] text-[#00A76F]': product.status === 'available' || product.status === 'coming_soon',
+                    'bg-red-50 text-red-500': product.status === 'out_of_stock' || product.status === 'discontinued',
+                  }"
+                  x-text="product.status === 'available' ? 'Còn hàng' : product.status === 'coming_soon' ? 'Đặt hàng' : product.status === 'out_of_stock' ? 'Hết hàng' : product.status === 'discontinued' ? 'Dừng bán' : ''"></span>
               </div>
-
-              <!-- Product Image -->
               <div class="w-full pt-[100%] relative bg-gradient-to-b from-white to-[#F9F8F6]">
                 <img :src="getStrapiMedia(product.images?.[0]?.url)" :alt="product.name"
-                  class="absolute inset-0 m-auto w-[65%] h-[65%] object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-500 ease-out" />
+                  class="absolute inset-0 m-auto w-[65%] h-[65%] object-contain drop-shadow-xl transition-all duration-500 ease-out"
+                  :class="product.images?.length > 1 ? 'group-hover:opacity-0 group-hover:scale-110' : 'group-hover:scale-110'" />
+                <img x-show="product.images?.length > 1" :src="getStrapiMedia(product.images?.[1]?.url)" :alt="product.name"
+                  class="absolute inset-0 m-auto w-[65%] h-[65%] object-contain drop-shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out group-hover:scale-110" />
               </div>
-
-              <!-- Info Content -->
               <div class="p-5 flex-1 flex flex-col justify-end bg-white">
-                <h3
-                  class="text-[16px] font-bold text-primary uppercase leading-snug tracking-wide line-clamp-2 mb-[30px]"
-                  x-text="product.name"></h3>
-
+                <h3 class="text-[16px] font-bold text-primary uppercase leading-snug tracking-wide line-clamp-2 mb-[30px]" x-text="product.name"></h3>
                 <div class="mt-auto">
                   <p class="text-[12px] text-[#0284c7] font-semibold uppercase mb-0.5 tracking-wider">Bán ra</p>
                   <p class="text-[22px] font-bold text-primary leading-none tracking-tight mb-2"
                     x-text="new Intl.NumberFormat('en-US').format(product.price)"></p>
-
                   <div class="flex items-center gap-1.5 flex-wrap">
                     <p class="text-[12px] text-pq-red font-semibold uppercase tracking-wider">Mua vào</p>
                     <p class="text-[15px] font-semibold text-pq-red tracking-tight"
-                      x-text="new Intl.NumberFormat('en-US').format(product.compareAtPrice || Math.floor(product.price * 0.96))">
-                    </p>
+                      x-text="new Intl.NumberFormat('en-US').format(product.compareAtPrice || Math.floor(product.price * 0.96))"></p>
                   </div>
                 </div>
               </div>
             </a>
-
           </div>
         </template>
       </div>
 
-      <!-- Pagination -->
-      <div x-show="!loading && totalPages > 1" class="flex items-center justify-center gap-2 mt-12">
-        <button @click="goToPage(currentPage - 1)" :disabled="currentPage <= 1"
-          :class="currentPage <= 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#ECECEC]'"
-          class="w-10 h-10 rounded-full flex items-center justify-center text-sm transition-colors text-primary font-medium">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
+      <!-- Pagination tich tru -->
+      <div x-show="tichTruTotalPages > 1" class="flex items-center justify-center gap-1 mt-8 text-sm text-gray-500">
+        <span>Hiển thị 1 - <span x-text="tichTruProducts.length"></span> trên tổng số <span x-text="tichTruTotal"></span> sản phẩm</span>
+      </div>
+    </section>
 
-        <template x-for="page in totalPages" :key="page">
-          <button x-show="page === 1 || page === totalPages || (page >= currentPage - 2 && page <= currentPage + 2)"
-            @click="goToPage(page)"
-            :class="page === currentPage ? 'bg-primary text-white' : 'hover:bg-[#ECECEC] text-primary'"
-            class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-colors"
-            x-text="page">
-          </button>
-        </template>
+    <!-- Divider -->
+    <div class="max-w-[1200px] mx-auto px-4"><hr class="border-gray-200 my-4" /></div>
 
-        <button @click="goToPage(currentPage + 1)" :disabled="currentPage >= totalPages"
-          :class="currentPage >= totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#ECECEC]'"
-          class="w-10 h-10 rounded-full flex items-center justify-center text-sm transition-colors text-primary font-medium">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
+    <!-- ==================== BẠC MỸ NGHỆ ==================== -->
+    <section class="max-w-[1200px] mx-auto px-4 py-10">
+      <div class="flex items-center justify-between mb-8">
+        <h2 class="font-heading text-2xl font-bold text-primary uppercase tracking-wide">Bạc mỹ nghệ</h2>
+        <span class="text-sm font-medium text-gray-500"><span x-text="myNgheProducts.length"></span> sản phẩm</span>
       </div>
 
+      <!-- Loading -->
+      <div x-show="loadingMyNghe" class="text-center py-16">
+        <div class="inline-block w-10 h-10 border-4 border-accent border-t-transparent rounded-full animate-spin"></div>
+        <p class="mt-4 text-gray-500 font-medium">Đang tải sản phẩm...</p>
+      </div>
+
+      <!-- Grid -->
+      <div x-show="!loadingMyNghe && myNgheProducts.length > 0"
+        class="grid grid-cols-2 lg:grid-cols-4 border-t border-l border-gray-100 bg-white">
+        <template x-for="(product, index) in myNgheProducts" :key="product.id">
+          <div class="group relative block border-r border-b border-gray-100 bg-white hover:shadow-[0_0_20px_rgba(0,0,0,0.08)] transition-shadow duration-300 hover:z-10 flex flex-col min-h-[420px]">
+            <a :href="'/san-pham-chi-tiet.html?slug=' + product.slug" class="block flex-1 flex flex-col">
+              <div class="absolute top-4 left-4 z-20">
+                <span class="text-xs px-2.5 py-1 rounded-sm font-semibold tracking-wide"
+                  :class="{
+                    'bg-[#E5F7ED] text-[#00A76F]': product.status === 'available' || product.status === 'coming_soon',
+                    'bg-red-50 text-red-500': product.status === 'out_of_stock' || product.status === 'discontinued',
+                  }"
+                  x-text="product.status === 'available' ? 'Còn hàng' : product.status === 'coming_soon' ? 'Đặt hàng' : product.status === 'out_of_stock' ? 'Hết hàng' : product.status === 'discontinued' ? 'Dừng bán' : ''"></span>
+              </div>
+              <div class="w-full pt-[100%] relative bg-gradient-to-b from-white to-[#F9F8F6]">
+                <img :src="getStrapiMedia(product.images?.[0]?.url)" :alt="product.name"
+                  class="absolute inset-0 m-auto w-[65%] h-[65%] object-contain drop-shadow-xl transition-all duration-500 ease-out"
+                  :class="product.images?.length > 1 ? 'group-hover:opacity-0 group-hover:scale-110' : 'group-hover:scale-110'" />
+                <img x-show="product.images?.length > 1" :src="getStrapiMedia(product.images?.[1]?.url)" :alt="product.name"
+                  class="absolute inset-0 m-auto w-[65%] h-[65%] object-contain drop-shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out group-hover:scale-110" />
+              </div>
+              <div class="p-5 flex-1 flex flex-col justify-end bg-white">
+                <h3 class="text-[16px] font-bold text-primary uppercase leading-snug tracking-wide line-clamp-2 mb-[30px]" x-text="product.name"></h3>
+                <div class="mt-auto">
+                  <p class="text-[12px] text-[#0284c7] font-semibold uppercase mb-0.5 tracking-wider">Bán ra</p>
+                  <p class="text-[22px] font-bold text-primary leading-none tracking-tight mb-2"
+                    x-text="new Intl.NumberFormat('en-US').format(product.price)"></p>
+                  <div class="flex items-center gap-1.5 flex-wrap">
+                    <p class="text-[12px] text-pq-red font-semibold uppercase tracking-wider">Mua vào</p>
+                    <p class="text-[15px] font-semibold text-pq-red tracking-tight"
+                      x-text="new Intl.NumberFormat('en-US').format(product.compareAtPrice || Math.floor(product.price * 0.96))"></p>
+                  </div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </template>
+      </div>
+
+      <!-- Pagination my nghe -->
+      <div x-show="myNgheTotalPages > 1" class="flex items-center justify-center gap-1 mt-8 text-sm text-gray-500">
+        <span>Hiển thị 1 - <span x-text="myNgheProducts.length"></span> trên tổng số <span x-text="myNgheTotal"></span> sản phẩm</span>
+      </div>
     </section>
 
   </main>

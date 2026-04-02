@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Đăng nhập Admin - Vàng An Thịnh" description="Đăng nhập quản trị." variant="home">
+  <main class="min-h-screen bg-light-bg">
+    <div class="flex items-center justify-center py-16 px-4" x-data="adminLoginPage">
+      <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+        <div class="text-center mb-8">
+          <img src="/logo-icon.png" alt="An Thịnh" class="w-16 h-16 rounded-full object-cover mx-auto mb-4" />
+          <h1 class="font-heading text-2xl text-primary font-bold">Đăng nhập Quản trị</h1>
+          <p class="text-gray-500 text-sm mt-1">Dành cho nhân viên Vàng An Thịnh</p>
+        </div>
+
+        <div x-show="error" x-transition class="mb-4 bg-red-50 border border-red-200 text-error text-sm rounded-lg p-3" x-text="error"></div>
+
+        <form @submit.prevent="login()" class="space-y-5">
+          <div>
+            <label for="email" class="block text-sm font-medium text-primary mb-1">Email</label>
+            <input
+              id="email"
+              type="email"
+              x-model="email"
+              required
+              placeholder="Nhập email admin"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors"
+            />
+          </div>
+          <div>
+            <label for="password" class="block text-sm font-medium text-primary mb-1">Mật khẩu</label>
+            <input
+              id="password"
+              type="password"
+              x-model="password"
+              required
+              placeholder="Nhập mật khẩu"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors"
+            />
+          </div>
+          <button
+            type="submit"
+            :disabled="loading"
+            class="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 text-sm"
+          >
+            <span x-show="!loading">Đăng nhập</span>
+            <span x-show="loading" class="flex items-center justify-center gap-2">
+              <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+              Đang xử lý...
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</Layout>

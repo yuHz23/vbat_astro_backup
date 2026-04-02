@@ -1,0 +1,46 @@
+<!-- Floating Facebook Contact Bubble -->
+<div class="fixed bottom-24 right-6 z-40" x-data="{ open: false }">
+  <!-- Tooltip popup -->
+  <div
+    x-show="open"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+    x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+    x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+    class="absolute bottom-16 right-0 bg-white rounded-xl shadow-2xl p-4 w-64 border border-gray-100"
+    @click.outside="open = false"
+    x-cloak
+  >
+    <div class="flex items-center gap-3 mb-3">
+      <div class="w-10 h-10 bg-[#1877F2] rounded-full flex items-center justify-center flex-shrink-0">
+        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+      </div>
+      <div>
+        <p class="font-semibold text-gray-800 text-sm">Chat qua Facebook</p>
+        <p class="text-xs text-gray-500">Vàng Bạc An Thịnh</p>
+      </div>
+    </div>
+    <a
+      href="https://www.facebook.com/61581487539883"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="block w-full bg-[#1877F2] hover:bg-[#1565C0] text-white text-center py-2.5 rounded-lg text-sm font-medium transition-colors"
+    >
+      Truy cập Facebook
+    </a>
+  </div>
+
+  <!-- Facebook bubble button -->
+  <button
+    @click="open = !open"
+    class="relative bg-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 transition-colors cursor-pointer group"
+    title="Chat Facebook"
+  >
+    <!-- Ping animation -->
+    <span class="absolute inset-0 rounded-full bg-white animate-ping opacity-20"></span>
+    <!-- Facebook icon -->
+    <svg class="w-7 h-7 text-[#1877F2] relative z-10" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+  </button>
+</div>

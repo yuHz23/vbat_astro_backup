@@ -9,7 +9,8 @@ import CartDrawer from '../components/CartDrawer.astro';
 import SearchOverlay from '../components/SearchOverlay.astro';
 import Footer from '../components/Footer.astro';
 import FloatingHotline from '../components/FloatingHotline.astro';
-import ThemeToggle from '../components/ThemeToggle.astro';
+import ZaloBubble from '../components/ZaloBubble.astro';
+import FacebookBubble from '../components/FacebookBubble.astro';
 import TickerBar from '../components/TickerBar.astro';
 
 interface Props {
@@ -37,6 +38,32 @@ const isHome = variant === 'home';
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content="https://vanganthinh.com/og-logo.png" />
+  <meta property="og:url" content="https://vanganthinh.com" />
+  <meta property="og:site_name" content="Vàng An Thịnh" />
+  <meta property="og:locale" content="vi_VN" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://vanganthinh.com/og-logo.png" />
+
+  <!-- Google Search Console -->
+  <meta name="google-site-verification" content="q_AfcRJMrdSs_5D4M8zyke5H_o3F-z3Mii8jVx47nG4" />
+
+  <!-- SEO -->
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Vàng An Thịnh" />
+  <link rel="canonical" href="https://vanganthinh.com" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -47,8 +74,8 @@ const isHome = variant === 'home';
 <body x-data>
 
   {isHome ? <TopBar /> : <TopBarInner />}
+  <TickerBar />
   {isHome ? <Header /> : <HeaderInner />}
-  {showTicker && <TickerBar />}
   {isHome && <SearchOverlay />}
 
   <MobileMenu />
@@ -57,8 +84,8 @@ const isHome = variant === 'home';
   <slot />
 
   <Footer />
-  <FloatingHotline />
-  <ThemeToggle />
+  <ZaloBubble />
+  <FacebookBubble />
 
 </body>
 

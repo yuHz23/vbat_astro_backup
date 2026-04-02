@@ -2,9 +2,9 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Đơn hàng - Vàng An Thịnh" description="Lịch sử đơn hàng Vàng An Thịnh - Theo dõi và quản lý đơn mua hàng của bạn." variant="inner">
+<Layout title="Đơn hàng - Vàng An Thịnh" description="Lịch sử đơn hàng Vàng An Thịnh - Theo dõi và quản lý đơn mua hàng của bạn." variant="home">
   <main class="min-h-screen bg-light-bg"
-    x-data="{ get user() { return $store.auth.user; } }">
+    x-data="orderHistoryPage">
 
     <div class="max-w-4xl mx-auto px-4 py-12">
 
@@ -23,10 +23,9 @@ import Layout from '../layouts/Layout.astro';
             <div class="text-center mb-6">
               <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-3">
                 <span class="text-accent font-heading text-3xl font-bold"
-                  x-text="user?.username?.[0]?.toUpperCase() || 'U'"></span>
+                  x-text="$store.auth.user?.username?.[0]?.toUpperCase() || 'U'"></span>
               </div>
-              <h2 class="font-semibold text-primary text-lg" x-text="user?.username"></h2>
-              <p class="text-sm text-gray-500" x-text="user?.email"></p>
+              <h2 class="font-semibold text-primary text-lg" x-text="$store.auth.user?.username"></h2>
             </div>
 
             <!-- Nav Links -->
@@ -34,27 +33,75 @@ import Layout from '../layouts/Layout.astro';
               <a href="/tai-khoan"
                 class="block py-2 px-3 rounded-lg hover:bg-light-bg text-primary text-sm transition-colors">Thông tin tài khoản</a>
               <a href="/don-hang"
-                class="block py-2 px-3 rounded-lg bg-light-bg text-accent font-medium text-sm">Lịch sử đơn
-                hàng</a>
-              <a href="/yeu-thich.html"
-                class="block py-2 px-3 rounded-lg hover:bg-light-bg text-primary text-sm transition-colors">Sản phẩm yêu
-                thích</a>
+                class="block py-2 px-3 rounded-lg bg-light-bg text-accent font-medium text-sm">Lịch sử đơn hàng</a>
               <button @click="$store.auth.logout()"
-                class="w-full text-left py-2 px-3 rounded-lg hover:bg-red-50 text-error text-sm transition-colors">Đăng
-                xuất</button>
+                class="w-full text-left py-2 px-3 rounded-lg hover:bg-red-50 text-error text-sm transition-colors">Đăng xuất</button>
             </nav>
           </div>
         </div>
 
         <!-- Main Content -->
         <div class="md:col-span-2">
-
-          <!-- Order History Card -->
           <div class="bg-white rounded-xl shadow-sm p-6">
             <h3 class="font-heading text-lg text-primary font-semibold mb-4">Lịch sử đơn hàng</h3>
 
+            <!-- Loading -->
+            <div x-show="loading" class="flex justify-center py-12">
+              <svg class="animate-spin w-8 h-8 text-accent" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+            </div>
+
+            <!-- Orders List -->
+            <div x-show="!loading && orders.length > 0" class="space-y-4">
+              <template x-for="order in orders" :key="order.id">
+                <div class="border border-gray-200 rounded-xl p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <div>
+                      <span class="font-semibold text-primary text-sm" x-text="order.orderNumber"></span>
+                      <span class="text-gray-400 text-xs ml-2" x-text="new Date(order.createdAt).toLocaleDateString('vi-VN')"></span>
+                    </div>
+                    <span class="text-xs font-medium px-3 py-1 rounded-full"
+                      :class="{
+                        'bg-yellow-100 text-yellow-700': order.status === 'pending',
+                        'bg-blue-100 text-blue-700': order.status === 'confirmed',
+                        'bg-green-100 text-green-700': order.status === 'paid' || order.status === 'completed',
+                        'bg-red-100 text-red-700': order.status === 'cancelled',
+                      }"
+                      x-text="{
+                        pending: 'Chờ xác nhận',
+                        confirmed: 'Đã xác nhận',
+                        paid: 'Đã thanh toán',
+                        completed: 'Hoàn thành',
+                        cancelled: 'Đã hủy',
+                      }[order.status] || order.status">
+                    </span>
+                  </div>
+
+                  <!-- Order Items -->
+                  <div class="space-y-2 mb-3">
+                    <template x-for="item in (order.items || [])" :key="item.id">
+                      <div class="flex items-center justify-between text-sm text-gray-600">
+                        <span>
+                          <span x-text="item.product?.name || item.variantInfo || 'Sản phẩm'"></span>
+                          <span class="text-gray-400" x-text="'x' + item.quantity"></span>
+                        </span>
+                        <span class="font-medium" x-text="formatPrice(item.unitPrice * item.quantity)"></span>
+                      </div>
+                    </template>
+                  </div>
+
+                  <div class="border-t pt-3 flex items-center justify-between">
+                    <span class="text-sm text-gray-500">Tổng cộng</span>
+                    <span class="font-bold text-accent" x-text="formatPrice(order.totalAmount)"></span>
+                  </div>
+                </div>
+              </template>
+            </div>
+
             <!-- Empty State -->
-            <div class="flex flex-col items-center justify-center py-16 text-center">
+            <div x-show="!loading && orders.length === 0" class="flex flex-col items-center justify-center py-16 text-center">
               <svg class="w-20 h-20 mb-5 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                   d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />

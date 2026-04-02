@@ -1,0 +1,128 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PolicySidebar from '../../components/PolicySidebar.astro';
+---
+
+<Layout title="Chính sách thu đổi - Vàng An Thịnh" variant="home">
+  <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Chính sách"}, {label: "Chính sách thu đổi"}]} />
+
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-[280px_1fr] gap-8">
+        <PolicySidebar current="/chinh-sach/thu-doi.html" />
+
+        <article class="bg-white rounded-xl shadow-sm p-8 lg:p-10">
+          <h1 class="font-heading text-3xl text-primary mb-8">Chính sách thu đổi</h1>
+
+          <div class="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
+
+            <!-- Bảng chính sách thu đổi -->
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse border border-gray-200 text-sm">
+                <thead>
+                  <tr class="bg-primary text-white">
+                    <th class="border border-gray-200 px-3 py-3 text-center w-12">STT</th>
+                    <th class="border border-gray-200 px-3 py-3 text-left">Chủng loại</th>
+                    <th class="border border-gray-200 px-3 py-3 text-center">Thu mua lại</th>
+                    <th class="border border-gray-200 px-3 py-3 text-center">Đổi sang sản phẩm mới</th>
+                    <th class="border border-gray-200 px-3 py-3 text-left">Ghi chú</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Row 1 -->
+                  <tr>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top font-semibold">1</td>
+                    <td class="border border-gray-200 px-3 py-3 align-top">
+                      <p>Tất cả các sản phẩm trang sức vàng 10k, 14k, 18k</p>
+                      <p class="text-xs text-gray-500 mt-1">(Điều kiện: Sản phẩm còn nguyên vẹn, không gãy hỏng)</p>
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top">70% giá trị hóa đơn</td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top">80% giá trị hóa đơn</td>
+                    <td class="border border-gray-200 px-3 py-3 align-top text-xs">
+                      <p>Tại thời điểm Quý khách bán lại sản phẩm: Nếu phương án thu mua theo giá vàng nguyên liệu (Mục 5) cao hơn so với phương án thu mua được quy định tại mục 1 và mục 4, thì An Thịnh sẽ áp dụng thu mua theo phương án giá vàng nguyên liệu (phương án có lợi nhất cho Quý khách).</p>
+                    </td>
+                  </tr>
+                  <!-- Row 2 -->
+                  <tr class="bg-gray-50">
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top font-semibold">2</td>
+                    <td class="border border-gray-200 px-3 py-3 align-top">
+                      Tất cả các sản phẩm trang sức vàng 10k, 14k, 18k
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top">—</td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top">100% giá trị hóa đơn (Không hoàn lại tiền) trong vòng 24h kể từ lúc mua hàng.</td>
+                    <td class="border border-gray-200 px-3 py-3 align-top text-xs">
+                      <p><strong class="text-red-600">Điều kiện áp dụng:</strong> Sản phẩm trong tình trạng chưa sử dụng còn nguyên vẹn như lúc mới mua:</p>
+                      <ul class="list-disc pl-4 mt-1 space-y-0.5">
+                        <li>Không xước</li>
+                        <li>Không gãy hỏng</li>
+                        <li>Không biến dạng</li>
+                        <li>Khối lượng không thay đổi</li>
+                      </ul>
+                      <p class="mt-1">Quý khách đổi sang sản phẩm có giá trị ngang bằng hoặc lớn hơn. <strong class="text-red-600">Không hoàn tiền. Chỉ áp dụng 01 lần.</strong></p>
+                    </td>
+                  </tr>
+                  <!-- Row 3 -->
+                  <tr>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top font-semibold">3</td>
+                    <td class="border border-gray-200 px-3 py-3 align-top">
+                      Trang sức tính công các loại, trang sức vàng có hàm lượng vàng 98%, 99%, 99.9%, 99.99%
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top text-xs">
+                      Thu mua lại theo khối lượng, tuổi vàng và giá vàng 98%, 99%, 99.9%, 99.99% <strong>MUA VÀO</strong> niêm yết của An Thịnh
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top text-xs">
+                      Thu mua lại theo khối lượng, tuổi vàng và giá vàng 98%, 99%, 99.9%, 99.99% <strong>BÁN RA</strong> niêm yết của An Thịnh
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 align-top text-xs">
+                      <p class="font-semibold mb-1">Công thức tính:</p>
+                      <p>- Trường hợp Quý khách bán lại:</p>
+                      <p class="pl-2">Giá thu mua lại = Khối lượng vàng của sản phẩm × Giá vàng 98%, 99%, 99.9%, 99.99% <strong>MUA VÀO</strong> niêm yết của An Thịnh</p>
+                      <p class="mt-1">- Trường hợp Quý khách đổi sang sản phẩm mới:</p>
+                      <p class="pl-2">Giá thu mua lại = Khối lượng vàng của sản phẩm × Giá vàng 98%, 99%, 99.9%, 99.99% <strong>BÁN RA</strong> niêm yết của An Thịnh</p>
+                    </td>
+                  </tr>
+                  <!-- Row 4 -->
+                  <tr class="bg-gray-50">
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top font-semibold">4</td>
+                    <td class="border border-gray-200 px-3 py-3 align-top">
+                      Đối với những sản phẩm có công nghệ chế tác đặc biệt (được ghi rõ trong giấy Chứng nhận vàng)
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top">60% giá trị hóa đơn</td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top">70% giá trị hóa đơn</td>
+                    <td class="border border-gray-200 px-3 py-3 align-top text-xs">
+                      <p><strong>Lưu ý:</strong> Chỉ áp dụng đối với các sản phẩm đảm bảo được khối lượng và kết cấu như lúc ban đầu.</p>
+                    </td>
+                  </tr>
+                  <!-- Row 5 -->
+                  <tr>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top font-semibold">5</td>
+                    <td class="border border-gray-200 px-3 py-3 align-top">
+                      Trường hợp sản phẩm trang sức vàng 10k, 14k, 18k hỏng (đứt, gãy, móp méo, bẹp, thiếu chi tiết)
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top text-xs">
+                      Thu mua lại theo giá vàng nguyên liệu 10k, 14k, 18k <strong>MUA VÀO</strong> niêm yết của An Thịnh
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 text-center align-top text-xs">
+                      Thu mua lại theo giá vàng nguyên liệu 10k, 14k, 18k <strong>BÁN RA</strong> niêm yết của An Thịnh
+                    </td>
+                    <td class="border border-gray-200 px-3 py-3 align-top text-xs">
+                      <p class="font-semibold mb-1">Công thức tính:</p>
+                      <p>- Trường hợp Quý khách bán lại:</p>
+                      <p class="pl-2">Giá thu mua lại = Khối lượng vàng của sản phẩm × Giá vàng nguyên liệu 10k, 14k, 18k <strong>MUA VÀO</strong> niêm yết của An Thịnh</p>
+                      <p class="mt-1">- Trường hợp Quý khách đổi sang sản phẩm mới:</p>
+                      <p class="pl-2">Giá thu mua lại = Khối lượng vàng của sản phẩm × Giá vàng nguyên liệu 10k, 14k, 18k <strong>BÁN RA</strong> niêm yết của An Thịnh</p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <p class="text-sm text-gray-500 italic">Lưu ý: Chế độ bảo hành và biểu phí sửa chữa có thể thay đổi theo chính sách của An Thịnh tại từng thời điểm.</p>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

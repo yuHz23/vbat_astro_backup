@@ -31,9 +31,9 @@
       "type": "decimal",
       "required": true
     },
-    "status": {
+    "orderStatus": {
       "type": "enumeration",
-      "enum": ["pending", "confirmed", "paid", "completed", "cancelled"],
+      "enum": ["pending", "paid", "completed", "cancelled"],
       "default": "pending",
       "required": true
     },

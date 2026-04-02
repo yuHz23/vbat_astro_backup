@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PolicySidebar from '../../components/PolicySidebar.astro';
+---
+
+<Layout title="Chính sách xử lý khiếu nại - Vàng An Thịnh" variant="home">
+  <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Chính sách"}, {label: "Chính sách xử lý khiếu nại"}]} />
+
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-[280px_1fr] gap-8">
+        <PolicySidebar current="/chinh-sach/xu-ly-khieu-nai.html" />
+
+        <article class="bg-white rounded-xl shadow-sm p-8 lg:p-10">
+          <h1 class="font-heading text-3xl text-primary mb-8">Chính sách xử lý khiếu nại</h1>
+
+          <div class="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
+
+            <p>Vàng An Thịnh luôn mong muốn mang đến trải nghiệm mua sắm tốt nhất cho khách hàng. Trong trường hợp phát sinh vấn đề, chúng tôi cam kết xử lý khiếu nại một cách nhanh chóng, công bằng và minh bạch.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">1. Hình thức tiếp nhận khiếu nại</h2>
+            <p>Khách hàng có thể gửi khiếu nại thông qua các kênh sau:</p>
+            <ul class="list-disc pl-6 space-y-2">
+              <li><strong>Trực tiếp tại cửa hàng:</strong> Số 141P Trương Định, P. Tương Mai, Q. Hoàng Mai, Hà Nội.</li>
+              <li><strong>Hotline:</strong> <a href="tel:0363778889" class="text-accent font-semibold">0363 778 889</a> (8:00 - 20:00 hàng ngày).</li>
+              <li><strong>Email:</strong> <a href="mailto:contact@vangantinh.vn" class="text-accent">contact@vangantinh.vn</a></li>
+              <li><strong>Qua website:</strong> Sử dụng form liên hệ trên website.</li>
+            </ul>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">2. Quy trình xử lý khiếu nại</h2>
+            <div class="space-y-4">
+              <div class="flex gap-3">
+                <span class="w-8 h-8 bg-accent/10 text-accent rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm">1</span>
+                <div>
+                  <p class="font-semibold text-primary">Tiếp nhận khiếu nại</p>
+                  <p>Khách hàng cung cấp thông tin: họ tên, số điện thoại, mã đơn hàng/hóa đơn, nội dung khiếu nại. Bộ phận chăm sóc khách hàng xác nhận đã nhận khiếu nại trong vòng 24 giờ.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="w-8 h-8 bg-accent/10 text-accent rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm">2</span>
+                <div>
+                  <p class="font-semibold text-primary">Xác minh và xử lý</p>
+                  <p>Vàng An Thịnh tiến hành xác minh thông tin, kiểm tra sản phẩm (nếu cần). Thời gian xử lý: 3-5 ngày làm việc kể từ ngày nhận đầy đủ thông tin.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="w-8 h-8 bg-accent/10 text-accent rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm">3</span>
+                <div>
+                  <p class="font-semibold text-primary">Phản hồi kết quả</p>
+                  <p>Thông báo kết quả xử lý khiếu nại cho khách hàng qua điện thoại hoặc email. Đề xuất phương án giải quyết phù hợp.</p>
+                </div>
+              </div>
+              <div class="flex gap-3">
+                <span class="w-8 h-8 bg-accent/10 text-accent rounded-full flex items-center justify-center flex-shrink-0 font-bold text-sm">4</span>
+                <div>
+                  <p class="font-semibold text-primary">Hoàn tất xử lý</p>
+                  <p>Thực hiện phương án đã thống nhất với khách hàng. Xác nhận khách hàng hài lòng với kết quả xử lý.</p>
+                </div>
+              </div>
+            </div>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">3. Kết quả và phản hồi</h2>
+            <p>Tùy theo từng trường hợp cụ thể, Vàng An Thịnh sẽ đưa ra các giải pháp phù hợp bao gồm: đổi sản phẩm, hoàn tiền, bồi thường, sửa chữa miễn phí, hoặc các hình thức hỗ trợ khác nhằm đảm bảo quyền lợi tối đa cho khách hàng.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">4. Cơ chế giải quyết tranh chấp</h2>
+            <p>Trong trường hợp khách hàng không đồng ý với phương án giải quyết, hai bên sẽ thương lượng để tìm giải pháp phù hợp. Nếu không thể thương lượng, tranh chấp sẽ được giải quyết theo quy định của pháp luật Việt Nam.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">5. Cam kết của Vàng An Thịnh</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Mọi khiếu nại đều được tiếp nhận và xử lý nghiêm túc.</li>
+              <li>Đảm bảo quyền lợi chính đáng của khách hàng.</li>
+              <li>Không ngừng cải thiện chất lượng dịch vụ dựa trên phản hồi của khách hàng.</li>
+            </ul>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

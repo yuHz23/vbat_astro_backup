@@ -2,7 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Chi Tiết Sản Phẩm - Vàng An Thịnh" description="Xem chi tiết sản phẩm trang sức vàng bạc cao cấp tại Vàng An Thịnh." variant="inner" showTicker={false}>
+<Layout title="Chi Tiết Sản Phẩm - Vàng An Thịnh" description="Xem chi tiết sản phẩm trang sức vàng bạc cao cấp tại Vàng An Thịnh." variant="home" showTicker={false}>
 
   <main x-data="productDetail">
 
@@ -58,7 +58,13 @@ import Layout from '../layouts/Layout.astro';
                   :alt="product?.name"
                   class="w-full h-full object-cover"
                 />
-                <span x-show="product?.compareAtPrice" class="absolute top-4 left-4 bg-error text-white text-sm px-3 py-1 rounded-full font-semibold">SALE</span>
+                <!-- Status badge -->
+                <span class="absolute top-4 left-4 text-xs px-2.5 py-1 rounded-sm font-semibold tracking-wide"
+                  :class="{
+                    'bg-[#E5F7ED] text-[#00A76F]': product?.status === 'available' || product?.status === 'coming_soon',
+                    'bg-red-50 text-red-500': product?.status === 'out_of_stock' || product?.status === 'discontinued',
+                  }"
+                  x-text="product?.status === 'available' ? 'Còn hàng' : product?.status === 'coming_soon' ? 'Đặt hàng' : product?.status === 'out_of_stock' ? 'Hết hàng' : product?.status === 'discontinued' ? 'Dừng bán' : ''"></span>
               </div>
 
               <!-- Thumbnails -->
@@ -81,11 +87,15 @@ import Layout from '../layouts/Layout.astro';
               <h1 class="font-heading text-2xl md:text-3xl text-primary mb-4" x-text="product?.name"></h1>
 
               <!-- Price -->
-              <div class="flex items-center gap-3 mb-6">
-                <span class="text-2xl md:text-3xl font-bold text-accent" x-text="formatPriceVND(currentPrice)"></span>
-                <span x-show="product?.compareAtPrice" class="text-lg text-gray-400 line-through" x-text="formatPriceVND(product?.compareAtPrice)"></span>
-                <span x-show="product?.compareAtPrice" class="bg-error/10 text-error text-sm px-2 py-1 rounded-full font-medium"
-                  x-text="'-' + Math.round((1 - product?.price / product?.compareAtPrice) * 100) + '%'"></span>
+              <div class="mb-6 space-y-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs text-blue-600 font-semibold uppercase tracking-wider">Bán ra</span>
+                  <span class="text-2xl md:text-3xl font-bold text-primary" x-text="formatPriceVND(currentPrice)"></span>
+                </div>
+                <div x-show="product?.compareAtPrice" class="flex items-center gap-2">
+                  <span class="text-xs text-red-500 font-semibold uppercase tracking-wider">Mua vào</span>
+                  <span class="text-lg font-semibold text-red-500" x-text="formatPriceVND(product?.compareAtPrice)"></span>
+                </div>
               </div>
 
               <!-- Variant Selector -->
@@ -104,7 +114,7 @@ import Layout from '../layouts/Layout.astro';
               </div>
 
               <!-- Quantity -->
-              <div class="mb-6">
+              <div class="mb-6" x-show="product?.status === 'available' || product?.status === 'coming_soon'">
                 <h3 class="text-sm font-semibold text-primary mb-2">Số lượng:</h3>
                 <div class="flex items-center gap-3">
                   <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -116,7 +126,7 @@ import Layout from '../layouts/Layout.astro';
               </div>
 
               <!-- Add to Cart -->
-              <div class="flex gap-3 mb-8">
+              <div class="flex gap-3 mb-8" x-show="product?.status === 'available' || product?.status === 'coming_soon'">
                 <button @click="addToCart()" class="flex-1 bg-accent text-white py-3 px-6 rounded-lg font-semibold hover:bg-accent-dark transition-colors flex items-center justify-center gap-2 text-sm md:text-base">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                   Thêm vào giỏ hàng
@@ -124,6 +134,13 @@ import Layout from '../layouts/Layout.astro';
                 <button class="w-12 h-12 border-2 border-gray-300 rounded-lg flex items-center justify-center hover:border-accent hover:text-accent transition-colors">
                   <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                 </button>
+              </div>
+              <!-- Out of stock / Discontinued message -->
+              <div x-show="product?.status === 'out_of_stock' || product?.status === 'discontinued'" class="mb-8">
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 text-center">
+                  <p class="text-red-600 font-semibold" x-text="product?.status === 'out_of_stock' ? 'Sản phẩm tạm hết hàng' : 'Sản phẩm ngừng kinh doanh'"></p>
+                  <p class="text-sm text-gray-500 mt-1">Vui lòng liên hệ <a href="tel:0363778889" class="text-accent font-semibold">0363 778 889</a> để được tư vấn.</p>
+                </div>
               </div>
 
               <!-- Product Meta -->
@@ -148,17 +165,17 @@ import Layout from '../layouts/Layout.astro';
 
               <!-- Trust Badges -->
               <div class="mt-8 grid grid-cols-3 gap-3">
-                <div class="bg-light-bg rounded-lg p-3 text-center">
-                  <svg class="w-6 h-6 mx-auto mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                <div class="bg-light-bg rounded-lg p-3 text-center flex flex-col items-center justify-center">
+                  <svg class="w-6 h-6 mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                   <p class="text-xs text-gray-600 font-medium">Cam kết chính hãng</p>
                 </div>
-                <div class="bg-light-bg rounded-lg p-3 text-center">
-                  <svg class="w-6 h-6 mx-auto mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                  <p class="text-xs text-gray-600 font-medium">Đổi trả 48h</p>
+                <div class="bg-light-bg rounded-lg p-3 text-center flex flex-col items-center justify-center">
+                  <svg class="w-6 h-6 mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                  <p class="text-xs text-gray-600 font-medium">Đổi trả 24h</p>
                 </div>
-                <div class="bg-light-bg rounded-lg p-3 text-center">
-                  <svg class="w-6 h-6 mx-auto mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                  <p class="text-xs text-gray-600 font-medium">Giá tốt nhất</p>
+                <div class="bg-light-bg rounded-lg p-3 text-center flex flex-col items-center justify-center">
+                  <svg class="w-6 h-6 mb-1 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                  <p class="text-xs text-gray-600 font-medium">Bảo hành trọn đời</p>
                 </div>
               </div>
             </div>
@@ -170,7 +187,7 @@ import Layout from '../layouts/Layout.astro';
       <!-- Description Section -->
       <section x-show="product?.description" class="py-8 md:py-12 bg-white">
         <div class="max-w-7xl mx-auto px-4">
-          <div class="max-w-4xl">
+          <div class="max-w-4xl border border-gray-200 rounded-xl p-6 md:p-8 bg-gradient-to-br from-white via-gray-50 to-amber-50/30">
             <h2 class="font-heading text-2xl text-primary mb-6 flex items-center gap-3">
               <div class="w-1 h-8 bg-accent rounded"></div>
               Mô tả sản phẩm
@@ -193,13 +210,12 @@ import Layout from '../layouts/Layout.astro';
                 <a :href="'/san-pham-chi-tiet.html?slug=' + rp.slug" class="block">
                   <div class="relative overflow-hidden aspect-square">
                     <img :src="getStrapiMedia(rp.images?.[0]?.url)" :alt="rp.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    <span x-show="rp.compareAtPrice" class="absolute top-3 left-3 bg-error text-white text-xs px-2 py-1 rounded-full font-semibold">SALE</span>
                   </div>
                   <div class="p-3 md:p-4">
                     <h3 class="text-sm font-medium text-primary line-clamp-2 mb-2" x-text="rp.name"></h3>
                     <div class="flex items-center gap-2 flex-wrap">
                       <span class="text-accent font-bold text-sm md:text-base" x-text="formatPriceVND(rp.price)"></span>
-                      <span x-show="rp.compareAtPrice" class="text-gray-400 text-xs line-through" x-text="formatPriceVND(rp.compareAtPrice)"></span>
+                      <span x-show="rp.compareAtPrice" class="text-red-400 text-xs" x-text="'MV: ' + formatPriceVND(rp.compareAtPrice)"></span>
                     </div>
                   </div>
                 </a>

@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PolicySidebar from '../../components/PolicySidebar.astro';
+---
+
+<Layout title="Chính sách vận chuyển - Vàng An Thịnh" variant="home">
+  <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Chính sách"}, {label: "Chính sách vận chuyển"}]} />
+
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-[280px_1fr] gap-8">
+        <PolicySidebar current="/chinh-sach/van-chuyen.html" />
+
+        <article class="bg-white rounded-xl shadow-sm p-8 lg:p-10">
+          <h1 class="font-heading text-3xl text-primary mb-8">Chính sách giao hàng</h1>
+
+          <div class="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
+
+            <p>An Thịnh cung cấp dịch vụ giao hàng tận nơi, áp dụng trên toàn bộ 63 tỉnh thành trên cả nước.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Các hình thức giao hàng</h2>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">1. Giao hàng nhanh tiêu chuẩn</h3>
+            <p>Áp dụng cho tất cả các đơn hàng nội thành và ngoại thành, thời gian giao hàng từ 24 giờ đến 5 ngày tùy thuộc vào khu vực, tình trạng sản phẩm và các điều kiện khách quan khác.</p>
+
+            <h3 class="font-semibold text-primary mt-6 mb-2">2. Giao hàng hỏa tốc</h3>
+            <p>Chỉ áp dụng cho các đơn hàng trong nội thành Hà Nội. Đối với khu vực Hà Nội, khách hàng có thể nhận hàng trong vòng 24-48 giờ kể từ khi nhân viên An Thịnh xử lý đơn hàng. Đối với các tỉnh thành khác, thời gian giao hàng từ 3-5 ngày.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Phí vận chuyển</h2>
+
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse border border-gray-200 text-sm">
+                <thead>
+                  <tr class="bg-primary text-white">
+                    <th class="border border-gray-200 px-4 py-3 text-left">Giá trị đơn hàng</th>
+                    <th class="border border-gray-200 px-4 py-3 text-left">Phí ship</th>
+                    <th class="border border-gray-200 px-4 py-3 text-left">Bảo hiểm vận chuyển</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="border border-gray-200 px-4 py-3">Dưới 3.000.000 VNĐ</td>
+                    <td class="border border-gray-200 px-4 py-3">29.000 VNĐ</td>
+                    <td class="border border-gray-200 px-4 py-3">Miễn phí</td>
+                  </tr>
+                  <tr class="bg-gray-50">
+                    <td class="border border-gray-200 px-4 py-3">Trên 3.000.000 VNĐ (dưới 1kg)</td>
+                    <td class="border border-gray-200 px-4 py-3">29.000 VNĐ</td>
+                    <td class="border border-gray-200 px-4 py-3">0,5% giá trị đơn hàng</td>
+                  </tr>
+                  <tr>
+                    <td class="border border-gray-200 px-4 py-3">Từ 1kg trở lên</td>
+                    <td class="border border-gray-200 px-4 py-3">39.000 VNĐ/kg</td>
+                    <td class="border border-gray-200 px-4 py-3">0,5% giá trị đơn hàng</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Bảo hiểm hàng hóa</h2>
+            <p>Tất cả sản phẩm của An Thịnh đều được mua bảo hiểm hàng hóa và đảm bảo giao hàng 100% thông qua các đối tác vận chuyển, nhằm bảo vệ khách hàng khi mua các sản phẩm trang sức có giá trị cao.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Chính sách bồi thường</h2>
+            <p>An Thịnh cam kết bồi thường 100% giá trị hàng hóa trong trường hợp thất lạc.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Thời gian xử lý khiếu nại</h2>
+            <p>Thời gian xử lý khiếu nại hoặc các vấn đề liên quan đến dịch vụ từ 2-7 ngày làm việc.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">Lưu ý khi nhận hàng</h2>
+            <ul class="list-disc pl-6 space-y-2">
+              <li>Khách hàng vui lòng kiểm tra kỹ sản phẩm trước khi ký nhận.</li>
+              <li>Cung cấp giấy tờ chứng minh danh tính (CCCD/Hộ chiếu/GPLX/VNeID...) khi được yêu cầu để đảm bảo đơn hàng được bàn giao cho chính chủ.</li>
+              <li>Nếu phát hiện sản phẩm bị hư hỏng, sai sản phẩm hoặc thiếu hàng, vui lòng từ chối nhận và liên hệ ngay hotline <a href="tel:0363778889" class="text-accent font-semibold">0363 778 889</a>.</li>
+              <li>Với đơn hàng nhận tại cửa hàng, An Thịnh giữ hộ miễn phí trong vòng 07 ngày kể từ ngày trả hàng.</li>
+            </ul>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

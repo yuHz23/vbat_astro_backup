@@ -1,0 +1,7 @@
+Strapi Admin Account
+====================
+URL:      http://localhost:1337/admin
+Email:    admin@vanganthinh.com
+Password: Admin123456
+Name:     Admin VDG
+Active:   Yes

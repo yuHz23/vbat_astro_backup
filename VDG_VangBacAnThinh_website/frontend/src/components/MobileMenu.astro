@@ -7,46 +7,118 @@
   <div x-cloak x-show="$store.ui.mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
     x-transition:enter-start="-translate-x-full" x-transition:enter-end="translate-x-0"
     x-transition:leave="transition ease-in duration-200" x-transition:leave-start="translate-x-0"
-    x-transition:leave-end="-translate-x-full" x-data="mobileMenu" class="w-80 bg-white h-full overflow-y-auto">
-    <div class="p-4 bg-primary text-text-light flex items-center justify-between">
-      <span class="font-heading font-bold text-accent text-lg">VÀNG AN THỊNH</span>
-      <button @click="close()" class="text-text-light hover:text-accent">
+    x-transition:leave-end="-translate-x-full" x-data="{ activeTab: 'vang', bannerIndex: 0 }" class="w-[85%] max-w-sm bg-white h-full flex flex-col overflow-hidden">
+
+    <!-- Header -->
+    <div class="p-4 bg-primary flex items-center justify-between shrink-0">
+      <div class="flex items-center gap-2">
+        <img src="/logo-icon.png" alt="An Thịnh" class="w-8 h-8 rounded-full object-cover" />
+        <span class="font-heading font-bold text-accent text-lg">AN THỊNH</span>
+      </div>
+      <button @click="$store.ui.mobileMenuOpen = false" class="text-white/80 hover:text-white p-1">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
-    <nav class="p-4 space-y-1">
-      <a href="/" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Trang chủ</a>
-      <a href="/gia-vang.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Giá vàng</a>
-      <div>
-        <button @click="toggleSubmenu('products')"
-          class="w-full flex justify-between items-center py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">
-          <span>Sản phẩm</span>
-          <svg :class="openSubmenu === 'products' ? 'rotate-180' : ''" class="w-4 h-4 transition-transform"
-            fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        <div x-show="openSubmenu === 'products'" x-transition class="pl-4 space-y-1">
-          <a href="/san-pham.html" class="block py-2 px-3 text-sm text-gray-600 hover:text-accent">Tất cả sản phẩm</a>
-          <a href="/san-pham.html?category=nhan" class="block py-2 px-3 text-sm text-gray-600 hover:text-accent">Nhẫn</a>
-          <a href="/san-pham.html?category=day-chuyen" class="block py-2 px-3 text-sm text-gray-600 hover:text-accent">Dây chuyền</a>
-          <a href="/san-pham.html?category=vong-tay" class="block py-2 px-3 text-sm text-gray-600 hover:text-accent">Vòng tay</a>
-          <a href="/san-pham.html?category=bong-tai" class="block py-2 px-3 text-sm text-gray-600 hover:text-accent">Bông tai</a>
-          <a href="/san-pham.html?category=vang-mieng" class="block py-2 px-3 text-sm text-gray-600 hover:text-accent">Vàng miếng</a>
+
+    <!-- Search -->
+    <div class="px-4 py-3 border-b border-gray-100 shrink-0">
+      <a href="/tim-kiem.html" class="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2.5 text-sm text-gray-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        Tìm kiếm sản phẩm...
+      </a>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="flex border-b border-gray-200 shrink-0">
+      <button @click="activeTab = 'vang'" :class="activeTab === 'vang' ? 'border-b-2 border-accent text-primary font-bold' : 'text-gray-500'" class="flex-1 py-3 text-sm text-center transition-colors">VÀNG</button>
+      <button @click="activeTab = 'bac'" :class="activeTab === 'bac' ? 'border-b-2 border-accent text-primary font-bold' : 'text-gray-500'" class="flex-1 py-3 text-sm text-center transition-colors">BẠC</button>
+      <button @click="activeTab = 'banggia'" :class="activeTab === 'banggia' ? 'border-b-2 border-accent text-primary font-bold' : 'text-gray-500'" class="flex-1 py-3 text-sm text-center transition-colors">BẢNG GIÁ</button>
+    </div>
+
+    <!-- Hero Banner Slider -->
+    <div class="relative shrink-0 overflow-hidden">
+      <div class="overflow-hidden">
+        <div class="flex transition-transform duration-300" :style="'transform: translateX(-' + (bannerIndex * 100) + '%)'">
+          <a href="/san-pham.html" class="w-full shrink-0">
+            <img src="/banner-vang.png" alt="Vàng An Thịnh" class="w-full h-[140px] object-cover object-center" />
+          </a>
+          <a href="/san-pham-bac.html" class="w-full shrink-0">
+            <img src="/banner-bac.png" alt="Bạc An Thịnh" class="w-full h-[140px] object-cover object-center" />
+          </a>
         </div>
       </div>
-      <a href="/tin-tuc.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Tin tức</a>
-      <a href="/he-thong-cua-hang.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Cửa hàng</a>
-      <a href="/gioi-thieu.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Giới thiệu</a>
-      <a href="/lien-he.html" class="block py-3 px-3 rounded-lg hover:bg-light-bg font-medium text-primary">Liên hệ</a>
-    </nav>
-    <div class="p-4 border-t">
-      <div class="text-sm text-gray-500">
-        <p class="font-semibold text-primary">📞 0363 778 889</p>
-        <p class="mt-1">📍 Số 141P Trương Định, Phường Tương Mai, Hà Nội</p>
+      <!-- Prev/Next -->
+      <button @click="bannerIndex = bannerIndex === 0 ? 1 : 0" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+      </button>
+      <button @click="bannerIndex = bannerIndex === 0 ? 1 : 0" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <!-- Xem thêm + Dots -->
+      <div class="flex items-center justify-center gap-3 py-2.5 border-b border-gray-100">
+        <div class="flex gap-1.5">
+          <button @click="bannerIndex = 0" class="w-2 h-2 rounded-full transition-colors" :class="bannerIndex === 0 ? 'bg-accent' : 'bg-gray-300'"></button>
+          <button @click="bannerIndex = 1" class="w-2 h-2 rounded-full transition-colors" :class="bannerIndex === 1 ? 'bg-accent' : 'bg-gray-300'"></button>
+        </div>
+        <a :href="bannerIndex === 0 ? '/san-pham.html' : '/san-pham-bac.html'" @click="$store.ui.mobileMenuOpen = false"
+          class="text-sm text-accent font-medium">
+          Xem thêm →
+        </a>
       </div>
     </div>
+
+    <!-- Tab Content -->
+    <div class="flex-1">
+
+      <!-- VÀNG Tab -->
+      <div x-show="activeTab === 'vang'" class="p-4 space-y-2">
+        <a href="/san-pham.html" @click="$store.ui.mobileMenuOpen = false" class="flex items-center justify-between py-4 px-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100">
+          <span class="text-base font-semibold text-primary">Vàng tích trữ</span>
+          <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- BẠC Tab -->
+      <div x-show="activeTab === 'bac'" class="p-4 space-y-2">
+        <a href="/san-pham-bac.html" @click="$store.ui.mobileMenuOpen = false" class="flex items-center justify-between py-4 px-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100">
+          <span class="text-base font-semibold text-primary">Bạc tích trữ</span>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/san-pham-bac.html" @click="$store.ui.mobileMenuOpen = false" class="flex items-center justify-between py-4 px-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100">
+          <span class="text-base font-semibold text-primary">Bạc mỹ nghệ</span>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <!-- BẢNG GIÁ Tab -->
+      <div x-show="activeTab === 'banggia'" class="p-4 space-y-2">
+        <a href="/gia-vang.html" @click="$store.ui.mobileMenuOpen = false" class="flex items-center justify-between py-4 px-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100">
+          <span class="text-base font-semibold text-primary">Bảng giá vàng</span>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/gia-bac.html" @click="$store.ui.mobileMenuOpen = false" class="flex items-center justify-between py-4 px-4 rounded-lg hover:bg-gray-50 transition-colors border border-gray-100">
+          <span class="text-base font-semibold text-primary">Bảng giá bạc</span>
+          <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom Links -->
+    <div class="border-t border-gray-200 p-4 space-y-1 shrink-0">
+      <a href="tel:0363778889" class="flex items-center gap-3 py-2 px-3 text-sm text-primary font-medium">
+        <svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+        CSKH: 0363 778 889
+      </a>
+      <a href="/gioi-thieu.html" @click="$store.ui.mobileMenuOpen = false" class="block py-2 px-3 text-sm text-gray-600 hover:text-primary">Về An Thịnh</a>
+      <a href="/chinh-sach/bao-hanh.html" @click="$store.ui.mobileMenuOpen = false" class="block py-2 px-3 text-sm text-gray-600 hover:text-primary">Chính sách</a>
+      <a href="/he-thong-cua-hang.html" @click="$store.ui.mobileMenuOpen = false" class="block py-2 px-3 text-sm text-gray-600 hover:text-primary">Cửa hàng</a>
+      <a href="/lien-he.html" @click="$store.ui.mobileMenuOpen = false" class="block py-2 px-3 text-sm text-gray-600 hover:text-primary">Liên hệ</a>
+      <template x-if="$store.auth.isAdmin">
+        <a :href="window.location.hostname === 'localhost' || /^\d+\.\d+\.\d+\.\d+$/.test(window.location.hostname) ? window.location.protocol + '//' + window.location.hostname + ':3001' : window.location.protocol + '//admin.' + window.location.hostname" class="block py-2 px-3 text-sm text-accent font-semibold">Dashboard</a>
+      </template>
+    </div>
+
   </div>
 </div>

@@ -18,7 +18,7 @@ export default [
   {
     name: 'strapi::cors',
     config: {
-      origin: ['http://localhost:3000', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://127.0.0.1:3001', 'http://localhost:5173', 'http://127.0.0.1:5173'],
+      origin: ['http://localhost:3000', 'http://localhost:3002', 'http://127.0.0.1:3000', 'http://localhost:3001', 'http://127.0.0.1:3001', 'http://localhost:5173', 'http://127.0.0.1:5173', 'http://147.93.157.156:3330', 'http://147.93.157.156:3331', 'http://localhost:3330', 'http://localhost:3331', 'https://vanganthinh.com', 'https://www.vanganthinh.com', 'https://admin.vanganthinh.com'],
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
       headers: ['Content-Type', 'Authorization', 'Origin', 'Accept'],
       keepHeaderOnError: true,

@@ -73,9 +73,28 @@
       "enum": [
         "available",
         "out_of_stock",
-        "coming_soon"
+        "coming_soon",
+        "discontinued"
       ],
       "default": "available"
+    },
+    "productType": {
+      "type": "enumeration",
+      "enum": [
+        "gold",
+        "silver"
+      ]
+    },
+    "subCategory": {
+      "type": "enumeration",
+      "enum": [
+        "tich-tru",
+        "my-nghe"
+      ]
+    },
+    "sortOrder": {
+      "type": "integer",
+      "default": 99
     }
   }
 }

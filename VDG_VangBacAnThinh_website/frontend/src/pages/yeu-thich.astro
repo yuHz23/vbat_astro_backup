@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 ---
 
-<Layout title="Yêu thích - Vàng An Thịnh" description="Sản phẩm yêu thích tại Vàng An Thịnh." variant="inner" showTicker={false}>
+<Layout title="Yêu thích - Vàng An Thịnh" description="Sản phẩm yêu thích tại Vàng An Thịnh." variant="home" showTicker={false}>
 
   <Breadcrumb items={[
     { label: 'Trang chủ', href: '/' },
@@ -45,7 +45,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
               </div>
               <div class="p-4 bg-white">
                 <h3 class="text-sm font-medium text-primary line-clamp-2 mb-2" x-text="item.name"></h3>
-                <span class="text-accent font-bold" x-text="new Intl.NumberFormat('vi-VN').format(item.price) + ' ₫'"></span>
+                <span class="text-accent font-bold" x-text="new Intl.NumberFormat('vi-VN').format(item.price)"></span>
               </div>
             </a>
             <div class="px-4 pb-4 bg-white">

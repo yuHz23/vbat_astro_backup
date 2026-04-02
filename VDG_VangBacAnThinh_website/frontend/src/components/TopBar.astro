@@ -14,9 +14,12 @@
         </div>
       </template>
       <template x-if="$store.auth.isLoggedIn">
-        <div class="flex gap-3">
+        <div class="flex gap-3 items-center">
           <a href="/tai-khoan.html" class="hover:text-white transition-colors font-medium text-accent"
-            x-text="$store.auth.user?.username"></a>
+            x-text="$store.auth.user?.fullName || $store.auth.user?.username"></a>
+          <template x-if="$store.auth.isAdmin">
+            <a href="/admin-dashboard" class="text-accent hover:text-white transition-colors font-semibold">Dashboard</a>
+          </template>
           <button @click="$store.auth.logout()" class="hover:text-white transition-colors">Đăng xuất</button>
         </div>
       </template>

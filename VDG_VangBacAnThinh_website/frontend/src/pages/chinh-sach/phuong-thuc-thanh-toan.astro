@@ -1,0 +1,59 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import PolicySidebar from '../../components/PolicySidebar.astro';
+---
+
+<Layout title="Phương thức thanh toán - Vàng An Thịnh" variant="home">
+  <Breadcrumb items={[{label: "Trang chủ", href: "/"}, {label: "Chính sách"}, {label: "Phương thức thanh toán"}]} />
+
+  <section class="py-10">
+    <div class="max-w-7xl mx-auto px-4">
+      <div class="grid lg:grid-cols-[280px_1fr] gap-8">
+        <PolicySidebar current="/chinh-sach/phuong-thuc-thanh-toan.html" />
+
+        <article class="bg-white rounded-xl shadow-sm p-8 lg:p-10">
+          <h1 class="font-heading text-3xl text-primary mb-8">Điều khoản và phương thức thanh toán</h1>
+
+          <div class="prose prose-gray max-w-none space-y-6 text-gray-700 leading-relaxed">
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">1. Hình thức thanh toán</h2>
+
+            <p>Khi mua hàng qua website vanganthinh.com, khách hàng có thể thanh toán qua tài khoản Ngân hàng. Thanh toán trực tuyến qua các tài khoản ngân hàng do An Thịnh chỉ định.</p>
+            <p>Với đơn mua hàng trực tuyến, việc giao dịch mua bán hoàn tất khi Quý khách thanh toán thành công và An Thịnh xác nhận đơn hàng. Quý khách vui lòng thực hiện thanh toán đúng theo hướng dẫn trên website.</p>
+            <p>Đối với giao dịch tại cửa hàng, An Thịnh chấp nhận thanh toán bằng tiền mặt hoặc chuyển khoản ngân hàng.</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">2. Quy định thanh toán</h2>
+
+            <p><strong>2.1.</strong> Tổng thể thanh toán bao gồm giá trị đơn hàng (theo bảng giá niêm yết), phí vận chuyển (nếu có) và các khoản phụ phí khác (nếu có). Mọi khoản thanh toán được thể hiện đầy đủ trong đơn đặt hàng trước khi khách hàng xác nhận.</p>
+
+            <p><strong>2.2.</strong> Khi thực hiện thanh toán chuyển khoản, khách hàng cần nhập chính xác nội dung chuyển khoản theo hướng dẫn để hệ thống có thể cập nhật trạng thái thanh toán tự động. Trường hợp nhập sai nội dung, đơn hàng có thể bị chậm xử lý.</p>
+
+            <p><strong>2.3.</strong> Đối với đơn hàng vàng miếng, do đặc thù giá biến động liên tục, giá được chốt tại thời điểm khách hàng hoàn tất thanh toán. Quý khách cần hoàn tất thanh toán trong thời gian quy định trên trang thanh toán. Hết thời gian giữ giá, đơn hàng sẽ tự động hủy và khách hàng cần đặt lại.</p>
+
+            <p><strong>2.4.</strong> Đơn hàng được coi là hợp lệ khi nhận đủ thanh toán theo giá trị đơn hàng. Trường hợp thanh toán thiếu, An Thịnh sẽ liên hệ để Quý khách bổ sung phần chênh lệch trước khi xử lý đơn hàng.</p>
+
+            <p><strong>2.5.</strong> An Thịnh có quyền từ chối hoặc hủy giao dịch nếu phát hiện dấu hiệu bất thường, gian lận hoặc vi phạm các điều khoản đã công bố. Trong trường hợp hủy đơn, khoản tiền đã thanh toán sẽ được hoàn trả theo chính sách hoàn tiền.</p>
+
+            <p><strong>2.6.</strong> Đơn hàng sẽ được xuất hóa đơn điện tử khi sản phẩm được xuất kho. Hóa đơn VAT được xuất theo yêu cầu của khách hàng (thông tin cần cung cấp trước hoặc trong ngày giao dịch).</p>
+
+            <h2 class="font-heading text-xl text-primary mt-8 mb-4">3. Chế tài bồi thường</h2>
+
+            <p><strong>3.1.</strong> Trường hợp An Thịnh giao hàng chậm so với cam kết (ngoại trừ trường hợp bất khả kháng), khách hàng có quyền yêu cầu hủy đơn và nhận hoàn tiền 100% giá trị đã thanh toán trong vòng 03 ngày làm việc.</p>
+
+            <p><strong>3.2.</strong> Trường hợp sản phẩm giao không đúng mô tả, sai chủng loại, sai trọng lượng hoặc có lỗi do nhà sản xuất, An Thịnh sẽ đổi sản phẩm mới hoặc hoàn tiền 100% theo yêu cầu của khách hàng.</p>
+
+            <p><strong>3.3.</strong> Trong trường hợp đã thanh toán nhưng đơn hàng bị hủy/từ chối, An Thịnh hoàn tiền qua phương thức chuyển khoản ngân hàng tới đúng tài khoản mà khách hàng đã sử dụng thanh toán ban đầu, trong vòng 03 ngày làm việc.</p>
+
+            <p><strong>3.4.</strong> Trường hợp khách hàng vi phạm các điều khoản thanh toán (thanh toán chậm, thông tin sai lệch, hành vi gian lận), An Thịnh có quyền hủy đơn hàng và áp dụng các biện pháp xử lý theo quy định.</p>
+
+            <div class="bg-accent/5 border border-accent/20 rounded-lg p-5 mt-8">
+              <p class="text-sm text-gray-600"><strong class="text-primary">Lưu ý:</strong> Mọi giao dịch tại An Thịnh đều tuân thủ quy định pháp luật về kinh doanh vàng bạc. Liên hệ hotline <a href="tel:0363778889" class="text-accent font-semibold">0363 778 889</a> để được hỗ trợ.</p>
+            </div>
+
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</Layout>

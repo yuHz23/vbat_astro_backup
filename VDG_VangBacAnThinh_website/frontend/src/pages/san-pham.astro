@@ -8,72 +8,11 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- Hero Banner -->
     <section class="max-w-[1400px] mx-auto px-4 py-4 mt-2">
-      <div
-        class="relative w-full h-[250px] md:h-[350px] rounded-xl overflow-hidden flex items-center bg-gradient-to-r from-[#800F17] to-[#B31B24]">
-        <div
-          class="absolute inset-0 bg-[url('https://phuquy.com.vn/images/bg-pattern.png')] opacity-10 mix-blend-overlay">
-        </div>
-        <div class="relative z-10 px-8 md:px-16 w-full lg:w-3/5">
-          <h2
-            class="font-heading text-3xl md:text-5xl lg:text-5xl text-white font-medium uppercase tracking-wider leading-tight">
-            Tích lũy giá trị<br />vững bền tương lai</h2>
-        </div>
-        <img src="/placeholder.jpg"
-          class="absolute right-0 top-0 h-full object-cover w-full md:w-1/2 mix-blend-luminosity opacity-40 md:opacity-80"
-          alt="Banner Vàng" />
+      <div class="relative w-full rounded-xl overflow-hidden">
+        <img src="/banner-vang.png" class="w-full h-auto" alt="Banner Vàng An Thịnh" />
       </div>
     </section>
 
-    <!-- Breadcrumb & Filters -->
-    <section class="max-w-[1200px] mx-auto px-4 py-6">
-      <div class="flex flex-col gap-5">
-        <!-- Breadcrumb -->
-        <nav class="flex items-center gap-1.5 text-lg md:text-xl font-heading">
-          <a href="/" class="text-gray-500 hover:text-primary transition-colors font-normal">Trang chủ</a>
-          <span class="text-gray-400 font-light">/</span>
-          <span class="text-primary font-bold">Vàng</span>
-        </nav>
-
-        <!-- Filters Row (4 Dropdowns) -->
-        <div class="flex flex-wrap items-center gap-3">
-          <select x-model="sortBy" @change="applyFilter()"
-            class="bg-[#ECECEC] text-gray-700 border-none rounded-md px-4 py-2.5 text-[15px] focus:ring-0 cursor-pointer min-w-[180px] font-medium outline-none">
-            <option value="createdAt:desc">Sắp xếp theo giá</option>
-            <option value="price:asc">Giá thấp đến cao</option>
-            <option value="price:desc">Giá cao đến thấp</option>
-            <option value="createdAt:asc">Cũ nhất</option>
-            <option value="name:asc">Tên A - Z</option>
-          </select>
-
-          <select x-model="selectedCategory" @change="applyFilter()"
-            class="bg-[#ECECEC] text-gray-700 border-none rounded-md px-4 py-2.5 text-[15px] focus:ring-0 cursor-pointer min-w-[180px] font-medium outline-none">
-            <option value="">Loại sản phẩm</option>
-            <template x-for="cat in categories" :key="cat.id">
-              <option :value="cat.slug" x-text="cat.name"></option>
-            </template>
-          </select>
-
-          <select x-model="karatFilter" @change="applyFilter()"
-            class="bg-[#ECECEC] text-gray-700 border-none rounded-md px-4 py-2.5 text-[15px] focus:ring-0 cursor-pointer min-w-[180px] font-medium outline-none">
-            <option value="">Chất liệu</option>
-            <option value="24K">Vàng 24K (999.9)</option>
-            <option value="18K">Vàng 18K (750)</option>
-            <option value="14K">Vàng 14K (585)</option>
-            <option value="10K">Vàng 10K (416)</option>
-          </select>
-
-          <select
-            class="bg-[#ECECEC] text-gray-700 border-none rounded-md px-4 py-2.5 text-[15px] focus:ring-0 cursor-pointer min-w-[180px] font-medium outline-none">
-            <option value="">Trọng lượng (chỉ)</option>
-            <option value="0.5">0.5 Chỉ</option>
-            <option value="1">1 Chỉ</option>
-            <option value="2">2 Chỉ</option>
-            <option value="5">5 Chỉ</option>
-            <option value="10">1 Lượng</option>
-          </select>
-        </div>
-      </div>
-    </section>
 
     <!-- Product Grid Section -->
     <section class="max-w-[1200px] mx-auto px-4 pb-16">
@@ -108,15 +47,21 @@ import Layout from '../layouts/Layout.astro';
             <a :href="'/san-pham-chi-tiet.html?slug=' + product.slug" class="block flex-1 flex flex-col">
               <!-- Top Badge -->
               <div class="absolute top-4 left-4 z-20">
-                <span :class="index % 3 === 0 ? 'bg-[#E5F7ED] text-[#00A76F]' : 'bg-[#E5F7ED] text-[#00A76F]'"
-                  class="text-xs px-2.5 py-1 rounded-sm font-semibold tracking-wide"
-                  x-text="index % 3 === 0 ? 'Đặt hàng' : 'Còn hàng'"></span>
+                <span class="text-xs px-2.5 py-1 rounded-sm font-semibold tracking-wide"
+                  :class="{
+                    'bg-[#E5F7ED] text-[#00A76F]': product.status === 'available' || product.status === 'coming_soon',
+                    'bg-red-50 text-red-500': product.status === 'out_of_stock' || product.status === 'discontinued',
+                  }"
+                  x-text="product.status === 'available' ? 'Còn hàng' : product.status === 'coming_soon' ? 'Đặt hàng' : product.status === 'out_of_stock' ? 'Hết hàng' : product.status === 'discontinued' ? 'Dừng bán' : ''"></span>
               </div>
 
-              <!-- Product Image -->
+              <!-- Product Image (hover to show 2nd image) -->
               <div class="w-full pt-[100%] relative bg-gradient-to-b from-white to-[#F9F8F6]">
                 <img :src="getStrapiMedia(product.images?.[0]?.url)" :alt="product.name"
-                  class="absolute inset-0 m-auto w-[65%] h-[65%] object-contain drop-shadow-xl group-hover:scale-110 transition-transform duration-500 ease-out" />
+                  class="absolute inset-0 m-auto w-[65%] h-[65%] object-contain drop-shadow-xl transition-all duration-500 ease-out"
+                  :class="product.images?.length > 1 ? 'group-hover:opacity-0 group-hover:scale-110' : 'group-hover:scale-110'" />
+                <img x-show="product.images?.length > 1" :src="getStrapiMedia(product.images?.[1]?.url)" :alt="product.name"
+                  class="absolute inset-0 m-auto w-[65%] h-[65%] object-contain drop-shadow-xl opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out group-hover:scale-110" />
               </div>
 
               <!-- Info Content -->

@@ -729,13 +729,13 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     orderNumber: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    paymentMethod: Schema.Attribute.String;
-    publishedAt: Schema.Attribute.DateTime;
-    status: Schema.Attribute.Enumeration<
-      ['pending', 'confirmed', 'paid', 'completed', 'cancelled']
+    orderStatus: Schema.Attribute.Enumeration<
+      ['pending', 'paid', 'completed', 'cancelled']
     > &
       Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'pending'>;
+    paymentMethod: Schema.Attribute.String;
+    publishedAt: Schema.Attribute.DateTime;
     totalAmount: Schema.Attribute.Decimal & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -823,13 +823,16 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    productType: Schema.Attribute.Enumeration<['gold', 'silver']>;
     publishedAt: Schema.Attribute.DateTime;
     sku: Schema.Attribute.String & Schema.Attribute.Unique;
     slug: Schema.Attribute.UID<'name'> & Schema.Attribute.Required;
+    sortOrder: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<99>;
     status: Schema.Attribute.Enumeration<
-      ['available', 'out_of_stock', 'coming_soon']
+      ['available', 'out_of_stock', 'coming_soon', 'discontinued']
     > &
       Schema.Attribute.DefaultTo<'available'>;
+    subCategory: Schema.Attribute.Enumeration<['tich-tru', 'my-nghe']>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1406,20 +1409,27 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    cccdExpiry: Schema.Attribute.String;
+    cccdNumber: Schema.Attribute.String;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    dateOfBirth: Schema.Attribute.String;
     email: Schema.Attribute.Email &
-      Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    fullName: Schema.Attribute.String;
+    gender: Schema.Attribute.String;
+    kycImages: Schema.Attribute.Media<'images', true>;
+    kycStatus: Schema.Attribute.Enumeration<
+      ['pending', 'verified', 'rejected']
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1431,6 +1441,9 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    phone: Schema.Attribute.String;
+    placeOfOrigin: Schema.Attribute.String;
+    placeOfResidence: Schema.Attribute.String;
     provider: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;

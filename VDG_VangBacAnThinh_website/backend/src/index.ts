@@ -1,3 +1,6 @@
+import { initSheetHeaders } from './utils/google-sheets';
+import { syncProductPrices } from './utils/sync-product-prices';
+
 // ===== vang.today price sync mapping =====
 const VANG_TODAY_TYPES: Record<string, { goldName: string; unit: string }> = {
   SJL1L10: { goldName: 'Vàng SJC 9999 (1 Lượng)', unit: 'VNĐ/lượng' },
@@ -85,21 +88,107 @@ async function syncGoldPricesFromVangToday(strapi: any) {
   }
 }
 
+// ===== Silver price sync from Phu Quy =====
+const SILVER_TYPES: Record<string, { name: string; unit: string; sortOrder: number }> = {
+  'BAC_MIENG_1L': { name: 'Bạc miếng 999 (1 Lượng)', unit: 'VNĐ/lượng', sortOrder: 20 },
+  'BAC_THOI_5L': { name: 'Bạc thỏi 999 (5L, 10L)', unit: 'VNĐ/lượng', sortOrder: 21 },
+  'BAC_MY_NGHE': { name: 'Đồng bạc mỹ nghệ 999', unit: 'VNĐ/lượng', sortOrder: 22 },
+  'BAC_THOI_1KG': { name: 'Bạc thỏi 999 (1 Kilo)', unit: 'VNĐ/kg', sortOrder: 23 },
+  'XAG_USD': { name: 'Bạc Thế Giới (XAG/USD)', unit: 'USD/oz', sortOrder: 24 },
+};
+
+async function syncSilverPrices(strapi: any) {
+  try {
+    // 1. Fetch from Phu Quy silver API (HTML)
+    const pqRes = await fetch('https://giabac.phuquygroup.vn/PhuQuyPrice/SilverPricePartial');
+    if (pqRes.ok) {
+      const html = await pqRes.text();
+      // Parse prices from HTML table rows
+      // Each product row has: <td class="col-product">NAME</td> <td>unit</td> <td>BUY</td> <td>SELL</td>
+      const prices: Array<{name: string; buy: number; sell: number}> = [];
+      const rowRegex = /<td class="col-product">\s*([\s\S]*?)<\/td>\s*<td[^>]*>[^<]*<\/td>\s*<td[^>]*[^>]*>([\d,\.]+)<\/td>\s*<td[^>]*[^>]*>([\d,\.]+)<\/td>/g;
+      let match;
+      while ((match = rowRegex.exec(html)) !== null) {
+        const name = match[1].replace(/<[^>]*>/g, '').replace(/&#\d+;/g, '').trim();
+        const buy = parseFloat(match[2].replace(/,/g, ''));
+        const sell = parseFloat(match[3].replace(/,/g, ''));
+        if (buy > 0 && sell > 0) prices.push({ name, buy, sell });
+      }
+      strapi.log.info(`[silver sync] Parsed ${prices.length} rows from Phu Quy: ${prices.map(p => p.name).join(', ')}`);
+
+      if (prices.length > 0) {
+        // Map to our types
+        const mappings: Array<{code: string; buy: number; sell: number}> = [];
+        for (const p of prices) {
+          const n = p.name.toLowerCase();
+          if (n.includes('miếng') || n.includes('mieng')) {
+            mappings.push({ code: 'BAC_MIENG_1L', buy: p.buy, sell: p.sell });
+          } else if (n.includes('thỏi') && (n.includes('kilo') || n.includes('kg'))) {
+            mappings.push({ code: 'BAC_THOI_1KG', buy: p.buy, sell: p.sell });
+          } else if (n.includes('thỏi') || n.includes('thoi')) {
+            mappings.push({ code: 'BAC_THOI_5L', buy: p.buy, sell: p.sell });
+          } else if (n.includes('mỹ nghệ') || n.includes('my nghe') || n.includes('đồng')) {
+            mappings.push({ code: 'BAC_MY_NGHE', buy: p.buy, sell: p.sell });
+          }
+        }
+
+        const today = new Date().toISOString().slice(0, 10);
+        for (const m of mappings) {
+          const info = SILVER_TYPES[m.code];
+          if (!info) continue;
+          const existing = await strapi.db.query('api::gold-price.gold-price').findOne({ where: { goldType: m.code } });
+          if (existing) {
+            await strapi.db.query('api::gold-price.gold-price').update({
+              where: { id: existing.id },
+              data: { buyPrice: m.buy, sellPrice: m.sell },
+            });
+          } else {
+            await strapi.db.query('api::gold-price.gold-price').create({
+              data: { goldType: m.code, goldName: info.name, buyPrice: m.buy, sellPrice: m.sell, unit: info.unit, sortOrder: info.sortOrder, isActive: true },
+            });
+          }
+          // History
+          const existingH = await strapi.db.query('api::gold-history.gold-history').findOne({ where: { goldType: m.code, recordDate: today } });
+          if (!existingH) {
+            await strapi.db.query('api::gold-history.gold-history').create({
+              data: { goldType: m.code, goldName: info.name, buyPrice: m.buy, sellPrice: m.sell, unit: info.unit, recordDate: today },
+            });
+          }
+        }
+        strapi.log.info(`[silver sync] Updated ${mappings.length} silver types from Phu Quy`);
+      }
+    }
+
+    // 2. Fetch world silver price (XAG/USD)
+    try {
+      const xagRes = await fetch('https://api.gold-api.com/price/XAG');
+      if (xagRes.ok) {
+        const xagData = await xagRes.json() as any;
+        if (xagData.price) {
+          const info = SILVER_TYPES['XAG_USD'];
+          const existing = await strapi.db.query('api::gold-price.gold-price').findOne({ where: { goldType: 'XAG_USD' } });
+          if (existing) {
+            await strapi.db.query('api::gold-price.gold-price').update({
+              where: { id: existing.id },
+              data: { buyPrice: xagData.price, sellPrice: 0 },
+            });
+          } else {
+            await strapi.db.query('api::gold-price.gold-price').create({
+              data: { goldType: 'XAG_USD', goldName: info.name, buyPrice: xagData.price, sellPrice: 0, unit: info.unit, sortOrder: info.sortOrder, isActive: true },
+            });
+          }
+          strapi.log.info(`[silver sync] XAG/USD: $${xagData.price}`);
+        }
+      }
+    } catch {}
+  } catch (e: any) {
+    strapi.log.error('[silver sync] Failed:', e?.message || e);
+  }
+}
+
 export default {
   register({ strapi }) {
-    // Dynamically extend users-permissions user schema to avoid overwriting base fields
-    const userSchema = strapi.plugin('users-permissions').contentType('user').schema;
-    if (userSchema) {
-      userSchema.attributes.kycStatus = {
-        type: 'enumeration',
-        enum: ['pending', 'verified', 'rejected']
-      };
-      userSchema.attributes.kycImages = {
-        type: 'media',
-        multiple: true,
-        allowedTypes: ['images']
-      };
-    }
+    // User schema extended via src/extensions/users-permissions/content-types/user/schema.json
   },
   async bootstrap({ strapi }: { strapi: any }) {
     try {
@@ -113,6 +202,9 @@ export default {
           'api::product-category.product-category.findOne',
           'api::order.order.create',
           'api::order.order.vnpayIpn',
+          'api::order.order.paymentWebhook',
+          'api::order.order.confirmTest',
+          'api::order.order.checkStatus',
           'api::testimonial.testimonial.find',
           'api::testimonial.testimonial.findOne',
           'api::article.article.find',
@@ -126,7 +218,9 @@ export default {
           'api::product.product.update',
           'plugin::upload.content-api.upload',
           'plugin::upload.content-api.find',
-          'plugin::upload.content-api.findOne'
+          'plugin::upload.content-api.findOne',
+          'api::phone-auth.phone-auth.register',
+          'api::phone-auth.phone-auth.login'
         ];
         for (const action of actions) {
           const exists = await strapi.db.query('plugin::users-permissions.permission').count({ where: { role: publicRole.id, action } });
@@ -141,10 +235,14 @@ export default {
       if (authRole) {
         const actions = [
           'api::kyc.kyc.submit',
+          'api::kyc.kyc.ocr',
+          'api::kyc.kyc.manualSubmit',
           'plugin::upload.content-api.upload',
           'api::order.order.create',
           'api::order.order.find',
-          'api::order.order.findOne'
+          'api::order.order.findOne',
+          'api::order.order.update',
+          'api::order.order.myOrders'
         ];
         for (const action of actions) {
           const exists = await strapi.db.query('plugin::users-permissions.permission').count({ where: { role: authRole.id, action } });
@@ -190,37 +288,37 @@ export default {
 
       // 4. Seed scraped products
       const allProducts = [
-        { name: 'Nhẫn tròn trơn 999.9 (0.5)', sku: 'NPQ0.5', price: 8775000, compareAtPrice: 8625000, karatType: 'Vàng 999,9', goldWeight: 1.875, description: 'Sản phẩm vàng nhỏ gọn cho ngân sách thấp.', status: 'available', cat: 'VÀNG' },
-        { name: 'Nhẫn tròn trơn 999.9 (1)', sku: 'NPQ1.0', price: 17550000, compareAtPrice: 17250000, karatType: 'Vàng 999,9', goldWeight: 3.75, description: 'Sản phẩm vàng tích trữ phổ biến, dễ dàng mua bán.', status: 'available', cat: 'VÀNG' },
-        { name: 'Nhẫn tròn trơn 999.9 (2)', sku: 'NPQ2', price: 35100000, compareAtPrice: 34500000, karatType: 'Vàng 999,9', goldWeight: 7.5, description: 'Nhẫn vàng tích trữ loại 2 chỉ.', status: 'available', cat: 'VÀNG' },
-        { name: 'Nhẫn tròn trơn 999.9 (3)', sku: 'NPQ3', price: 52650000, compareAtPrice: 51750000, karatType: 'Vàng 999,9', goldWeight: 11.25, description: 'Nhẫn vàng tích trữ loại trung bình.', status: 'available', cat: 'VÀNG' },
-        { name: 'Nhẫn tròn trơn 999.9 (5)', sku: 'NPQ5', price: 87750000, compareAtPrice: 86250000, karatType: 'Vàng 999,9', goldWeight: 18.75, description: 'Nhẫn vàng tích trữ loại 5 chỉ.', status: 'available', cat: 'VÀNG' },
-        { name: 'Nhẫn tròn trơn 999.9 (10)', sku: 'NPQ10', price: 175500000, compareAtPrice: 172500000, karatType: 'Vàng 999,9', goldWeight: 37.5, description: 'Biểu tượng của sự thịnh vượng và tài lộc.', status: 'available', cat: 'VÀNG' },
-        { name: 'Thần tài Phú Quý 1 chỉ (999.9)', sku: 'TPQ1C', price: 17550000, compareAtPrice: 17250000, karatType: 'Vàng 999,9', goldWeight: 3.75, description: 'Sản phẩm may mắn cho ngày vía Thần tài.', status: 'available', cat: 'VÀNG' },
-        { name: 'Phú Quý 1 Lượng 999.9', sku: 'TPQ1L', price: 175500000, compareAtPrice: 172500000, karatType: 'Vàng 999,9', goldWeight: 37.5, description: 'Bản vàng miếng tiêu chuẩn cho việc tích trữ giá trị cao.', status: 'available', cat: 'VÀNG' },
-        { name: 'Vàng rồng Phú Quý 999.9 1L', sku: 'VRPQ1L', price: 175500000, compareAtPrice: 172500000, karatType: 'Vàng 999,9', goldWeight: 37.5, description: 'Vàng miếng rồng vàng biểu tượng quyền quý.', status: 'available', cat: 'VÀNG' },
-        { name: 'Vàng con giáp 1 chỉ (999.9)', sku: 'CNG1.0', price: 17550000, compareAtPrice: 17250000, karatType: 'Vàng 999,9', goldWeight: 3.75, description: 'Bộ sưu tập vàng con giáp theo tuổi.', status: 'available', cat: 'VÀNG' },
-        { name: 'Bạc Thanh Long Phú Quý 999 1KG', sku: 'BTL1KG', price: 73466483, compareAtPrice: 71253155, karatType: 'Bạc 999', goldWeight: 1000, description: 'Bạc thỏi Thanh Long Phú Quý 999 khối lượng 1KG.', status: 'available', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Bạc Thanh Long Phú Quý 999 1KG -M', sku: 'BTL1KGM', price: 73466483, compareAtPrice: 71253155, karatType: 'Bạc 999', goldWeight: 1000, description: 'Bạc thỏi Thanh Long Phú Quý 999 khối lượng 1KG - bề mặt mờ.', status: 'available', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Bạc Thanh Long Phú Quý 999 5L', sku: 'BTL5L', price: 13775000, compareAtPrice: 13360000, karatType: 'Bạc 999', goldWeight: 187.5, description: 'Bạc thỏi Thanh Long Phú Quý 999 khối lượng 5 lượng.', status: 'available', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Bạc Thanh Long Phú Quý 999 1L', sku: 'BTLPQ1L', price: 2755000, compareAtPrice: 2672000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Bạc thỏi Thanh Long Phú Quý 999 khối lượng 1 lượng.', status: 'available', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Bạc thỏi Phú Quý 999 1KG', sku: 'BPQ1KG', price: 73466483, compareAtPrice: 71253155, karatType: 'Bạc 999', goldWeight: 1000, description: 'Bạc thỏi Phú Quý 999 khối lượng 1KG.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Bạc miếng Phú Quý 999 1L', sku: 'BPQ1L', price: 2755000, compareAtPrice: 2672000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Bạc miếng Phú Quý 999 khối lượng 1 lượng.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Bạc thỏi Phú Quý 999 5L', sku: 'BPQ5L', price: 13775000, compareAtPrice: 13360000, karatType: 'Bạc 999', goldWeight: 187.5, description: 'Bạc thỏi Phú Quý 999 khối lượng 5 lượng.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Bạch mã phi thiên 999 5L', sku: 'BBM5L', price: 13775000, compareAtPrice: 13360000, karatType: 'Bạc 999', goldWeight: 187.5, description: 'Bạc miếng Bạch mã phi thiên 999 khối lượng 5 lượng.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Ngân mã chiêu tài 999 1L', sku: 'BNM1L', price: 2755000, compareAtPrice: 2672000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Bạc miếng Ngân mã chiêu tài 999 khối lượng 1 lượng.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
-        { name: 'Đồng bạc Liên Hoa Bồ Đề Phú Quý 1 Lượng', sku: 'BM1.001', price: 3148000, compareAtPrice: 2676000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Đồng bạc mỹ nghệ Liên Hoa Bồ Đề Phú Quý 1 Lượng.', status: 'available', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc Buffalo Matte 1 OZ Phú Quý', sku: 'BM1.006', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Buffalo Matte 1 OZ Phú Quý, bề mặt mờ.', status: 'available', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc Buffalo Proof 1 OZ Phú Quý', sku: 'BM1.007', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Buffalo Proof 1 OZ Phú Quý, bề mặt bóng gương.', status: 'available', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Miếng bạc Pamp Dragon 10g 2024', sku: 'BDR10G', price: 1955511, compareAtPrice: 713422, karatType: 'Bạc 999', goldWeight: 10, description: 'Miếng bạc PAMP Suisse hình rồng 10g năm 2024.', status: 'available', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Bạc miếng Phú Quý 999 RAN1L', sku: 'BRN1L', price: 2755000, compareAtPrice: 2672000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Bạc miếng Phú Quý 999 hình rắn 1 lượng.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc Britannia 1 OZ', sku: 'BP1.001', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Britannia 1 OZ - The Royal Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc Kangaroo 1 OZ', sku: 'BP1.002', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Kangaroo 1 OZ - Perth Mint Úc.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc Maple Leaf 1 OZ', sku: 'BP1.003', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Maple Leaf 1 OZ - Royal Canadian Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc Philharmonia 1 OZ', sku: 'BP1.004', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Philharmonia 1 OZ - Austrian Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc American Eagle 1 OZ', sku: 'BP1.005', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc American Eagle 1 OZ - US Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc Niue Turtle 1 OZ', sku: 'BP1.006', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Niue Turtle 1 OZ - NZ Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
-        { name: 'Đồng bạc Somalia Elephant 1 OZ', sku: 'BP1.007', price: 2612840, compareAtPrice: 2221080, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Somalia Elephant 1 OZ - Bavarian State Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Nhẫn tròn trơn 999.9 (0.5)', sku: 'NPQ0.5', price: 8350000, compareAtPrice: 8200000, karatType: 'Vàng 999,9', goldWeight: 1.875, description: 'Sản phẩm vàng nhỏ gọn cho ngân sách thấp.', status: 'available', cat: 'VÀNG' },
+        { name: 'Nhẫn tròn trơn 999.9 (1)', sku: 'NPQ1.0', price: 16700000, compareAtPrice: 16400000, karatType: 'Vàng 999,9', goldWeight: 3.75, description: 'Sản phẩm vàng tích trữ phổ biến, dễ dàng mua bán.', status: 'available', cat: 'VÀNG' },
+        { name: 'Nhẫn tròn trơn 999.9 (2)', sku: 'NPQ2', price: 33400000, compareAtPrice: 32800000, karatType: 'Vàng 999,9', goldWeight: 7.5, description: 'Nhẫn vàng tích trữ loại 2 chỉ.', status: 'available', cat: 'VÀNG' },
+        { name: 'Nhẫn tròn trơn 999.9 (3)', sku: 'NPQ3', price: 50100000, compareAtPrice: 49200000, karatType: 'Vàng 999,9', goldWeight: 11.25, description: 'Nhẫn vàng tích trữ loại trung bình.', status: 'available', cat: 'VÀNG' },
+        { name: 'Nhẫn tròn trơn 999.9 (5)', sku: 'NPQ5', price: 83500000, compareAtPrice: 82000000, karatType: 'Vàng 999,9', goldWeight: 18.75, description: 'Nhẫn vàng tích trữ loại 5 chỉ.', status: 'available', cat: 'VÀNG' },
+        { name: 'Nhẫn tròn trơn 999.9 (10)', sku: 'NPQ10', price: 167000000, compareAtPrice: 164000000, karatType: 'Vàng 999,9', goldWeight: 37.5, description: 'Biểu tượng của sự thịnh vượng và tài lộc.', status: 'available', cat: 'VÀNG' },
+        { name: 'Thần tài Phú Quý 1 chỉ (999.9)', sku: 'TPQ1C', price: 16700000, compareAtPrice: 16400000, karatType: 'Vàng 999,9', goldWeight: 3.75, description: 'Sản phẩm may mắn cho ngày vía Thần tài.', status: 'available', cat: 'VÀNG' },
+        { name: 'Phú Quý 1 Lượng 999.9', sku: 'TPQ1L', price: 167000000, compareAtPrice: 164000000, karatType: 'Vàng 999,9', goldWeight: 37.5, description: 'Bản vàng miếng tiêu chuẩn cho việc tích trữ giá trị cao.', status: 'available', cat: 'VÀNG' },
+        { name: 'Vàng rồng Phú Quý 999.9 1L', sku: 'VRPQ1L', price: 167000000, compareAtPrice: 164000000, karatType: 'Vàng 999,9', goldWeight: 37.5, description: 'Vàng miếng rồng vàng biểu tượng quyền quý.', status: 'available', cat: 'VÀNG' },
+        { name: 'Vàng con giáp 1 chỉ (999.9)', sku: 'CNG1.0', price: 16700000, compareAtPrice: 16400000, karatType: 'Vàng 999,9', goldWeight: 3.75, description: 'Bộ sưu tập vàng con giáp theo tuổi.', status: 'available', cat: 'VÀNG' },
+        { name: 'Bạc Thanh Long Phú Quý 999 1KG', sku: 'BTL1KG', price: 66880000, compareAtPrice: 64880000, karatType: 'Bạc 999', goldWeight: 1000, description: 'Bạc thỏi Thanh Long Phú Quý 999 khối lượng 1KG.', status: 'available', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Bạc Thanh Long Phú Quý 999 1KG -M', sku: 'BTL1KGM', price: 66880000, compareAtPrice: 64880000, karatType: 'Bạc 999', goldWeight: 1000, description: 'Bạc thỏi Thanh Long Phú Quý 999 khối lượng 1KG - bề mặt mờ.', status: 'available', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Bạc Thanh Long Phú Quý 999 5L', sku: 'BTL5L', price: 12540000, compareAtPrice: 12165000, karatType: 'Bạc 999', goldWeight: 187.5, description: 'Bạc thỏi Thanh Long Phú Quý 999 khối lượng 5 lượng.', status: 'available', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Bạc Thanh Long Phú Quý 999 1L', sku: 'BTLPQ1L', price: 2508000, compareAtPrice: 2433000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Bạc thỏi Thanh Long Phú Quý 999 khối lượng 1 lượng.', status: 'available', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Bạc thỏi Phú Quý 999 1KG', sku: 'BPQ1KG', price: 66880000, compareAtPrice: 64880000, karatType: 'Bạc 999', goldWeight: 1000, description: 'Bạc thỏi Phú Quý 999 khối lượng 1KG.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Bạc miếng Phú Quý 999 1L', sku: 'BPQ1L', price: 2508000, compareAtPrice: 2433000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Bạc miếng Phú Quý 999 khối lượng 1 lượng.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Bạc thỏi Phú Quý 999 5L', sku: 'BPQ5L', price: 12540000, compareAtPrice: 12165000, karatType: 'Bạc 999', goldWeight: 187.5, description: 'Bạc thỏi Phú Quý 999 khối lượng 5 lượng.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Bạch mã phi thiên 999 5L', sku: 'BBM5L', price: 12540000, compareAtPrice: 12165000, karatType: 'Bạc 999', goldWeight: 187.5, description: 'Bạc miếng Bạch mã phi thiên 999 khối lượng 5 lượng.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Ngân mã chiêu tài 999 1L', sku: 'BNM1L', price: 2508000, compareAtPrice: 2433000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Bạc miếng Ngân mã chiêu tài 999 khối lượng 1 lượng.', status: 'out_of_stock', cat: 'BẠC TÍCH TRỮ' },
+        { name: 'Đồng bạc Liên Hoa Bồ Đề Phú Quý 1 Lượng', sku: 'BM1.001', price: 2862000, compareAtPrice: 2433000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Đồng bạc mỹ nghệ Liên Hoa Bồ Đề Phú Quý 1 Lượng.', status: 'available', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc Buffalo Matte 1 OZ Phú Quý', sku: 'BM1.006', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Buffalo Matte 1 OZ Phú Quý, bề mặt mờ.', status: 'available', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc Buffalo Proof 1 OZ Phú Quý', sku: 'BM1.007', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Buffalo Proof 1 OZ Phú Quý, bề mặt bóng gương.', status: 'available', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Miếng bạc Pamp Dragon 10g 2024', sku: 'BDR10G', price: 1953792, compareAtPrice: 648800, karatType: 'Bạc 999', goldWeight: 10, description: 'Miếng bạc PAMP Suisse hình rồng 10g năm 2024.', status: 'available', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Bạc miếng Phú Quý 999 RAN1L', sku: 'BRN1L', price: 2862000, compareAtPrice: 2433000, karatType: 'Bạc 999', goldWeight: 37.5, description: 'Bạc miếng Phú Quý 999 hình rắn 1 lượng.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc Britannia 1 OZ', sku: 'BP1.001', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Britannia 1 OZ - The Royal Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc Kangaroo 1 OZ', sku: 'BP1.002', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Kangaroo 1 OZ - Perth Mint Úc.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc Maple Leaf 1 OZ', sku: 'BP1.003', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Maple Leaf 1 OZ - Royal Canadian Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc Philharmonia 1 OZ', sku: 'BP1.004', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Philharmonia 1 OZ - Austrian Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc American Eagle 1 OZ', sku: 'BP1.005', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc American Eagle 1 OZ - US Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc Niue Turtle 1 OZ', sku: 'BP1.006', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Niue Turtle 1 OZ - NZ Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
+        { name: 'Đồng bạc Somalia Elephant 1 OZ', sku: 'BP1.007', price: 2373552, compareAtPrice: 2017768, karatType: 'Bạc 999.9', goldWeight: 31.1, description: 'Đồng bạc Somalia Elephant 1 OZ - Bavarian State Mint.', status: 'out_of_stock', cat: 'BẠC MỸ NGHỆ' },
       ];
 
       for (const p of allProducts) {
@@ -296,12 +394,23 @@ export default {
         }
       }
 
-      // 5. Start vang.today price sync
-      // Run immediately on startup
+      // 5. Init Google Sheets headers
+      initSheetHeaders().catch(err => strapi.log.error('[google-sheets] Init failed:', err));
+
+      // 6. Start vang.today price sync
       await syncGoldPricesFromVangToday(strapi);
-      // Then sync every 5 minutes
       setInterval(() => syncGoldPricesFromVangToday(strapi), 5 * 60 * 1000);
       strapi.log.info('[vang.today sync] Scheduled sync every 5 minutes');
+
+      // 7. Start silver price sync from Phu Quy
+      await syncSilverPrices(strapi);
+      setInterval(() => syncSilverPrices(strapi), 5 * 60 * 1000);
+      strapi.log.info('[silver sync] Scheduled sync every 5 minutes');
+
+      // 8. Sync product prices from Phú Quý API (realtime - every 5 min)
+      await syncProductPrices(strapi);
+      setInterval(() => syncProductPrices(strapi), 5 * 60 * 1000);
+      strapi.log.info('[price-sync] Scheduled product price sync every 5 minutes');
 
     } catch (e) {
       strapi.log.error('Bootstrap error', e);

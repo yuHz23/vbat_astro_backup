@@ -24,7 +24,15 @@ export async function fetchAPI(endpoint, options = {}) {
   const res = await fetch(url, { ...options, headers: { ...headers, ...options.headers } });
   if (!res.ok) {
     const error = await res.json().catch(() => ({}));
-    throw new Error(error?.error?.message || `API Error: ${res.status}`);
+    const msg = error?.error?.message || `API Error: ${res.status}`;
+    // Auto logout on expired/invalid token
+    if (res.status === 401 && auth) {
+      localStorage.removeItem('jwt');
+      localStorage.removeItem('user');
+      window.location.href = '/dang-nhap.html';
+      throw new Error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
+    }
+    throw new Error(msg);
   }
   return res.json();
 }
@@ -32,7 +40,9 @@ export async function fetchAPI(endpoint, options = {}) {
 export function getStrapiMedia(url) {
   if (!url) return '/placeholder.jpg';
   if (url.startsWith('http')) return url;
+  // In dev, /uploads is proxied to Strapi; in prod, use admin subdomain
   if (STRAPI_URL) return `${STRAPI_URL}${url}`;
+  if (url.startsWith('/uploads')) return url;
   const host = window.location.hostname;
   if (host === 'localhost' || host === '127.0.0.1' || /^\d+\.\d+\.\d+\.\d+$/.test(host)) {
     return `${window.location.protocol}//${host}:1337${url}`;
@@ -47,5 +57,5 @@ export function formatPrice(price) {
 
 export function formatPriceVND(price) {
   if (!price && price !== 0) return '—';
-  return new Intl.NumberFormat('vi-VN').format(price) + ' ₫';
+  return new Intl.NumberFormat('vi-VN').format(price);
 }

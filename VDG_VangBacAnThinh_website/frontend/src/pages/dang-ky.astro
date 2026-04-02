@@ -2,15 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="Đăng ký - Vàng An Thịnh" description="Đăng ký tài khoản Vàng An Thịnh - Mua bán vàng bạc uy tín tại Hà Nội." variant="inner">
+<Layout title="Đăng ký - Vàng An Thịnh" description="Đăng ký tài khoản Vàng An Thịnh - Mua bán vàng bạc uy tín tại Hà Nội." variant="home">
   <main class="min-h-screen bg-light-bg">
     <div class="flex items-center justify-center py-16 px-4" x-data="registerPage">
       <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
         <!-- Logo -->
         <div class="text-center mb-8">
-          <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-            <span class="text-accent font-heading text-2xl font-bold">VA</span>
-          </div>
+          <img src="/logo-icon.png" alt="An Thịnh" class="w-16 h-16 rounded-full object-cover mx-auto mb-4" />
           <h1 class="font-heading text-2xl text-primary font-bold">Đăng ký tài khoản</h1>
           <p class="text-gray-500 text-sm mt-1">Tạo tài khoản để mua sắm tại Vàng An Thịnh</p>
         </div>
@@ -21,13 +19,25 @@ import Layout from '../layouts/Layout.astro';
         <!-- Form -->
         <form @submit.prevent="register()" class="space-y-5">
           <div>
-            <label for="username" class="block text-sm font-medium text-primary mb-1">Tên đăng nhập</label>
+            <label for="fullName" class="block text-sm font-medium text-primary mb-1">Họ và tên</label>
             <input
-              id="username"
+              id="fullName"
               type="text"
-              x-model="username"
+              x-model="fullName"
               required
-              placeholder="Nhập tên đăng nhập"
+              placeholder="Nhập họ và tên"
+              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors"
+            />
+          </div>
+          <div>
+            <label for="phone" class="block text-sm font-medium text-primary mb-1">Số điện thoại</label>
+            <input
+              id="phone"
+              type="tel"
+              x-model="phone"
+              required
+              placeholder="Nhập số điện thoại"
+              inputmode="numeric"
               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors"
             />
           </div>
@@ -49,9 +59,25 @@ import Layout from '../layouts/Layout.astro';
               type="password"
               x-model="password"
               required
-              placeholder="Nhập mật khẩu"
+              placeholder="Tối thiểu 8 ký tự, chữ hoa, thường, số, đặc biệt"
               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent text-sm transition-colors"
             />
+            <!-- Password Strength Indicator -->
+            <div x-show="password.length > 0" x-transition class="mt-2">
+              <div class="flex gap-1 mb-1">
+                <template x-for="i in 5" :key="i">
+                  <div class="h-1 flex-1 rounded-full transition-colors" :class="i <= passwordStrength.level ? passwordStrength.color : 'bg-gray-200'"></div>
+                </template>
+              </div>
+              <p class="text-xs" :class="passwordStrength.color.replace('bg-', 'text-')" x-text="'Độ mạnh: ' + passwordStrength.label"></p>
+              <ul class="text-xs text-gray-400 mt-1 space-y-0.5">
+                <li :class="password.length >= 8 ? 'text-green-500' : ''">&#x2022; Tối thiểu 8 ký tự</li>
+                <li :class="/[A-Z]/.test(password) ? 'text-green-500' : ''">&#x2022; Chứa chữ cái viết hoa (A-Z)</li>
+                <li :class="/[a-z]/.test(password) ? 'text-green-500' : ''">&#x2022; Chứa chữ cái viết thường (a-z)</li>
+                <li :class="/[0-9]/.test(password) ? 'text-green-500' : ''">&#x2022; Chứa chữ số (0-9)</li>
+                <li :class="/[!@#$%^&*()_+\-=\[\]{};':&quot;\\|,.<>\/?]/.test(password) ? 'text-green-500' : ''">&#x2022; Chứa ký tự đặc biệt (!@#$%...)</li>
+              </ul>
+            </div>
           </div>
           <div>
             <label for="confirmPassword" class="block text-sm font-medium text-primary mb-1">Xác nhận mật khẩu</label>

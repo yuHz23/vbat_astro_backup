@@ -14,8 +14,14 @@
         </div>
       </template>
       <template x-if="$store.auth.isLoggedIn">
-        <div class="flex gap-2">
-          <a href="/tai-khoan.html" class="hover:text-accent" x-text="$store.auth.user?.username"></a>
+        <div class="flex gap-2 items-center">
+          <a href="/tai-khoan.html" class="hover:text-accent" x-text="$store.auth.user?.fullName || $store.auth.user?.username"></a>
+          <template x-if="$store.auth.isAdmin">
+            <span class="flex items-center gap-2">
+              <span>|</span>
+              <a href="/admin-dashboard" class="text-accent hover:text-accent-light font-semibold">Dashboard</a>
+            </span>
+          </template>
           <span>|</span>
           <button @click="$store.auth.logout()" class="hover:text-accent">Đăng xuất</button>
         </div>

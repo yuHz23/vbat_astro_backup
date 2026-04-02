@@ -22,6 +22,9 @@ import { registerCheckoutPage } from './js/pages/checkout';
 import { registerAuthPages } from './js/pages/auth';
 import { registerContactPage } from './js/pages/contact';
 import { registerStoreLocator } from './js/pages/store-locator';
+import { registerOrderHistory } from './js/pages/order-history';
+import { registerDashboardPage } from './js/pages/dashboard';
+import { registerSilverPage } from './js/pages/silver-page';
 
 // Global media URL helper
 (window as any).__strapiBase = (() => {
@@ -64,4 +67,7 @@ export default (Alpine: AlpineType) => {
   registerAuthPages(Alpine);
   registerContactPage(Alpine);
   registerStoreLocator(Alpine);
+  registerOrderHistory(Alpine);
+  registerDashboardPage(Alpine);
+  registerSilverPage(Alpine);
 };

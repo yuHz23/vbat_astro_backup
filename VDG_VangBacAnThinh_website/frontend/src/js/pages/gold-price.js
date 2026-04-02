@@ -21,6 +21,7 @@ export function registerGoldPricePage(Alpine) {
   Alpine.data('goldPricePage', (defaultType = 'SJL1L10') => ({
     prices: [],          // Array of { goldType, goldName, buyPrice, sellPrice, unit, changeBuy, changeSell }
     goldPrices: [],      // Filtered: non-silver
+    silverPrices: [],    // Silver prices from DB
     xauusd: null,        // World gold price
     goldTypes: [],       // List for chart dropdown
     loading: true,
@@ -106,6 +107,29 @@ export function registerGoldPricePage(Alpine) {
         this.prices = livePrices;
         this.goldPrices = livePrices.filter(p => p.goldType !== 'XAUUSD');
         this.xauusd = livePrices.find(p => p.goldType === 'XAUUSD') || null;
+
+        // Fetch silver prices from DB
+        try {
+          const silverRes = await fetchAPI('/gold-prices', {
+            params: {
+              'filters[goldType][$startsWith]': 'BAC',
+              'filters[isActive][$eq]': 'true',
+              'sort[0]': 'sortOrder:asc',
+              'pagination[pageSize]': '20',
+            },
+          });
+          this.silverPrices = (silverRes.data || []).map(p => ({
+            id: p.id,
+            goldType: p.goldType,
+            goldName: p.goldName,
+            buyPrice: p.buyPrice,
+            sellPrice: p.sellPrice,
+            unit: p.unit,
+          }));
+        } catch (e) {
+          console.warn('Silver prices fetch failed:', e);
+          this.silverPrices = [];
+        }
 
         // Build dropdown list for chart (exclude XAUUSD for VND chart simplicity)
         this.goldTypes = this.goldPrices.map(p => ({ code: p.goldType, name: p.goldName }));
@@ -297,7 +321,7 @@ export function registerGoldPricePage(Alpine) {
     formatPriceVND(price, currency = 'VND') {
       if (!price && price !== 0) return '—';
       if (currency === 'USD') return new Intl.NumberFormat('en-US', { minimumFractionDigits: 2 }).format(price) + ' USD';
-      return new Intl.NumberFormat('vi-VN').format(price) + ' đ/lượng';
+      return new Intl.NumberFormat('vi-VN').format(price);
     },
 
     formatChange(change) {
